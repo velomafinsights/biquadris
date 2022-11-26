@@ -10,7 +10,7 @@ using namespace std;
 
 class Block {
     // orientation determined by a 3D vector
-    vector<vector<vector<int>>> orientation;
+    std::vector<std::vector<std::vector<int>>> orientation;
     
     // movement of blocks not determined yet
     size_t x;
@@ -23,9 +23,9 @@ class Block {
     size_t i;
 
     // current orientation (coordinates) of the 4 pieces of the block 
-    vector<vector<int>> structure;
+    std::vector<std::vector<int>> structure;
 
  public:
-        
+        virtual std::vector<std::vector<int>> getStructure() = 0;        
 };
 #endif
