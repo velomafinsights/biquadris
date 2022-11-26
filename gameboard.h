@@ -12,7 +12,7 @@ using namespace std;
 
 // GameBoard is a concrete Subject
 class GameBoard: public Subject {
-    vector<vector<Piece>> canvas;
+    //vector<vector<Piece>> canvas;
     Block* currBlock;
     Block* nextBlock;
     size_t level;

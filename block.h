@@ -4,19 +4,28 @@
 #include <vector>
 #include <string>
 
+using namespace std;
 
 // Block implements 
 
 class Block {
+    // orientation determined by a 3D vector
+    vector<vector<vector<int>>> orientation;
     
-    char orientation; // (1, 2, 3, 4) tells the degree of rotation (0, 90, 180, 270)
-
-    // since rotation happens about the top left corner of block, x and y represent bottom left?
+    // movement of blocks not determined yet
     size_t x;
     size_t y;
 
-    vector<vector<string>> structure;
+    // character the block is made up of: I, J, L, O, S, Z, T
+    char c;
+
+    // current index in orientation vector
+    size_t i;
+
+    // current orientation (coordinates) of the 4 pieces of the block 
+    vector<vector<int>> structure;
 
  public:
+        
 };
 #endif
