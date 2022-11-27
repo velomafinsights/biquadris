@@ -18,4 +18,15 @@ int main() {
     board->dropBlock();
     // board->dropBlock();
     delete board;
+
+    string command;
+    while (cin >> command){
+        // drop
+        if (command == "drop") {
+            // 
+        }
+
+        // left-right
+    }
+    return 0;
 }
