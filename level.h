@@ -3,10 +3,12 @@
 
 // #include "gameboard.h"
 #include "block.h"
+#include "blocks.h"
 #include <string>
 #include <vector>
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 class Level {

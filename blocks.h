@@ -20,6 +20,9 @@ class BlockS : public Block{
     public:
         BlockS();
         std::vector<std::vector<int>> getStructure() override;
+        std::vector<std::vector<int>> getbottomMost() override;
+        std::vector<std::vector<int>> getleftMost() override;
+        std::vector<std::vector<int>> getRightMost() override;
         char getBlockType() override;
         void rotateClockWise() override;  // changes the 2D vector structure and size_t i equal to new index
         void rotateCounterClockWise() override;
