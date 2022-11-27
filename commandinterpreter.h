@@ -5,19 +5,23 @@
 #include <iostream>
 #include <sstream>
 
+using namespace std;
+
+
 class commandInterpreter{
-    private:
         std::vector<std::string> core = {
             "left", "right", "down", "clockwise", "counterclockwise", "drop", "level up", "level down", "norandom", "random",
             "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart"
         };
     public:
-        bool findMatch(std::string given, std:vector commands);
-        std::string process(std::string input);
+        // performs startsWith string comparison
+        bool validSubString(std::string original, std::string sub);
+
+        // returns the corresponding command 
+        std::string process(std::string given);
         int multiplier(std::string input);
         std::string rename(std::string toRename, std::string given);
-}
-
-
+};
 
 #endif
+
