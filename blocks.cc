@@ -9,13 +9,18 @@ BlockS::BlockS(){
    /*std::vector<std::vector<std::vector<int>>> bottomMost;
         std::vector<std::vector<std::vector<int>>> leftMost;
         std::vector<std::vector<std::vector<int>>> rightMost; */
-    /*
-    vector<vector<int>> b0 = {{3,0}, {3,1}, {2,2}};
+    
+    vector<vector<int>> b0 = {{2,2}, {3,0}, {3,1}};
     vector<vector<int>> b1 = {{2,0}, {3,1}};
     bottomMost = {b0, b1, b0, b1};
     
-    vector<vector<int>> l0 = {{2,0}, {3,-1}};
-    vector<vector<int>> l1 = {{2,0}, {3,1}};*/
+    vector<vector<int>> l0 = {{2,1}, {3,0}};
+    vector<vector<int>> l1 = {{1,0}, {2,0}, {3,1}};
+    leftMost = {l0, l1, l0, l1};
+
+    vector<vector<int>> r0 = {{2,2}, {3,1}};
+    vector<vector<int>> r1 = {{1,0}, {2,1}, {3,1}};
+    rightMost = {r0, r1, r0, r1};
 
     x = 0;
     y = 3;
@@ -69,4 +74,23 @@ void BlockS::moveBlockDown(){
 std::vector<std::vector<int>> BlockS::getStructure(){
     return orientation[i];
 }
+
+/*
+virtual std::vector<std::vector<int>> getbottomMost() = 0;
+        virtual std::vector<std::vector<int>> getleftMost() = 0;
+        virtual std::vector<std::vector<int>> getRightMost() = 0;
+*/
+
+std::vector<std::vector<int>> BlockS::getbottomMost(){
+    return bottomMost[i];
+}
+
+std::vector<std::vector<int>> BlockS::getleftMost(){
+    return leftMost[i];
+}
+
+std::vector<std::vector<int>> BlockS::getRightMost(){
+    return rightMost[i];
+}
+
 
