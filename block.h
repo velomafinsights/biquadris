@@ -15,7 +15,7 @@ class Block {
     size_t x;
     size_t y;
 
-    vector<vector<string>> structure;
+    std::vector<std::vector<std::string>> structure;
 
  public:
 };
