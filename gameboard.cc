@@ -16,19 +16,19 @@ GameBoard::GameBoard() {
 }
 
 bool GameBoard::newBlock() {
-    // delete b;
-    //b = new BlockS{};
-    //drawBlock();
-    //notifyObservers();
-       // call gameLost()
-
-    b = currLevel->getBlock(turnNumber);
+    if (currBlock == nullptr) {
+        currBlock = currLevel->getBlock(turnNumber);
+        nextBlock = currLevel->getBlock(turnNumber + 1);
+    } else {
+        Block* temp = currBlock;
+        currBlock = nextBlock;
+        nextBlock = currLevel->getBlock(turnNumber + 1);
+        delete temp;
+    }
     ++turnNumber;
     if (!drawBlock()){
-        // game is over;
         return 0;
     }
-    //notifyObservers();
     return 1;
 }
 
@@ -79,16 +79,6 @@ bool GameBoard::drawBlock() {
     return 1;
 }
 
-/*void GameBoard::blindBoard() {
-    if (blind) {
-        for (int i = 3; i <= 12; i++) {
-            for (int j = 3; j <= 9; j++) {
-                board[i][j] = '?';
-            }
-        }
-    }
-}*/
-
 void GameBoard::applyHeavy() {
     for (int i = 0; i < 2; i++) {
         if (!moveDown()) {
@@ -111,7 +101,7 @@ void GameBoard::moveRight() {
         b->moveBlockRight();
     }
     drawBlock();
-    //notifyObservers();
+    if (heavy) applyHeavy();
 }
 
 void GameBoard::moveLeft() {
@@ -127,7 +117,7 @@ void GameBoard::moveLeft() {
         b->moveBlockLeft();
     }
     drawBlock();
-    //notifyObservers();
+    if (heavy) applyHeavy();
 }
 
 bool GameBoard::moveDown() {
@@ -193,6 +183,6 @@ std::vector<std::vector <char>> GameBoard::getState() {
     return board;
 }
 
-bool getBlind(){
+bool GameBoard::getBlind(){
     return blind;
 }

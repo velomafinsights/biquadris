@@ -24,6 +24,8 @@ int main() {
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
+        
+        if(turn%2 == 0)
         if (command == "drop") {
             board->dropBlock();
             gameContinue = board->newBlock();

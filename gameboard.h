@@ -7,10 +7,12 @@
 #include "level.h"
 #include "level0.h"
 
-class GameBoard: public Subject {
+class GameBoard{
     std::vector<std::vector <char>> board;
-    Block* b;
-    bool blind;
+    std::vector<Block*> blocks;
+    Block* currBlock;
+    Block* nextBlock;
+    bool blind1;
     size_t turnNumber;
     Level* currLevel;
     bool heavy;
