@@ -2,6 +2,7 @@
 #include "observer.h"
 #include "subject.h"
 #include "textObserver.h"
+#include "commandinterpreter.h"
 #include <iostream>
 #include <string>
 
@@ -12,12 +13,12 @@ int main() {
     board->newBlock();
     string commandFromUser;
     string command;
-    ifstream seq;
+    commandInterpreter ci{};
 
 
     while (cin >> commandFromUser){
-        multi = commandinterpreter::multiplier(commandFromUser);
-        command = commandinterpreter::process(commandFromUser);
+        int multi = ci.multiplier(commandFromUser);
+        command = ci.process(commandFromUser);
         if (command == "drop") {
             board->dropBlock();
         } else if (command == "right") {
