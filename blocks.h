@@ -19,7 +19,7 @@ class BlockS : public Block{
 
     public:
         BlockS();
-        std::vector<std::vector<int>> getStructure() override;
+        /*std::vector<std::vector<int>> getStructure() override;
         std::vector<std::vector<int>> getNextCWOrientation() override;
         std::vector<std::vector<int>> getNextCCWOrientation() override;
         std::vector<std::vector<int>> getbottomMost() override;
@@ -34,7 +34,7 @@ class BlockS : public Block{
         void moveBlockLeft() override;
         void moveBlockDown() override;
         int getX() override;
-        int getY() override;
+        int getY() override;*/
 };
 
 #endif

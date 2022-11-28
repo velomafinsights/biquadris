@@ -14,13 +14,13 @@ BlockS::BlockS(){
     vector<vector<int>> b1 = {{2,0}, {3,1}};
     bottomMost = {b0, b1, b0, b1};
     
-    vector<vector<int>> l0 = {{2,1}, {3,0}};
+    /*vector<vector<int>> l0 = {{2,1}, {3,0}};
     vector<vector<int>> l1 = {{1,0}, {2,0}, {3,1}};
     leftMost = {l0, l1, l0, l1};
 
     vector<vector<int>> r0 = {{2,2}, {3,1}};
     vector<vector<int>> r1 = {{1,0}, {2,1}, {3,1}};
-    rightMost = {r0, r1, r0, r1};
+    rightMost = {r0, r1, r0, r1};*/
 
     x = 0;
     y = 0;
@@ -28,6 +28,8 @@ BlockS::BlockS(){
     i = 0;
 }
 
+
+/*
 char BlockS::getBlockType(){
     return c;
 }
@@ -165,5 +167,5 @@ int BlockS::getX(){
 
 int BlockS::getY(){
     return y;
-}
+} */
 
