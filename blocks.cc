@@ -149,7 +149,7 @@ virtual std::vector<std::vector<int>> getbottomMost() = 0;
         virtual std::vector<std::vector<int>> getRightMost() = 0;
 */
 
-std::vector<std::vector<int>> BlockS::getbottomMost(){
+/*std::vector<std::vector<int>> BlockS::getbottomMost(){
     return bottomMost[i];
 }
 
