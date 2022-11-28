@@ -159,4 +159,11 @@ std::vector<std::vector<int>> BlockS::getRightMost(){
     return rightMost[i];
 }
 
+int BlockS::getX(){
+    return x;
+}
+
+int BlockS::getY(){
+    return y;
+}
 
