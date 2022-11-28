@@ -14,6 +14,7 @@ int main() {
     GameBoard* board = new GameBoard();
     Observer* obs = new TextObserver{board, 0, 0, 0, 0};
     board->newBlock();
+    board->render();
     string commandFromUser;
     string command;
     commandInterpreter ci{};
@@ -31,26 +32,46 @@ int main() {
                 cout<< "Game Over! :("<<endl;
                 break;
             }
+            board->newBlock();
+            board->render();
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
                 board->moveRight();
             }
+            board->render();
+            
         } else if (command == "left") {
             for(int i =0; i<multi; ++i){
                 board->moveLeft();
             }
+            board->render();
+
         } else if (command == "down") {
             for(int i =0; i<multi; ++i){
                 board->moveDown();
             }
+            board->render();
+
         } else if (command == "clockwise") {
             for(int i =0; i<multi; ++i){
                 board->rotate(1);
             }
+            board->render();
+
         } else if (command == "counterclockwise") {
            for(int i =0; i<multi; ++i){
                 board->rotate(0);
             }
+            board->render();
+
+        } else if (command == "blind"){
+            board->setBlind();
+            board->render();
+
+        } else if (command == "heavy"){
+            board->setHeavy();
+            board->render();
+            
         }
 
 

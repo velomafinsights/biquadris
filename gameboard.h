@@ -9,7 +9,9 @@
 
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
-    Block* b;
+    std::vector<Block*> blocks;
+    Block* currBlock;
+    Block* nextBlock;
     bool blind;
     size_t turnNumber;
     Level* currLevel;
@@ -30,7 +32,9 @@ class GameBoard: public Subject {
     void setBlind();
     void setHeavy();
     void rotate(bool clockwise);
+    void render();
     std::vector<std::vector <char>> getState();
+    bool getBlind();
     ~GameBoard() = default;
 };
 
