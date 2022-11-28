@@ -16,7 +16,7 @@ class Level {
     
     public:
         std::vector<string> blockQueue;
-        virtual vector<vector<int>> getblock(size_t i) = 0;
+        virtual Block* getBlock(size_t i) = 0;
         virtual size_t getLevel() = 0;
         virtual ~Level();
 };

@@ -6,6 +6,9 @@
 #include <iostream>
 #include <string>
 
+#include "level.h"
+#include "level0.h"
+
 
 int main() {
     GameBoard* board = new GameBoard();
@@ -15,6 +18,7 @@ int main() {
     string command;
     commandInterpreter ci{};
 
+    //Level0 baseL =  Level0{"sequence1.txt"};
 
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);

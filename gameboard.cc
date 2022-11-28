@@ -11,11 +11,14 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
+    currLevel = new Level0{"sequence1.txt"};
+    turnNumber = 1;
 }
 
 void GameBoard::newBlock() {
     // delete b;
-    b = new BlockS{};
+    b = currLevel->getBlock(turnNumber);
+    ++turnNumber;
     drawBlock();
     notifyObservers();
 }

@@ -4,11 +4,15 @@
 #include <string>
 #include "subject.h"
 #include "block.h"
+#include "level.h"
+#include "level0.h"
 
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     Block* b;
     bool blind;
+    size_t turnNumber;
+    Level* currLevel;
     bool heavy;
     void clearFilledRows();
     void clearRow(int row);

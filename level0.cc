@@ -6,56 +6,64 @@
 using namespace std;
 
 // init ctor
-Level0::Level0(std::string seqOneSource): seqOneSource{seqOneSource}, seqOneLength{0} { }
+Level0::Level0(std::string seqOneSource): seqOneSource{seqOneSource}, seqOneLength{0} { 
+    setBlockQueue();
+}
 
 void Level0::setBlockQueue(){
-    seqOne.open("sequence1.txt");
-    while(seqOne >> seqOneSource){
+    // 
+    seqOne.open(seqOneSource);
+    // seqOneSource change to blockQItem
+    while(seqOne >> blockQItem){
         // emplaceback the seqOneSource onto blockQueue
-        blockQueue.emplace_back(seqOneSource);
+        blockQueue.emplace_back(blockQItem);
         ++seqOneLength;
     }
 }
 
+/*
+void Level0::printBlockQueue(){
+    for (int i = 0; i < seqOneLength; ++i){
+        cout<< blockQueue[i] << endl;
+    }
+}*/
+
 // iterate through ifstream to get the block string
 Block* Level0::getBlock(size_t i){
     // we want to iterate 
-
-    
     size_t pos = (i-1) % seqOneLength;
-    // now we get whatever string there is at that index
-
+    Block* nB;
     if (blockQueue[pos] == "S"){
-        Block* SBlock = new Block('s');
-        return SBlock;
+        nB = new Block('s');
     }
-        // return new IBlock{};
-    //}
 
-    // else if (blockQueue[pos] == "J"){
-    //     vector<vector<int>> JBlock = {{0,0}, {1, 0}, {1,1}, {1,2}};
-    //     return IBlock;
+    else if (blockQueue[pos] == "I"){
+        nB = new Block('i');
+    }
 
-    // } else if(blockQueue[pos] == "O") {
-    //     vector<vector<int>> OBlock = {{1,1}, {1,2}, {2,1}, {2,2}};
-    //     return OBlock;
+    else if (blockQueue[pos] == "J"){
+        nB = new Block('j');
+    }
 
-    // } else if(blockQueue[pos] == "T"){
-    //     vector<vector<int>> TBlock = {{1,0}, {1,1}, {1,2}, {2,1}};
-    //     return TBlock;
+    else if (blockQueue[pos] == "L"){
+        nB = new Block('l');
+    }
 
-    // } else if(blockQueue[pos] == "L"){
-    //     vector<vector<int>> LBlock = {{0,2}, {1, 0}, {1,1}, {1,2}};
-    //     return LBlock;
+    else if (blockQueue[pos] == "Z"){
+        nB = new Block('z');
+    }
 
-    // } else if(blockQueue[pos] == "I"){
-    //     vector<vector<int>> IBlock = {{1,0}, {1,1}, {1,2}, {1,3}};
-    //     return IBlock;
+    else if (blockQueue[pos] == "O"){
+        nB = new Block('o');
+    }
 
-    // } else{
-    //     vector<vector<int>> ZBlock = {{1,0}, {1,1}, {2,1}, {2,2}};
-    //     return ZBlock;
-    // }
+    else if (blockQueue[pos] == "T"){
+        nB = new Block('t');
+    }
+    else {
+        nB = nullptr;
+    }
+    return nB;
 }
 
 
