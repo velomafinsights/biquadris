@@ -61,7 +61,7 @@ std::string commandInterpreter::process(std::string given){
     //return validCommand;
 }
 
-int commandinterpreter::multiplier(std::string given){
+int commandInterpreter::multiplier(std::string given){
     std::string multi = "";
     std::stringstream ss;
     size_t toRet;
@@ -82,7 +82,7 @@ int commandinterpreter::multiplier(std::string given){
     }
 }
 
-void commandinterpreter::rename(std::string toRename, std::string given){
+void commandInterpreter::rename(std::string toRename, std::string given){
     vector<std::string>::iterator it;
     it = remove(users.begin(), users.end(), given);
     userDefined[given] = toRename;
