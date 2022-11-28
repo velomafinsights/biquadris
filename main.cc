@@ -35,22 +35,40 @@ int main() {
             for(int i =0; i<multi; ++i){
                 board->moveRight();
             }
+            board->render();
+            
         } else if (command == "left") {
             for(int i =0; i<multi; ++i){
                 board->moveLeft();
             }
+            board->render();
+
         } else if (command == "down") {
             for(int i =0; i<multi; ++i){
                 board->moveDown();
             }
+            board->render();
+
         } else if (command == "clockwise") {
             for(int i =0; i<multi; ++i){
                 board->rotate(1);
             }
+            board->render();
+
         } else if (command == "counterclockwise") {
            for(int i =0; i<multi; ++i){
                 board->rotate(0);
             }
+            board->render();
+
+        } else if (command == "blind"){
+            board->setBlind();
+            board->render();
+
+        } else if (command == "heavy"){
+            board->setHeavy();
+            board->render();
+            
         }
 
 

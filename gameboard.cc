@@ -17,7 +17,10 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     // delete b;
-    // call gameLost()
+    b = new BlockS{};
+    drawBlock();
+    notifyObservers();
+       // call gameLost()
 
     b = currLevel->getBlock(turnNumber);
     ++turnNumber;
@@ -108,7 +111,7 @@ void GameBoard::moveRight() {
         b->moveBlockRight();
     }
     drawBlock();
-    notifyObservers();
+    //notifyObservers();
 }
 
 void GameBoard::moveLeft() {
@@ -124,7 +127,7 @@ void GameBoard::moveLeft() {
         b->moveBlockLeft();
     }
     drawBlock();
-    notifyObservers();
+    //notifyObservers();
 }
 
 bool GameBoard::moveDown() {
@@ -171,7 +174,7 @@ void GameBoard::rotate(bool clockwise) {
         }
     }
     drawBlock();
-    notifyObservers();
+    //notifyObservers();
 }
 
 void GameBoard::setBlind() {
@@ -180,6 +183,10 @@ void GameBoard::setBlind() {
 
 void GameBoard::setHeavy() {
     heavy = true;
+}
+
+void GameBoard::render(){
+    notifyObservers();
 }
 
 std::vector<std::vector <char>> GameBoard::getState() {
