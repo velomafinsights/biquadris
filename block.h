@@ -16,7 +16,9 @@ class Block {
  // we don't need to explicitly define the 3D vector as private field
  // orientation determined by a 3D vector
         std::vector<std::vector<std::vector<int>>> orientation;
-        
+        std::vector<std::vector<std::vector<int>>> bottomMost;
+        std::vector<std::vector<std::vector<int>>> leftMost;
+        std::vector<std::vector<std::vector<int>>> rightMost;
         // movement of blocks not determined yet
         size_t x;
         size_t y;
@@ -26,7 +28,16 @@ class Block {
 
         // current index in orientation vector
         size_t i;
-        virtual std::vector<std::vector<int>> getStructure() = 0;     
+        virtual std::vector<std::vector<int>> getStructure() = 0;
+        //clockwise
+        virtual std::vector<std::vector<int>> getNextCWOrientation() = 0;
+        //counterclockwise
+        virtual std::vector<std::vector<int>> getNextCCWOrientation() = 0;    
+
+        virtual std::vector<std::vector<int>> getbottomMost() = 0;
+        virtual std::vector<std::vector<int>> getleftMost() = 0;
+        virtual std::vector<std::vector<int>> getRightMost() = 0;
+
         virtual void moveBlockRight() = 0;
         virtual void moveBlockLeft() = 0;      // change x
         virtual void moveBlockDown() = 0;       // change y
