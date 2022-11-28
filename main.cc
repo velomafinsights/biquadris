@@ -14,6 +14,7 @@ int main() {
     GameBoard* board = new GameBoard();
     Observer* obs = new TextObserver{board, 0, 0, 0, 0};
     board->newBlock();
+    board->render();
     string commandFromUser;
     string command;
     commandInterpreter ci{};
@@ -24,8 +25,6 @@ int main() {
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
-        
-        if(turn%2 == 0)
         if (command == "drop") {
             board->dropBlock();
             gameContinue = board->newBlock();
@@ -33,6 +32,8 @@ int main() {
                 cout<< "Game Over! :("<<endl;
                 break;
             }
+            board->newBlock();
+            board->render();
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
                 board->moveRight();

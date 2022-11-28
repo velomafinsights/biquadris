@@ -17,12 +17,15 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     if (currBlock == nullptr) {
-        currBlock = currLevel->getBlock(turnNumber);
-        nextBlock = currLevel->getBlock(turnNumber + 1);
+        currBlock = new Block{'s'};
+        nextBlock = new Block{'s'};;
+        // currBlock = currLevel->getBlock(turnNumber);
+        // nextBlock = currLevel->getBlock(turnNumber + 1);
+        std::cout << "hello" << std::endl;
     } else {
         Block* temp = currBlock;
         currBlock = nextBlock;
-        nextBlock = currLevel->getBlock(turnNumber + 1);
+        nextBlock = new Block{'s'};;
         delete temp;
     }
     ++turnNumber;
@@ -63,14 +66,14 @@ void GameBoard::dropBlock() {
 }
 
 void GameBoard::clearBlock() {
-    for (auto it: b->getStructure()) {
+    for (auto it: currBlock->getStructure()) {
         board[it[0]][it[1]] = '.';
     }
 }
 
 bool GameBoard::drawBlock() {
-    char symbol = b->getBlockType();
-    for (auto it: b->getStructure()) {
+    char symbol = currBlock->getBlockType();
+    for (auto it: currBlock->getStructure()) {
         if (board[it[0]][it[1]] != '.'){
             return 0;
         }
@@ -91,14 +94,14 @@ void GameBoard::applyHeavy() {
 void GameBoard::moveRight() {
     bool canMoveRight = 1;
     clearBlock();
-    for (auto it: b->getStructure()) {
+    for (auto it: currBlock->getStructure()) {
         if (it[1] == 10 || board[it[0]][it[1] + 1] != '.') {
             canMoveRight = 0;
             break;
         }
     }
     if (canMoveRight) {
-        b->moveBlockRight();
+        currBlock->moveBlockRight();
     }
     drawBlock();
     if (heavy) applyHeavy();
@@ -107,14 +110,14 @@ void GameBoard::moveRight() {
 void GameBoard::moveLeft() {
     bool canMoveLeft = 1;
     clearBlock();
-    for (auto it: b->getStructure()) {
+    for (auto it: currBlock->getStructure()) {
         if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '.') {
             canMoveLeft = 0;
             break;
         }
     }
     if (canMoveLeft) {
-        b->moveBlockLeft();
+        currBlock->moveBlockLeft();
     }
     drawBlock();
     if (heavy) applyHeavy();
@@ -123,15 +126,16 @@ void GameBoard::moveLeft() {
 bool GameBoard::moveDown() {
     clearBlock();
     bool canMoveDown = 1;
-    for (auto it: b->getbottomMost()) {
+    for (auto it: currBlock->getbottomMost()) {
         if (it[0] == 17 || board[it[0] + 1][it[1]] != '.') {
+            std::cout << "OUT OF INDEX";
             std::cout << it[0] << "-" << it[1] << std::endl;
             canMoveDown = 0;
             break;
         }
     }
     if (canMoveDown) {
-        b->moveBlockDown();
+        currBlock->moveBlockDown();
     }
     drawBlock();
     notifyObservers();
@@ -144,9 +148,9 @@ bool GameBoard::moveDown() {
 void GameBoard::rotate(bool clockwise) {
     std::vector<std::vector <int>> rotatedBlock;
     if (clockwise) {
-        rotatedBlock = b->getNextCWOrientation();
+        rotatedBlock = currBlock->getNextCWOrientation();
     } else {
-        rotatedBlock = b->getNextCCWOrientation();
+        rotatedBlock = currBlock->getNextCCWOrientation();
     }
     clearBlock();
     bool canRoate = 1;
@@ -158,13 +162,12 @@ void GameBoard::rotate(bool clockwise) {
     }
     if (canRoate) {
         if (clockwise) {
-            b->rotateClockWise();
+            currBlock->rotateClockWise();
         } else {
-            b->rotateCounterClockWise();
+            currBlock->rotateCounterClockWise();
         }
     }
     drawBlock();
-    //notifyObservers();
 }
 
 void GameBoard::setBlind() {
