@@ -32,6 +32,7 @@ class GameBoard: public Subject {
     void rotate(bool clockwise);
     void render();
     std::vector<std::vector <char>> getState();
+    bool getBlind();
     ~GameBoard() = default;
 };
 

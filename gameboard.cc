@@ -28,7 +28,7 @@ bool GameBoard::newBlock() {
         // game is over;
         return 0;
     }
-    notifyObservers();
+    //notifyObservers();
     return 1;
 }
 
@@ -79,7 +79,7 @@ bool GameBoard::drawBlock() {
     return 1;
 }
 
-void GameBoard::blindBoard() {
+/*void GameBoard::blindBoard() {
     if (blind) {
         for (int i = 3; i <= 12; i++) {
             for (int j = 3; j <= 9; j++) {
@@ -87,7 +87,7 @@ void GameBoard::blindBoard() {
             }
         }
     }
-}
+}*/
 
 void GameBoard::applyHeavy() {
     for (int i = 0; i < 2; i++) {
@@ -190,8 +190,9 @@ void GameBoard::render(){
 }
 
 std::vector<std::vector <char>> GameBoard::getState() {
-    if (blind) {
-        blindBoard();
-    }
     return board;
+}
+
+bool getBlind(){
+    return blind;
 }
