@@ -17,6 +17,7 @@ int main() {
     string commandFromUser;
     string command;
     commandInterpreter ci{};
+    bool gameContinue;
 
     //Level0 baseL =  Level0{"sequence1.txt"};
 
@@ -25,6 +26,11 @@ int main() {
         command = ci.process(commandFromUser);
         if (command == "drop") {
             board->dropBlock();
+            gameContinue = board->newBlock();
+            if (gameContinue == 0){
+                cout<< "Game Over! :("<<endl;
+                break;
+            }
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
                 board->moveRight();
@@ -46,6 +52,8 @@ int main() {
                 board->rotate(0);
             }
         }
+
+
     }
     delete board;
 }

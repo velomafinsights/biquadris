@@ -17,12 +17,12 @@ class GameBoard: public Subject {
     void clearFilledRows();
     void clearRow(int row);
     void clearBlock();
-    void drawBlock();
+    bool drawBlock();
     void blindBoard();
     void applyHeavy();
  public:
     GameBoard();
-    void newBlock();
+    bool newBlock();
     void dropBlock();
     void moveRight();
     void moveLeft();

@@ -15,12 +15,18 @@ GameBoard::GameBoard() {
     turnNumber = 1;
 }
 
-void GameBoard::newBlock() {
+bool GameBoard::newBlock() {
     // delete b;
+    // call gameLost()
+
     b = currLevel->getBlock(turnNumber);
     ++turnNumber;
-    drawBlock();
+    if (!drawBlock()){
+        // game is over;
+        return 0;
+    }
     notifyObservers();
+    return 1;
 }
 
 void GameBoard::clearRow(int row) {
@@ -51,7 +57,6 @@ void GameBoard::dropBlock() {
     while (moveDown()) {}
     if (blind) blind = false;
     clearFilledRows();
-    newBlock();
 }
 
 void GameBoard::clearBlock() {
@@ -60,11 +65,15 @@ void GameBoard::clearBlock() {
     }
 }
 
-void GameBoard::drawBlock() {
+bool GameBoard::drawBlock() {
     char symbol = b->getBlockType();
     for (auto it: b->getStructure()) {
+        if (board[it[0]][it[1]] != '.'){
+            return 0;
+        }
         board[it[0]][it[1]] = symbol;
     }
+    return 1;
 }
 
 void GameBoard::blindBoard() {
