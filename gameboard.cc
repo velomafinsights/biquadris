@@ -7,25 +7,22 @@ GameBoard::GameBoard() {
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
         for (int j = 0; j < 11; j++) {
-            row.emplace_back('*');
+            row.emplace_back('.');
         }
         board.emplace_back(row);
     }
 }
 
 void GameBoard::newBlock() {
-    b = new Block('s');
-    std::vector<std::vector<int>> block = b->getStructure();
-    char bChar = b->getBlockType();
-    for (int i = 0; i < 4; i++) {
-        board[block[i][0] + b->getX()][block[i][1] + b->getY()] = bChar;
-    }
+    // delete b;
+    b = new BlockS{};
+    drawBlock();
     notifyObservers();
 }
 
 void GameBoard::clearRow(int row) {
     for (int i = 0; i < 11; i++) {
-        board[row][i] = '*';
+        board[row][i] = '.';
     }
     for (int i = row; i > 0; i--) {
         for (int j = 0; j < 11; j++) {
@@ -38,7 +35,7 @@ void GameBoard::clearFilledRows() {
     for (int i = 0; i < 18; i++) {
         bool rowClear = 1;
         for (int j = 0; j < 11; j++) {
-            if (board[i][j] == '*') {
+            if (board[i][j] == '.') {
                 rowClear = 0;
                 break;
             }
@@ -48,114 +45,108 @@ void GameBoard::clearFilledRows() {
 }
 
 void GameBoard::dropBlock() {
-    std::vector<std::vector<int>> block = b->getStructure();
-    int rowsToDropBy = 0;
-    bool rowFound = 0;
-    while (true) {
-        for (auto it: b->getbottomMost()) {
-            if (it[0] == 17 || board[it[0] + rowsToDropBy][it[1]] != '*') {
-                rowFound = 1;
-                break;
-            }
-        }
-        if (rowFound) break;
-        rowsToDropBy += 1;
-    }
-    for (int i = 0; i < 4; i++) {
-        board[block[i][0]][block[i][1]] = '*';
-        board[rowsToDropBy + block[i][0]][block[i][1]] = 'b';
-    }
+    while (moveDown()) {}
+    if (blind) blind = false;
     clearFilledRows();
     newBlock();
 }
 
-void GameBoard::moveRight() {
-    std::vector<std::vector <int>> block = b->getStructure();
-    char symbol = b->getBlockType();
-    bool canMoveRight = 1;
-    for (auto it: block) {
-        board[it[0]][it[1]] = '*';
+void GameBoard::clearBlock() {
+    for (auto it: b->getStructure()) {
+        board[it[0]][it[1]] = '.';
     }
-    for (auto it: block) {
-        if (it[1] == 10 || board[it[0]][it[1] + 1] != '*') {
+}
+
+void GameBoard::drawBlock() {
+    char symbol = b->getBlockType();
+    for (auto it: b->getStructure()) {
+        board[it[0]][it[1]] = symbol;
+    }
+}
+
+void GameBoard::blindBoard() {
+    if (blind) {
+        for (int i = 3; i <= 12; i++) {
+            for (int j = 3; j <= 9; j++) {
+                board[i][j] = '?';
+            }
+        }
+    }
+}
+
+void GameBoard::applyHeavy() {
+    for (int i = 0; i < 2; i++) {
+        if (!moveDown()) {
+            dropBlock();
+            break;
+        }
+    }
+}
+ 
+void GameBoard::moveRight() {
+    bool canMoveRight = 1;
+    clearBlock();
+    for (auto it: b->getStructure()) {
+        if (it[1] == 10 || board[it[0]][it[1] + 1] != '.') {
             canMoveRight = 0;
             break;
         }
     }
     if (canMoveRight) {
         b->moveBlockRight();
-        block = b->getStructure();
     }
-    for (auto it: block) {
-        board[it[0]][it[1]] = symbol;
-    }
+    drawBlock();
     notifyObservers();
 }
 
 void GameBoard::moveLeft() {
-    std::vector<std::vector <int>> block = b->getStructure();
-    char symbol = b->getBlockType();
     bool canMoveLeft = 1;
-    for (auto it: block) {
-        board[it[0]][it[1]] = '*';
-    }
-    for (auto it: block) {
-        if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '*') {
+    clearBlock();
+    for (auto it: b->getStructure()) {
+        if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '.') {
             canMoveLeft = 0;
             break;
         }
     }
     if (canMoveLeft) {
         b->moveBlockLeft();
-        block = b->getStructure();
-        for (auto it: block) {
-            std::cout << it[0] << "-" << it[1] << std::endl;
-        }
-
     }
-    for (auto it: block) {
-        board[it[0]][it[1]] = symbol;
-    }
+    drawBlock();
     notifyObservers();
 }
 
-void GameBoard::moveDown() {
-    std::vector<std::vector <int>> block = b->getStructure();
-    std::vector<std::vector <int>> bottomMost = b->getbottomMost();
-    for (auto it: block) {
-        board[it[0]][it[1]] = '*';
-    }
-    char symbol = b->getBlockType();
+bool GameBoard::moveDown() {
+    clearBlock();
     bool canMoveDown = 1;
-    for (auto it: bottomMost) {
-        if (it[0] == 17 || board[it[0] + 1][it[1]] != '*') {
+    for (auto it: b->getbottomMost()) {
+        if (it[0] == 17 || board[it[0] + 1][it[1]] != '.') {
             std::cout << it[0] << "-" << it[1] << std::endl;
             canMoveDown = 0;
             break;
         }
     }
     if (canMoveDown) {
-        std::cout << "move down" << std::endl;
         b->moveBlockDown();
-        block = b->getStructure();
     }
-    for (auto it: block) {
-        board[it[0]][it[1]] = symbol;
-    }
+    drawBlock();
     notifyObservers();
+    if (canMoveDown) {
+        return true;
+    }
+    return false;
 }
 
 void GameBoard::rotate(bool clockwise) {
     std::vector<std::vector <int>> rotatedBlock;
-    char symbol = b->getBlockType();
     if (clockwise) {
         rotatedBlock = b->getNextCWOrientation();
     } else {
         rotatedBlock = b->getNextCCWOrientation();
     }
+    clearBlock();
     bool canRoate = 1;
     for (auto it: rotatedBlock) {
-        if (it[0] == 18 || it[1] == 11 || it[1] == -1 || board[it[0]][it[1]] != '*') {
+        if (it[0] == 18 || it[1] == 11 || it[1] == -1 || board[it[0]][it[1]] != '.') {
             canRoate = 0;
             break;
         }
@@ -167,13 +158,21 @@ void GameBoard::rotate(bool clockwise) {
             b->rotateCounterClockWise();
         }
     }
-    std::vector<std::vector <int>> block = b->getStructure();
-    for (auto it: block) {
-        board[it[0]][it[1]] = symbol;
-    }
+    drawBlock();
     notifyObservers();
 }
 
+void GameBoard::setBlind() {
+    blind = true;
+}
+
+void GameBoard::setHeavy() {
+    heavy = true;
+}
+
 std::vector<std::vector <char>> GameBoard::getState() {
+    if (blind) {
+        blindBoard();
+    }
     return board;
 }
