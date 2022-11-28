@@ -7,7 +7,6 @@
 
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
-    std::vector< std::vector<int>> block;
     Block* b;
     void clearFilledRows();
     void clearRow(int row);

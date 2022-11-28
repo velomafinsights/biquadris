@@ -11,15 +11,14 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
-    block = {{1,1}, {1, 2}, {2, 0}, {2, 1}};
 }
 
 void GameBoard::newBlock() {
     b = new BlockS{};
-    std::vector<std::vector<int>> bStruct = b->getStructure();
+    std::vector<std::vector<int>> block = b->getStructure();
     char bChar = b->getBlockType();
     for (int i = 0; i < 4; i++) {
-        board[bStruct[i][0] + b->getX()][bStruct[i][1] + b->getY()] = bChar;
+        board[block[i][0] + b->getX()][block[i][1] + b->getY()] = bChar;
     }
     notifyObservers();
 }
@@ -49,14 +48,12 @@ void GameBoard::clearFilledRows() {
 }
 
 void GameBoard::dropBlock() {
-    int x = 0;
-    int y = 0;
-    std::vector<std::vector <int>> mostBottom = {{2,2}, {3,0}, {3,1}};
+    std::vector<std::vector<int>> block = b->getStructure();
     int rowsToDropBy = 0;
     bool rowFound = 0;
     while (true) {
-        for (auto it: mostBottom) {
-            if ((it[0] + x) == 18 || board[it[0] + x][it[1] + y] != '*') {
+        for (auto it: b->getbottomMost()) {
+            if (it[0] == 17 || board[it[0] + rowsToDropBy][it[1]] != '*') {
                 rowFound = 1;
                 break;
             }
@@ -64,10 +61,9 @@ void GameBoard::dropBlock() {
         if (rowFound) break;
         rowsToDropBy += 1;
     }
-    std::vector<std::vector<int>> bStruct = b->getStructure();
     for (int i = 0; i < 4; i++) {
-        board[block[i][0] + b->getY()][block[i][1] + b->getX()] = '*';
-        board[rowsToDropBy + block[i][0] + b->getY()][block[i][1] + b->getX()] = 'b';
+        board[block[i][0]][block[i][1]] = '*';
+        board[rowsToDropBy + block[i][0]][block[i][1]] = 'b';
     }
     clearFilledRows();
     newBlock();
@@ -118,7 +114,8 @@ void GameBoard::moveLeft() {
 }
 
 void GameBoard::moveDown() {
-    std::vector<std::vector <int>> bottomMost = b->getStructure();
+    std::vector<std::vector <int>> block = b->getStructure();
+    std::vector<std::vector <int>> bottomMost = b->getbottomMost();
     char symbol = b->getBlockType();
     bool canMoveDown = 1;
     for (auto it: bottomMost) {
@@ -138,12 +135,12 @@ void GameBoard::moveDown() {
 
 void GameBoard::rotate(bool clockwise) {
     std::vector<std::vector <int>> rotatedBlock;
-    if (clockwise) {
-        rotatedBlock = b->getStructure();
-    } else {
-        rotatedBlock = b->getStructure();
-    }
     char symbol = b->getBlockType();
+    if (clockwise) {
+        rotatedBlock = b->getNextCWOrientation();
+    } else {
+        rotatedBlock = b->getNextCCWOrientation();
+    }
     bool canRoate = 1;
     for (auto it: rotatedBlock) {
         if (it[0] == 18 || it[1] == 11 || it[1] == -1 || board[it[0]][it[1]] != '*') {
@@ -153,9 +150,9 @@ void GameBoard::rotate(bool clockwise) {
     }
     if (canRoate) {
         if (clockwise) {
-            b->moveBlockDown();
+            b->rotateClockWise();
         } else {
-            b->moveBlockDown();
+            b->rotateCounterClockWise();
         }
     }
     std::vector<std::vector <int>> block = b->getStructure();
