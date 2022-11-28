@@ -89,6 +89,7 @@ void GameBoard::moveRight() {
     for (auto it: block) {
         board[it[0]][it[1]] = symbol;
     }
+    notifyObservers();
 }
 
 void GameBoard::moveLeft() {
@@ -111,6 +112,7 @@ void GameBoard::moveLeft() {
     for (auto it: block) {
         board[it[0]][it[1]] = symbol;
     }
+    notifyObservers();
 }
 
 void GameBoard::moveDown() {
@@ -131,6 +133,7 @@ void GameBoard::moveDown() {
     for (auto it: block) {
         board[it[0]][it[1]] = symbol;
     }
+    notifyObservers();
 }
 
 void GameBoard::rotate(bool clockwise) {
@@ -159,6 +162,7 @@ void GameBoard::rotate(bool clockwise) {
     for (auto it: block) {
         board[it[0]][it[1]] = symbol;
     }
+    notifyObservers();
 }
 
 std::vector<std::vector <char>> GameBoard::getState() {
