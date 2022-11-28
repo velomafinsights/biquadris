@@ -29,9 +29,15 @@ class Block {
         // current index in orientation vector
         size_t i;
         virtual std::vector<std::vector<int>> getStructure() = 0;
+        //clockwise
+        virtual std::vector<std::vector<int>> getNextCWOrientation() = 0;
+        //counterclockwise
+        virtual std::vector<std::vector<int>> getNextCCWOrientation() = 0;    
+
         virtual std::vector<std::vector<int>> getbottomMost() = 0;
         virtual std::vector<std::vector<int>> getleftMost() = 0;
         virtual std::vector<std::vector<int>> getRightMost() = 0;
+
         virtual void moveBlockRight() = 0;
         virtual void moveBlockLeft() = 0;      // change x
         virtual void moveBlockDown() = 0;       // change y

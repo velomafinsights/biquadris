@@ -49,30 +49,96 @@ void BlockS::rotateCounterClockWise(){
 void BlockS::moveBlockRight(){
     // create a check for out of range
     // create a check for current orientation and max width
+    int colAdd = 0;
     if (i == 0 || i == 2){
         if (x < 8){
+            // we've basically incremented the x (col) values by 1
+            colAdd = 1;
             ++x;
         }
     }
     else{
         if (x < 9){
+            colAdd = 1;
             ++x;
+        }
+    }
+    // change orientation vector
+    for (int i = 0; i < 4; ++i){
+        //orientation[i]; gives each of the 2d vectors
+        for (int j = 0; j < 4; ++j){
+            orientation[i][j][1] += colAdd;
+        }
+    }
+    for (int i = 0; i < 4; ++i){
+        int itlen = bottomMost[i].size();
+        for (int j = 0; j < itlen; ++j){
+            bottomMost[i][j][1] += colAdd;
+        }
+    }
+    
+
+}
+
+void BlockS::moveBlockLeft(){
+    int colSub = 0;
+    if (x > 0){
+        colSub = 1;
+        --x;
+    }
+    for (int i = 0; i < 4; ++i){
+        //orientation[i]; gives each of the 2d vectors
+        for (int j = 0; j < 4; ++j){
+            orientation[i][j][1] -= colSub;
+        }
+    }
+    for (int i = 0; i < 4; ++i){
+        int itlen = bottomMost[i].size();
+        for (int j = 0; j < itlen; ++j){
+            bottomMost[i][j][1] -= colSub;
         }
     }
 }
 
-void BlockS::moveBlockLeft(){
-    if (x > 0){
-        --x;
-    }
-}
-
 void BlockS::moveBlockDown(){
-    --y;
+    ++y;
+    for (int i = 0; i < 4; ++i){
+        //orientation[i]; gives each of the 2d vectors
+        for (int j = 0; j < 4; ++j){
+            orientation[i][j][0] += 1;
+        }
+    }
+    
+    for (int i = 0; i < 4; ++i){
+        int itlen = bottomMost[i].size();
+        for (int j = 0; j < itlen; ++j){
+            bottomMost[i][j][0] += 1;
+        }
+    }
+
+
 }
 
 std::vector<std::vector<int>> BlockS::getStructure(){
     return orientation[i];
+}
+
+std::vector<std::vector<int>> BlockS::getNextCWOrientation(){
+    if (i == 3){
+        return orientation[0];
+    }
+    else{
+        return orientation[i + 1];
+    }
+}
+
+std::vector<std::vector<int>> BlockS::getNextCCWOrientation(){
+    if (i == 0){
+        return orientation[3];
+    }
+    else{
+        return orientation[i - 1];
+    }
 }
 
 /*
