@@ -17,9 +17,9 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     // delete b;
-    b = new BlockS{};
-    drawBlock();
-    notifyObservers();
+    //b = new BlockS{};
+    //drawBlock();
+    //notifyObservers();
        // call gameLost()
 
     b = currLevel->getBlock(turnNumber);
