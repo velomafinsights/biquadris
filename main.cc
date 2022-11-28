@@ -18,6 +18,10 @@ int main() {
             board->moveLeft();
         } else if (command == "down") {
             board->moveDown();
+        } else if (command == "clockwise") {
+            board->rotate(1);
+        } else if (command == "counterclockwise") {
+            board->rotate(0);
         }
     }
     delete board;
