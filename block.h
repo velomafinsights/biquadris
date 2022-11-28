@@ -11,6 +11,7 @@ using namespace std;
 class Block {
     // current orientation (coordinates) of the 4 pieces of the block 
     // std::vector<std::vector<int>> structure;
+    Block(char c);
 
  public:
  // we don't need to explicitly define the 3D vector as private field
@@ -28,24 +29,24 @@ class Block {
 
         // current index in orientation vector
         size_t i;
-        virtual std::vector<std::vector<int>> getStructure() = 0;
+        std::vector<std::vector<int>> getStructure();
         //clockwise
-        virtual std::vector<std::vector<int>> getNextCWOrientation() = 0;
+        std::vector<std::vector<int>> getNextCWOrientation();
         //counterclockwise
-        virtual std::vector<std::vector<int>> getNextCCWOrientation() = 0;    
+        std::vector<std::vector<int>> getNextCCWOrientation();    
 
-        virtual std::vector<std::vector<int>> getbottomMost() = 0;
-        virtual std::vector<std::vector<int>> getleftMost() = 0;
-        virtual std::vector<std::vector<int>> getRightMost() = 0;
+        std::vector<std::vector<int>> getbottomMost();
+        std::vector<std::vector<int>> getleftMost();
+        std::vector<std::vector<int>> getRightMost();
 
-        virtual void moveBlockRight() = 0;
-        virtual void moveBlockLeft() = 0;      // change x
-        virtual void moveBlockDown() = 0;       // change y
-        virtual char getBlockType() = 0;     // return c
-        virtual void rotateClockWise() = 0;  // changes the 2D vector structure and size_t i equal to new index
-        virtual void rotateCounterClockWise() = 0;
-        virtual int getX() = 0;
-        virtual int getY() = 0;
+        void moveBlockRight();
+        void moveBlockLeft();      // change x
+        void moveBlockDown();       // change y
+        char getBlockType();     // return c
+        void rotateClockWise();  // changes the 2D vector structure and size_t i equal to new index
+        void rotateCounterClockWise();
+        int getX();
+        int getY();
 
 };
 #endif
