@@ -8,25 +8,17 @@ int main() {
     GameBoard* board = new GameBoard();
     Observer* obs = new TextObserver{board, 0, 0, 0, 0};
     board->newBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    board->dropBlock();
-    // board->dropBlock();
-    delete board;
-
     string command;
     while (cin >> command){
-        // drop
         if (command == "drop") {
-            // 
+            board->dropBlock();
+        } else if (command == "right") {
+            board->moveRight();
+        } else if (command == "left") {
+            board->moveLeft();
+        } else if (command == "down") {
+            board->moveDown();
         }
-
-        // left-right
     }
-    return 0;
+    delete board;
 }

@@ -26,7 +26,8 @@ class BlockS : public Block{
         void moveBlockRight() override;
         void moveBlockLeft() override;
         void moveBlockDown() override;
-
+        int getX() override;
+        int getY() override;
 };
 
 #endif

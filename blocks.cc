@@ -8,7 +8,7 @@ BlockS::BlockS(){
     // add to 3D vec orientation
    //
     x = 0;
-    y = 3;
+    y = 0;
     c = 's';
     i = 0;
 }
@@ -53,10 +53,18 @@ void BlockS::moveBlockLeft(){
 }
 
 void BlockS::moveBlockDown(){
-    --y;
+    ++y;
 }
 
 std::vector<std::vector<int>> BlockS::getStructure(){
     return orientation[i];
+}
+
+int BlockS::getX() {
+    return x;
+}
+
+int BlockS::getY() {
+    return y;
 }
 

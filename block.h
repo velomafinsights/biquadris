@@ -33,6 +33,8 @@ class Block {
         virtual char getBlockType() = 0;     // return c
         virtual void rotateClockWise() = 0;  // changes the 2D vector structure and size_t i equal to new index
         virtual void rotateCounterClockWise() = 0;
+        virtual int getX() = 0;
+        virtual int getY() = 0;
 
 };
 #endif

@@ -8,6 +8,7 @@
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     std::vector< std::vector<int>> block;
+    Block* b;
     void clearFilledRows();
     void clearRow(int row);
  public:
@@ -15,8 +16,9 @@ class GameBoard: public Subject {
     void newBlock();
     void dropBlock();
     void moveRight();
-    // void moveLeft();
-    // void moveDown();
+    void moveLeft();
+    void moveDown();
+    void rotate(bool clockwise);
     std::vector<std::vector <char>> getState();
     ~GameBoard() = default;
 };

@@ -18,7 +18,7 @@ class Level0 : public Level {
     public:
         Level0(std::string seqOneSource);
         void setBlockQueue();
-        // the index is determined by the client using getBlock;
+        // the index is determined by the client using getBlock, turn #
         std::vector<std::vector<int>> getBlock(size_t i);
         //Block* getBlock(size_t i);
         size_t getLevel() override;
