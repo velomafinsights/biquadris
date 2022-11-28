@@ -1,3 +1,4 @@
+/*
 #include "blocks.h"
 
 BlockS::BlockS(){
@@ -8,19 +9,19 @@ BlockS::BlockS(){
     // add to 3D vec orientation
    /*std::vector<std::vector<std::vector<int>>> bottomMost;
         std::vector<std::vector<std::vector<int>>> leftMost;
-        std::vector<std::vector<std::vector<int>>> rightMost; */
+        std::vector<std::vector<std::vector<int>>> rightMost; 
     
     vector<vector<int>> b0 = {{2,2}, {3,0}, {3,1}};
     vector<vector<int>> b1 = {{2,0}, {3,1}};
     bottomMost = {b0, b1, b0, b1};
     
-    /*vector<vector<int>> l0 = {{2,1}, {3,0}};
+    vector<vector<int>> l0 = {{2,1}, {3,0}};
     vector<vector<int>> l1 = {{1,0}, {2,0}, {3,1}};
     leftMost = {l0, l1, l0, l1};
 
     vector<vector<int>> r0 = {{2,2}, {3,1}};
     vector<vector<int>> r1 = {{1,0}, {2,1}, {3,1}};
-    rightMost = {r0, r1, r0, r1};*/
+    rightMost = {r0, r1, r0, r1};
 
     x = 0;
     y = 0;
@@ -29,7 +30,7 @@ BlockS::BlockS(){
 }
 
 
-/*
+
 char BlockS::getBlockType(){
     return c;
 }
@@ -143,11 +144,11 @@ std::vector<std::vector<int>> BlockS::getNextCCWOrientation(){
     }
 }
 
-/*
+
 virtual std::vector<std::vector<int>> getbottomMost() = 0;
         virtual std::vector<std::vector<int>> getleftMost() = 0;
         virtual std::vector<std::vector<int>> getRightMost() = 0;
-*/
+
 
 std::vector<std::vector<int>> BlockS::getbottomMost(){
     return bottomMost[i];

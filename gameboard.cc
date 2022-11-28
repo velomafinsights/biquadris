@@ -14,7 +14,7 @@ GameBoard::GameBoard() {
 }
 
 void GameBoard::newBlock() {
-    b = new BlockS{};
+    b = new Block('s');
     std::vector<std::vector<int>> block = b->getStructure();
     char bChar = b->getBlockType();
     for (int i = 0; i < 4; i++) {

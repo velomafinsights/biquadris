@@ -10,7 +10,6 @@
 using namespace std;
 
 class Level0 : public Level {
-    //
     string seqOneSource;
     //string seqTwoSource;
     ifstream seqOne; //the sequence1.txt file we use to find the next block
@@ -19,7 +18,8 @@ class Level0 : public Level {
     public:
         Level0(std::string seqOneSource);
         void setBlockQueue();
-        // the index is determined by the client using getBlock: 0 <= i <=3
+
+        // i = currTurnNumber, 0 < i
         Block* getBlock(size_t i);
         //Block* getBlock(size_t i);
         size_t getLevel() override;

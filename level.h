@@ -13,8 +13,7 @@ using namespace std;
 
 class Level {
     size_t level;
-   
-
+    
     public:
         std::vector<string> blockQueue;
         virtual vector<vector<int>> getblock(size_t i) = 0;

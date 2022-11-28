@@ -20,11 +20,15 @@ void Level0::setBlockQueue(){
 // iterate through ifstream to get the block string
 Block* Level0::getBlock(size_t i){
     // we want to iterate 
-    size_t pos = i % seqOneLength;
+
+    
+    size_t pos = (i-1) % seqOneLength;
     // now we get whatever string there is at that index
-    //if (blockQueue[pos] == "S"){
-        Block* SBlock = new BlockS();
+
+    if (blockQueue[pos] == "S"){
+        Block* SBlock = new Block('s');
         return SBlock;
+    }
         // return new IBlock{};
     //}
 
