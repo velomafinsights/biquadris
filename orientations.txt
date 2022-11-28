@@ -1,0 +1,28 @@
+I-Block
+s0 = {{0,3}, {1,3}, {2,3}, {3,3}} //Original starting position
+s1 = {{0,0}, {1,0}, {2,0}, {3,0}} //Clockwise
+
+J-Block
+s0 = {{2,0}, {3,0}, {3,1}, {3,2}} //Original starting position
+s1 = {{1,0}, {1,1}, {2,0}, {3,0}} //  1 Clockwise
+s2 = {{2,0}, {2,1}, {2,2}, {3,2}} //  2 Clockwise
+s3 = {{3,0}, {1,1}, {2,1}, {3,1}} //  3 Clockwise
+
+L-Block
+s0 = {{2,2}, {3,0}, {3,1}, {3,2}} //Original starting position
+s1 = {{1,0}, {3,1}, {2,0}, {3,0}} //  1 Clockwise
+s2 = {{2,0}, {2,1}, {2,2}, {3,0}} //  2 Clockwise
+s3 = {{1,0}, {1,1}, {2,1}, {3,1}} //  3 Clockwise
+
+Z-Block
+s0 = {{2,0}, {2,1}, {3,1}, {3,2}};
+s1 = {{1,1}, {2,0}, {2,1}, {3,0}};
+
+O-Block
+s0 = {{2,0}, {2,1}, {3,0}, {3,1}}
+
+T-Block
+s0 = {{1,0}, {1,1}, {1,2}, {2,1}} //Original starting position
+s1 = {{1,0}, {0, 1}, {1,1}, {2, 1}} //  1 Clockwise
+s2 = {{0,1}, {1,0}, {1,1}, {1,2}} // 2 Clockwise
+s3 = {{0,0}, {1,0}, {2,0}, {1,1}} // 3 Clockwise

@@ -15,7 +15,7 @@ class commandInterpreter{
             "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart"
         };
 
-        std::vector<std::string> users =;
+        std::vector<std::string> users = {};
 
         std::map<std::string, std::string> userDefined;
     public:
