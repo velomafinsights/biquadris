@@ -26,8 +26,8 @@ bool commandInterpreter::validSubString(std::string original, std::string sub){
 std::string commandInterpreter::process(std::string given){
     //given2 will be the modified string after checking for multi
     std::string given2;
-
-    for(size_t k = 0; k < given.length(); ++k){
+    size_t k = 0;
+    for(k; k < given.length(); ++k){
         if(given[k]>='0' && given[k]<='9'){
         } else {
             break;
@@ -56,12 +56,12 @@ std::string commandInterpreter::process(std::string given){
     if(validOptions == 1){
         return validCommand;
     } else {
-        return "Invalid Output"
+        return "Invalid Output";
     }
     //return validCommand;
 }
 
-int commandInterpreter::multiplier(std::string imput){
+int commandinterpreter::multiplier(std::string given){
     std::string multi = "";
     std::stringstream ss;
     size_t toRet;
@@ -83,7 +83,7 @@ int commandInterpreter::multiplier(std::string imput){
 }
 
 void commandinterpreter::rename(std::string toRename, std::string given){
-    <vector>::iterator it;
+    vector<std::string>::iterator it;
     it = remove(users.begin(), users.end(), given);
     userDefined[given] = toRename;
     users.emplace_back(given);
