@@ -100,7 +100,7 @@ void GameBoard::moveLeft() {
         board[it[0]][it[1]] = '*';
     }
     for (auto it: block) {
-        if (it[1] == 0 ||  board[it[0]][it[1] + 1] != '*') {
+        if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '*') {
             canMoveLeft = 0;
             break;
         }
@@ -108,6 +108,10 @@ void GameBoard::moveLeft() {
     if (canMoveLeft) {
         b->moveBlockLeft();
         block = b->getStructure();
+        for (auto it: block) {
+            std::cout << it[0] << "-" << it[1] << std::endl;
+        }
+
     }
     for (auto it: block) {
         board[it[0]][it[1]] = symbol;
@@ -118,15 +122,20 @@ void GameBoard::moveLeft() {
 void GameBoard::moveDown() {
     std::vector<std::vector <int>> block = b->getStructure();
     std::vector<std::vector <int>> bottomMost = b->getbottomMost();
+    for (auto it: block) {
+        board[it[0]][it[1]] = '*';
+    }
     char symbol = b->getBlockType();
     bool canMoveDown = 1;
     for (auto it: bottomMost) {
-        if (it[0] == 0 || board[it[0] - 1][it[1]] != '*') {
+        if (it[0] == 17 || board[it[0] + 1][it[1]] != '*') {
+            std::cout << it[0] << "-" << it[1] << std::endl;
             canMoveDown = 0;
             break;
         }
     }
     if (canMoveDown) {
+        std::cout << "move down" << std::endl;
         b->moveBlockDown();
         block = b->getStructure();
     }
