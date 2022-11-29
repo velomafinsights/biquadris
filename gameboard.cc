@@ -16,6 +16,9 @@ GameBoard::GameBoard() {
 }
 
 bool GameBoard::newBlock() {
+    delete currBlock;
+    currBlock = new Block{'i'};
+    /*
     if (currBlock == nullptr) {
         currBlock = new Block{'i'};
         nextBlock = new Block{'j'};
@@ -24,7 +27,7 @@ bool GameBoard::newBlock() {
         currBlock = nextBlock;
         nextBlock = new Block{'s'};
         delete temp;
-    }
+    }*/
     ++turnNumber;
     if (!drawBlock()){
         return 0;

@@ -1,16 +1,17 @@
 #include "level1.h"
 #include <string>
 #include "block.h"
-#include <stdlib>
+#include <cstdlib>
+
 
 Level1::Level1(){    
 }
 
 Block* Level1::getBlock(size_t i){
-    int v1 = rand() % 1 + 12;
+    int v1 = rand() % 12 + 1;
     Block* nB;
     if (v1 == 1){
-        nb = new Block('s');
+        nB = new Block('s');
     }
     else if (v1 == 2 || v1 == 3){
         nB = new Block('i');
@@ -36,7 +37,7 @@ Block* Level1::getBlock(size_t i){
     return nB;
 }
 
-size_t getLevel(){
+size_t Level1::getLevel(){
     return 1;
 }
 

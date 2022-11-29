@@ -24,6 +24,7 @@ class Block {
         size_t x;
         size_t y;
 
+        size_t currLevel;
         // character the block is made up of: I, J, L, O, S, Z, T
         char c;
 
@@ -38,13 +39,15 @@ class Block {
         std::vector<std::vector<int>> getbottomMost();
         std::vector<std::vector<int>> getleftMost();
         std::vector<std::vector<int>> getRightMost();
-
+        int blockRemoved();
+        void rowCleared(int row, bool called);
         void moveBlockRight();
         void moveBlockLeft();      // change x
         void moveBlockDown();       // change y
         char getBlockType();     // return c
         void rotateClockWise();  // changes the 2D vector structure and size_t i equal to new index
         void rotateCounterClockWise();
+        void setCurrLevel(size_t level);
         int getX();
         int getY();
 
