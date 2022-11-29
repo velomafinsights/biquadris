@@ -5,12 +5,19 @@
 #include "commandinterpreter.h"
 #include <iostream>
 #include <string>
-
 #include "level.h"
 #include "level0.h"
 #include "level1.h"
 
+void updateHighScore(int score, size_t *highScore) {
+    if (score > *highScore) {
+        *highScore = score;
+    }
+}
+
 int main() {
+    size_t highScore = 0;
+    size_t score = 0;
     std::unique_ptr <GameBoard> board1{new GameBoard{}};
     std::unique_ptr <GameBoard> board2{new GameBoard{}};
     
@@ -47,7 +54,8 @@ int main() {
                 cout<< "Game Over! :("<<endl;
                 break;
             }
-            board->newBlock();
+            score = board->getScore();
+            updateHighScore(score, &highScore);
             board->render();
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
