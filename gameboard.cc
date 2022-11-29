@@ -17,15 +17,15 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     if (currBlock == nullptr) {
-        currBlock = new Block{'s'};
-        nextBlock = new Block{'s'};;
+        currBlock = new Block{'j'};
+        nextBlock = new Block{'j'};
         // currBlock = currLevel->getBlock(turnNumber);
         // nextBlock = currLevel->getBlock(turnNumber + 1);
         std::cout << "hello" << std::endl;
     } else {
         Block* temp = currBlock;
         currBlock = nextBlock;
-        nextBlock = new Block{'s'};;
+        nextBlock = new Block{'j'};
         delete temp;
     }
     ++turnNumber;
