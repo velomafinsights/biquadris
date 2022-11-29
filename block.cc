@@ -9,10 +9,6 @@ Block::Block(char c): c{c}{
         vector<vector<int>> b0 = {{2,2}, {3,0}, {3,1}};
         vector<vector<int>> b1 = {{2,0}, {3,1}};
         bottomMost = {b0, b1, b0, b1};
-
-        x = 0;
-        y = 0;
-        i = 0;
     } else if (c == 'i'){
         vector<vector<int>> s0 = {{3,0}, {3,1}, {3,2}, {3,3}}; //Original starting position
         vector<vector<int>> s1 = {{0,0}, {1,0}, {2,0}, {3,0}};//Clockwise
@@ -73,6 +69,9 @@ Block::Block(char c): c{c}{
         vector<vector<int>> b3 = {{2,0}, {1,1}};
         bottomMost = {b0, b1, b2, b3};
     }
+    x = 0;
+    y = 0;
+    i = 0;
 }
 char Block::getBlockType(){
     return c;

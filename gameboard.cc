@@ -17,15 +17,12 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     if (currBlock == nullptr) {
-        currBlock = new Block{'j'};
+        currBlock = new Block{'i'};
         nextBlock = new Block{'j'};
-        // currBlock = currLevel->getBlock(turnNumber);
-        // nextBlock = currLevel->getBlock(turnNumber + 1);
-        std::cout << "hello" << std::endl;
     } else {
         Block* temp = currBlock;
         currBlock = nextBlock;
-        nextBlock = new Block{'j'};
+        nextBlock = new Block{'s'};
         delete temp;
     }
     ++turnNumber;
@@ -63,6 +60,7 @@ void GameBoard::dropBlock() {
     while (moveDown()) {}
     if (blind) blind = false;
     clearFilledRows();
+    std::cout << "rows cleared" << std::endl;
 }
 
 void GameBoard::clearBlock() {
@@ -90,7 +88,7 @@ void GameBoard::applyHeavy() {
         }
     }
 }
- 
+
 void GameBoard::moveRight() {
     bool canMoveRight = 1;
     clearBlock();
