@@ -16,25 +16,27 @@ void TextObserver::notify() {
     std::vector<std::vector <char>> boardP1 = iObserve1->getState();
     std::vector<std::vector <char>> boardP2 = iObserve2->getState();
 
-    //Player 1's Score and Level
     cout<<"Level:    "<<iObserve1->getLevel();
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve1->getScore();
-    cout<<"-----------";
-
     cout<<"               ";
-
-    //Player 2's Score and Level
     cout<<"Level:    "<<iObserve2->getLevel();
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve2->getScore();
-    cout<<"-----------";
-
     std::cout << std::endl;
-    for (int i = 0; i < 18; i++) {
+
+    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve1->getScore();
+    cout<<"               ";
+    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve2->getScore();
+    
+
+    cout<<"-----------";
+    cout<<"               ";
+    cout<<"-----------";
+    std::cout << std::endl;
+
+    for (int i = 0; i < 18; ++i) {
         if (i < 10) std::cout << i << "      ";
         else std::cout << i << "     ";
 
         //Outputing Player 1's GameBoard
-        for (int j = 0; j < 11; j++) {
+        for (int j = 0; j < 11; ++j) {
             if (blind1 && i>=3 && i<=12 && j>=3 && j<=9) {
                         std::cout<< '?' << " "; 
             } else {
@@ -44,11 +46,11 @@ void TextObserver::notify() {
         cout<<"               ";
 
         //Outputing Player 2's GameBoard
-        for (int j = 0; j < 11; j++) {
-            if (blind2 && i>=3 && i<=12 && j>=3 && j<=9) {
+        for (int k = 0; k < 11; ++k) {
+            if (blind2 && i>=3 && i<=12 && k>=3 && k<=9) {
                         std::cout<< '?' << " "; 
             } else {
-                std::cout << boardP2[i][j] << " ";
+                std::cout << boardP2[i][k] << " ";
             }
         }
         std::cout << std::endl;
@@ -63,7 +65,12 @@ void TextObserver::notify() {
     cout<<"               ";
     cout<<"Next:      ";
     std::cout << std::endl;
+//add blocks here
 
+
+    if(iObserve1->getWon()){
+        cout<<iObserve1->getWinner()<< " has won the game!";
+    }
     std::cout << std::endl;
 }
 
