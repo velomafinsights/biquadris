@@ -211,3 +211,36 @@ int Block::getX(){
 int Block::getY(){
     return y;
 }
+
+int Block::blockRemoved(){
+    if (orientation[i].empty()){
+        return currLevel;
+    }
+    return -1;
+}
+
+void Block::rowCleared(int row, bool called){
+    if (!called){
+        vector<int> remIndex;
+        for (int j = 0; j < orientation[i].size(); ++j){
+            if (orientation[i][j][0] == row){
+                remIndex.emplace_back(j);
+            }
+        }
+        for (int x = 0; x < remIndex.size(); ++x){
+            orientation[i].erase(orientation[i].begin() + remIndex[x]);
+        }
+    }
+
+    //vector<int> ltRows;
+    for (int j = 0; j < orientation[i].size(); ++j){
+        if (orientation[i][j][0] < row){
+            orientation[i][j][0] += 1;
+        }
+    }
+}
+
+void Block::setCurrLevel(size_t level){
+    currLevel = level;
+}
+

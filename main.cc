@@ -7,6 +7,7 @@
 #include <string>
 #include "level.h"
 #include "level0.h"
+#include "level1.h"
 
 void updateHighScore(int score, size_t *highScore) {
     if (score > *highScore) {
@@ -25,8 +26,20 @@ int main() {
     string command;
     commandInterpreter ci{};
     bool gameContinue;
+    /*
+    Level0 lev0 = Level0{"sequence1.txt"};
+    Level1 lev1 =  Level1();
 
-    //Level0 baseL =  Level0{"sequence1.txt"};
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev0.getBlock(i);
+        cout<< "Level 0: "<< i << "th block:" << gb->c<<endl;
+    }
+
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev1.getBlock(i);
+        cout<< "Level 1: "<< i << "th block:" << gb->c<<endl;
+    }
+    */
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);

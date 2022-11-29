@@ -18,6 +18,7 @@ GameBoard::GameBoard() {
 }
 
 bool GameBoard::newBlock() {
+    delete currBlock;
     if (currBlock == nullptr) {
         currBlock = currLevel->getBlock(turnNumber);
         nextBlock = currLevel->getBlock(turnNumber + 1);
