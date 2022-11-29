@@ -219,17 +219,15 @@ int Block::blockRemoved(){
     return -1;
 }
 
-void Block::rowCleared(int row, bool called){
-    if (!called){
-        vector<int> remIndex;
-        for (int j = 0; j < orientation[i].size(); ++j){
-            if (orientation[i][j][0] == row){
-                remIndex.emplace_back(j);
-            }
+void Block::rowCleared(int row){
+    vector<int> remIndex;
+    for (int j = 0; j < orientation[i].size(); ++j){
+        if (orientation[i][j][0] == row){
+            remIndex.emplace_back(j);
         }
-        for (int x = 0; x < remIndex.size(); ++x){
-            orientation[i].erase(orientation[i].begin() + remIndex[x]);
-        }
+    }
+    for (int x = 0; x < remIndex.size(); ++x){
+        orientation[i].erase(orientation[i].begin() + remIndex[x]);
     }
 
     //vector<int> ltRows;

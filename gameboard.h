@@ -36,7 +36,9 @@ class GameBoard: public Subject {
     void setHeavy();
     void levelUp();
     void levelDown();
+    bool changeBlock(char block);
     size_t getScore();
+    size_t getLevel();
     size_t getHighScore();
     void setHighScore(size_t hScore);
     void rotate(bool clockwise);
