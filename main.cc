@@ -18,7 +18,6 @@ void updateHighScore(int score, size_t *highScore) {
 }
 
 int main() {
-    size_t player = 0;
     size_t highScore = 0;
     size_t score = 0;
     std::unique_ptr <GameBoard> board1{new GameBoard{}};
