@@ -5,6 +5,8 @@
 #include "commandinterpreter.h"
 #include <iostream>
 #include <string>
+#include <utility>
+#include <memory>
 #include "level.h"
 #include "level0.h"
 #include "level1.h"
