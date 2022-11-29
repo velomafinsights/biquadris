@@ -36,6 +36,9 @@ class GameBoard: public Subject {
     std::vector<std::vector <char>> getState();
     bool getBlind();
     ~GameBoard() = default;
+    //getNextBlock()
+    //getLevel()
+    //getScore()
 };
 
 #endif
