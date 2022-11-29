@@ -23,11 +23,11 @@ int main() {
     std::unique_ptr <GameBoard> board1{new GameBoard{}};
     std::unique_ptr <GameBoard> board2{new GameBoard{}};
     
-    GameBoard* b1 = *board1;
-    GameBoard* b2 = *board2;
-    Observer* obs = new TextObserver{b1, b2, 0, 0, 0, 0};
-    board->newBlock();
-    board->render();
+    GameBoard b1 = *board1;
+    GameBoard b2 = *board2;
+    Observer* obs = new TextObserver{&b1, &b2, 0, 0, 0, 0};
+    b1.newBlock();
+    b1.render();
     string commandFromUser;
     string command;
     commandInterpreter ci{};
@@ -50,56 +50,55 @@ int main() {
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
         if (command == "drop") {
-            board->dropBlock();
-            gameContinue = board->newBlock();
+            b1.dropBlock();
+            gameContinue = b1.newBlock();
             if (gameContinue == 0){
                 cout<< "Game Over! :("<<endl;
                 break;
             }
-            score = board->getScore();
+            score = b1.getScore();
             updateHighScore(score, &highScore);
-            board->render();
+            b1.render();
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
-                board->moveRight();
+                b1.moveRight();
             }
-            board->render();
+            b1.render();
             
         } else if (command == "left") {
             for(int i =0; i<multi; ++i){
-                board->moveLeft();
+                b1.moveLeft();
             }
-            board->render();
+            b1.render();
 
         } else if (command == "down") {
             for(int i =0; i<multi; ++i){
-                board->moveDown();
+                b1.moveDown();
             }
-            board->render();
+            b1.render();
 
         } else if (command == "clockwise") {
             for(int i =0; i<multi; ++i){
-                board->rotate(1);
+                b1.rotate(1);
             }
-            board->render();
+            b1.render();
 
         } else if (command == "counterclockwise") {
            for(int i =0; i<multi; ++i){
-                board->rotate(0);
+                b1.rotate(0);
             }
-            board->render();
+            b1.render();
 
         } else if (command == "blind"){
-            board->setBlind();
-            board->render();
+            b1.setBlind();
+            b1.render();
 
         } else if (command == "heavy"){
-            board->setHeavy();
-            board->render();
+            b1.setHeavy();
+            b1.render();
             
         }
 
 
     }
-    delete board;
 }
