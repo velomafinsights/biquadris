@@ -45,7 +45,7 @@ void GameBoard::clearRow(int row) {
     }
 }
 
-void GameBoard::clearFilledRows() {
+size_t GameBoard::clearFilledRows() {
     int numberOfRowsCleared = 0;
     for (int i = 0; i < 18; i++) {
         bool rowClear = 1;
@@ -68,14 +68,16 @@ void GameBoard::clearFilledRows() {
         }
     }
     score += (level + numberOfRowsCleared) * (level + numberOfRowsCleared);
+    return numberOfRowsCleared;
 }
 
-void GameBoard::dropBlock() {
+int GameBoard::dropBlock() {
     while (moveDown()) {}
     blocks.emplace_back(currBlock);
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
-    clearFilledRows();
+    int rowCleared = clearFilledRows();
+    return rowCleared;
 }
 
 void GameBoard::clearBlock() {
@@ -292,3 +294,17 @@ bool GameBoard::changeBlock(char block) {
     }
     return false;
 }
+
+void GameBoard::setWinner(string player) {
+    won = 1;
+    winner = player;
+}
+
+bool GameBoard::getWon() {
+    return won;
+}
+
+string GameBoard::getWinner() {
+    return winner;
+}
+

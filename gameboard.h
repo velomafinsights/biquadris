@@ -10,6 +10,8 @@
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     std::vector<Block*> blocks;
+    bool won;
+    string winner;
     Block* currBlock;
     Block* nextBlock;
     Level* currLevel;
@@ -19,7 +21,7 @@ class GameBoard: public Subject {
     size_t highScore;
     bool blind;
     bool heavy;
-    void clearFilledRows();
+    size_t clearFilledRows();
     void clearRow(int row);
     void clearBlock();
     bool drawBlock();
@@ -27,8 +29,11 @@ class GameBoard: public Subject {
     void applyHeavy();
  public:
     GameBoard();
+    bool getWon();
+    string getWinner();
+    void setWinner(string player);
     bool newBlock();
-    void dropBlock();
+    int dropBlock();
     void moveRight();
     void moveLeft();
     bool moveDown();

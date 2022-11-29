@@ -18,84 +18,93 @@ void updateHighScore(int score, size_t *highScore) {
 }
 
 int main() {
+    size_t player = 0;
     size_t highScore = 0;
     size_t score = 0;
     std::unique_ptr <GameBoard> board1{new GameBoard{}};
     std::unique_ptr <GameBoard> board2{new GameBoard{}};
-    
-    GameBoard b1 = *board1;
-    GameBoard b2 = *board2;
-    Observer* obs = new TextObserver{&b1, &b2, 0, 0, 0, 0};
-    b1.newBlock();
-    b1.render();
+    GameBoard* b1 = board1.get();
+    GameBoard* b2 = board2.get();
+    GameBoard* currentPlayer = b1;
+    Observer* obs = new TextObserver{b1, b2, 0, 0, 0, 0};
+    currentPlayer->newBlock();
+    currentPlayer->render();
     string commandFromUser;
     string command;
     commandInterpreter ci{};
     bool gameContinue;
-    /*
-    Level0 lev0 = Level0{"sequence1.txt"};
-    Level1 lev1 =  Level1();
 
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev0.getBlock(i);
-        cout<< "Level 0: "<< i << "th block:" << gb->c<<endl;
-    }
-
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev1.getBlock(i);
-        cout<< "Level 1: "<< i << "th block:" << gb->c<<endl;
-    }
-    */
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
         if (command == "drop") {
-            b1.dropBlock();
-            gameContinue = b1.newBlock();
+            int rowsCleared = currentPlayer->dropBlock();
+            gameContinue = currentPlayer->newBlock();
             if (gameContinue == 0){
                 cout<< "Game Over! :("<<endl;
                 break;
             }
-            score = b1.getScore();
+            score = currentPlayer->getScore();
             updateHighScore(score, &highScore);
-            b1.render();
+            currentPlayer->render();
+            if (currentPlayer == b1) {
+                currentPlayer = b2;
+            } else {
+                currentPlayer = b1;
+            }
+            if (rowsCleared >= 2) {
+                cin >> commandFromUser;
+                string punish = ci.process(commandFromUser);
+                if (punish == "blind") {
+                    currentPlayer->setBlind();
+                } else if (punish == "heavy") {
+                    currentPlayer->setHeavy();
+                } else if (punish == "force") {
+                    cin >> commandFromUser;
+                    string blockType = ci.process(commandFromUser);
+                    if (!currentPlayer->changeBlock(blockType[0])) {
+                        if (currentPlayer == b1) {
+                            currentPlayer->setWinner("player 2");
+                            b2->setWinner("player 1");
+                        } else {
+                            currentPlayer->setWinner("player 1");
+                            b1->setWinner("player 1");
+                        }
+                    }
+                }
+                currentPlayer->render();
+            }
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
-                b1.moveRight();
+                currentPlayer->moveRight();
             }
-            b1.render();
-            
+            currentPlayer->render();
         } else if (command == "left") {
             for(int i =0; i<multi; ++i){
-                b1.moveLeft();
+                currentPlayer->moveLeft();
             }
-            b1.render();
-
+            currentPlayer->render();
         } else if (command == "down") {
             for(int i =0; i<multi; ++i){
-                b1.moveDown();
+                currentPlayer->moveDown();
             }
-            b1.render();
-
+            currentPlayer->render();
         } else if (command == "clockwise") {
             for(int i =0; i<multi; ++i){
-                b1.rotate(1);
+                currentPlayer->rotate(1);
             }
-            b1.render();
-
+            currentPlayer->render();
         } else if (command == "counterclockwise") {
            for(int i =0; i<multi; ++i){
-                b1.rotate(0);
+                currentPlayer->rotate(0);
             }
-            b1.render();
-
+            currentPlayer->render();
         } else if (command == "blind"){
-            b1.setBlind();
-            b1.render();
-
+            currentPlayer->setBlind();
+            currentPlayer->render();
         } else if (command == "heavy"){
-            b1.setHeavy();
-            b1.render();
+            currentPlayer->setHeavy();
+            currentPlayer->render();
             
         }
 
