@@ -11,8 +11,12 @@
 #include "level1.h"
 
 int main() {
-    GameBoard* board = new GameBoard();
-    Observer* obs = new TextObserver{board, 0, 0, 0, 0};
+    std::unique_ptr <GameBoard> board1{new GameBoard{}};
+    std::unique_ptr <GameBoard> board2{new GameBoard{}};
+    
+    GameBoard* b1 = *board1;
+    GameBoard* b2 = *board2;
+    Observer* obs = new TextObserver{b1, b2, 0, 0, 0, 0};
     board->newBlock();
     board->render();
     string commandFromUser;
