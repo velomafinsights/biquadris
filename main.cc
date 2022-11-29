@@ -5,12 +5,18 @@
 #include "commandinterpreter.h"
 #include <iostream>
 #include <string>
-
 #include "level.h"
 #include "level0.h"
 
+void updateHighScore(int score, size_t *highScore) {
+    if (score > *highScore) {
+        *highScore = score;
+    }
+}
 
 int main() {
+    size_t highScore = 0;
+    size_t score = 0;
     GameBoard* board = new GameBoard();
     Observer* obs = new TextObserver{board, 0, 0, 0, 0};
     board->newBlock();
@@ -21,7 +27,6 @@ int main() {
     bool gameContinue;
 
     //Level0 baseL =  Level0{"sequence1.txt"};
-
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
@@ -32,7 +37,8 @@ int main() {
                 cout<< "Game Over! :("<<endl;
                 break;
             }
-            board->newBlock();
+            score = board->getScore();
+            updateHighScore(score, &highScore);
             board->render();
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
