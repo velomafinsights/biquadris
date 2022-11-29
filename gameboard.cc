@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdlib.h>
 #include "blocks.h"
+#include "block.h"
 
 GameBoard::GameBoard() {
     for (int i = 0; i < 18; i++) {
@@ -56,7 +57,13 @@ void GameBoard::clearFilledRows() {
         }
         if (rowClear) {
             clearRow(i);
-            //call block method, update score if false
+            for(auto it: blocks) {
+                it->rowCleared(i);
+                int blockRemove = it->blockRemoved();
+                if (blockRemove >= 0) {
+                    score += (blockRemove + 1) * (blockRemove + 1);
+                }
+            }
             numberOfRowsCleared++;
         }
     }
@@ -66,9 +73,9 @@ void GameBoard::clearFilledRows() {
 void GameBoard::dropBlock() {
     while (moveDown()) {}
     blocks.emplace_back(currBlock);
+    currBlock->setCurrLevel(level);
     if (blind) blind = false;
     clearFilledRows();
-    std::cout << "rows cleared" << std::endl;
 }
 
 void GameBoard::clearBlock() {
@@ -259,4 +266,29 @@ size_t GameBoard::getHighScore() {
     
 void GameBoard::setHighScore(size_t hScore) {
     highScore = hScore;
+}
+
+size_t GameBoard::getLevel() {
+    return level;
+}
+
+bool GameBoard::changeBlock(char block) {
+    bool canPlace = true;
+    Block* newBlock = new Block{block};
+    clearBlock();
+    char symbol = newBlock->getBlockType();
+    for (auto it: newBlock->getStructure()) {
+        if (board[it[0]][it[1]] != '.'){
+            canPlace = 0;
+            break;
+        }
+    }
+    if (canPlace) {
+        delete currBlock;
+        currBlock = newBlock;
+        newBlock = nullptr;
+        drawBlock();
+        return true;
+    }
+    return false;
 }
