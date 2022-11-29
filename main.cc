@@ -5,6 +5,8 @@
 #include "commandinterpreter.h"
 #include <iostream>
 #include <string>
+#include <utility>
+#include <memory>
 #include "level.h"
 #include "level0.h"
 #include "level1.h"
@@ -18,8 +20,12 @@ void updateHighScore(int score, size_t *highScore) {
 int main() {
     size_t highScore = 0;
     size_t score = 0;
-    GameBoard* board = new GameBoard();
-    Observer* obs = new TextObserver{board, 0, 0, 0, 0};
+    std::unique_ptr <GameBoard> board1{new GameBoard{}};
+    std::unique_ptr <GameBoard> board2{new GameBoard{}};
+    
+    GameBoard* b1 = *board1;
+    GameBoard* b2 = *board2;
+    Observer* obs = new TextObserver{b1, b2, 0, 0, 0, 0};
     board->newBlock();
     board->render();
     string commandFromUser;
