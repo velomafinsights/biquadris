@@ -2,6 +2,8 @@
 #define _GAMEBOARD_H_
 #include <vector>
 #include <string>
+#include <memory>
+#include <utility>
 #include "subject.h"
 #include "block.h"
 #include "level.h"

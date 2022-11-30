@@ -46,11 +46,11 @@ int main() {
             score = currentPlayer->getScore();
             updateHighScore(score, &highScore);
             currentPlayer->render();
-            if (currentPlayer == b1) {
+            /*if (currentPlayer == b1) {
                 currentPlayer = b2;
             } else {
                 currentPlayer = b1;
-            }
+            }*/
             std::cout << "reached" << std::endl;
             if (rowsCleared >= 2) {
                 cin >> commandFromUser;
@@ -74,7 +74,7 @@ int main() {
                 }
             }
             currentPlayer->render();
-            currentPlayer->newBlock();
+            //currentPlayer->newBlock();
             std::cout << "after render" << std::endl;
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){

@@ -24,7 +24,7 @@ void TextObserver::notify() {
     cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve1->getScore();
     cout<<"               ";
     cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve2->getScore();
-    
+    std::cout<<std::endl;
 
     cout<<"-----------";
     cout<<"               ";
