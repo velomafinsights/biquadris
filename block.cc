@@ -5,6 +5,8 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s0 = {{2,1}, {2,2}, {3,0}, {3,1}};
         vector<vector<int>> s1 = {{1,0}, {2,0}, {2,1}, {3,1}};
         orientation = {s0, s1, s0, s1};
+        
+        blockWidth = {2, 2};
 
         vector<vector<int>> b0 = {{2,2}, {3,0}, {3,1}};
         vector<vector<int>> b1 = {{2,0}, {3,1}};
@@ -13,7 +15,9 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s0 = {{3,0}, {3,1}, {3,2}, {3,3}}; //Original starting position
         vector<vector<int>> s1 = {{0,0}, {1,0}, {2,0}, {3,0}};//Clockwise
         orientation = {s0, s1, s0, s1};
-
+        
+        blockWidth = {4, 1};
+        
         vector<vector<int>> b0 = {{3,0}, {3,1}, {3,2}, {3,3}};
         vector<vector<int>> b1 = {{3, 0}};
         bottomMost = {b0, b1, b0, b1};
@@ -24,6 +28,8 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s2 = {{2,0}, {2,1}, {2,2}, {3,2}}; //  2 Clockwise
         vector<vector<int>> s3 = {{3,0}, {1,1}, {2,1}, {3,1}}; //  3 Clockwise
         orientation = {s0, s1, s2, s3};
+
+        blockWidth = {3, 2};
 
         vector<vector<int>> b0 = {{3,0}, {3,1}, {3,2}};
         vector<vector<int>> b1 = {{1,1}, {3,0}};
@@ -37,6 +43,8 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s3 = {{1,0}, {1,1}, {2,1}, {3,1}}; //  3 Clockwise
         orientation = {s0, s1, s2, s3};
 
+        blockWidth = {3, 2};
+
         vector<vector<int>> b0 = {{3,0}, {3,1}, {3,2}};
         vector<vector<int>> b1 = {{3,1}, {3,0}};
         vector<vector<int>> b2 = {{3,0}, {2,1}, {2,2}};
@@ -47,13 +55,15 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s1 = {{1,1}, {2,0}, {2,1}, {3,0}};
         orientation = {s0, s1, s0, s1};
 
+        blockWidth = {2, 2};
+
         vector<vector<int>> b0 = {{2,0}, {3,1}, {3,2}};
         vector<vector<int>> b1 = {{2,1}, {3,0}};
         bottomMost = {b0, b1, b0, b1};
     } else if (c == 'o'){
         vector<vector<int>> s0 = {{2,0}, {2,1}, {3,0}, {3,1}};
         orientation = {s0, s0, s0, s0};
-
+        blockWidth = {2, 2};
         vector<vector<int>> b0 = {{3,0}, {3,1}};
         bottomMost = {b0, b0, b0, b0};
     } else {
@@ -62,6 +72,8 @@ Block::Block(char c): c{c}{
         vector<vector<int>> s2 = {{0,1}, {1,0}, {1,1}, {1,2}}; // 2 Clockwise
         vector<vector<int>> s3 = {{0,0}, {1,0}, {2,0}, {1,1}}; // 3 Clockwise
         orientation = {s0, s1, s2, s3};
+
+        blockWidth = {3, 2};
 
         vector<vector<int>> b0 = {{2,1}, {1,2}};
         vector<vector<int>> b1 = {{2,1}, {1,0}};
@@ -95,15 +107,18 @@ void Block::moveBlockRight(){
     // create a check for out of range
     // create a check for current orientation and max width
     int colAdd = 0;
+    int colMargin;
     if (i == 0 || i == 2){
-        if (x < 8){
+        colMargin = 11 - blockWidth[0];
+        if (x < colMargin){
             // we've basically incremented the x (col) values by 1
             colAdd = 1;
             ++x;
         }
     }
     else{
-        if (x < 9){
+        colMargin = 11 - blockWidth[1];
+        if (x < colMargin){
             colAdd = 1;
             ++x;
         }
@@ -121,8 +136,6 @@ void Block::moveBlockRight(){
             bottomMost[i][j][1] += colAdd;
         }
     }
-    
-
 }
 
 void Block::moveBlockLeft(){

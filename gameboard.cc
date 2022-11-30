@@ -17,7 +17,7 @@ GameBoard::GameBoard() {
 
 bool GameBoard::newBlock() {
     delete currBlock;
-    currBlock = new Block{'i'};
+    currBlock = new Block{'o'};
     /*
     if (currBlock == nullptr) {
         currBlock = new Block{'i'};
@@ -63,7 +63,6 @@ void GameBoard::dropBlock() {
     while (moveDown()) {}
     if (blind) blind = false;
     clearFilledRows();
-    std::cout << "rows cleared" << std::endl;
 }
 
 void GameBoard::clearBlock() {

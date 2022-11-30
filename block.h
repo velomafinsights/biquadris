@@ -17,9 +17,11 @@ class Block {
  // orientation determined by a 3D vector
         Block(char c);
         std::vector<std::vector<std::vector<int>>> orientation;
+        std::vector<int> blockWidth;
         std::vector<std::vector<std::vector<int>>> bottomMost;
         std::vector<std::vector<std::vector<int>>> leftMost;
         std::vector<std::vector<std::vector<int>>> rightMost;
+
         // movement of blocks not determined yet
         size_t x;
         size_t y;
