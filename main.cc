@@ -51,6 +51,7 @@ int main() {
             } else {
                 currentPlayer = b1;
             }
+            std::cout << "reached" << std::endl;
             if (rowsCleared >= 2) {
                 cin >> commandFromUser;
                 string punish = ci.process(commandFromUser);
@@ -71,8 +72,10 @@ int main() {
                         }
                     }
                 }
-                currentPlayer->render();
             }
+            currentPlayer->render();
+            currentPlayer->newBlock();
+            std::cout << "after render" << std::endl;
         } else if (command == "right") {
             for(int i =0; i<multi; ++i){
                 currentPlayer->moveRight();
