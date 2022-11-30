@@ -16,24 +16,24 @@ void TextObserver::notify() {
     std::vector<std::vector <char>> boardP2 = iObserve2->getState();
 
     cout<<"Level:    "<<iObserve1->getLevel();
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"Level:    "<<iObserve2->getLevel();
     std::cout << std::endl;
 
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve1->getScore();
-    cout<<"               ";
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve2->getScore();
+    cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve1->getScore();
+    cout<<"                               ";
+    cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve2->getScore();
     std::cout<<std::endl;
     
 
     cout<<"-----------";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"-----------";
     std::cout << std::endl;
 
     for (int i = 0; i < 18; ++i) {
-        if (i < 10) std::cout << i << "      ";
-        else std::cout << i << "     ";
+        //if (i < 10) std::cout << i << "      ";
+        //else std::cout << i << "     ";
 
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j) {
@@ -43,7 +43,7 @@ void TextObserver::notify() {
                 std::cout << boardP1[i][j] << " ";
             }
         }
-        cout<<"               ";
+        cout<<"                    ";
 
         //Outputing Player 2's GameBoard
         for (int k = 0; k < 11; ++k) {
@@ -57,12 +57,12 @@ void TextObserver::notify() {
     }
 
     cout<<"-----------";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"-----------";
     std::cout << std::endl;
 
     cout<<"Next:      ";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"Next:      ";
     std::cout << std::endl;
 }

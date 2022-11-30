@@ -15,7 +15,42 @@
 #include "level3.h"
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    //cout<<argv[0]<<argv[1];
+
+    std::string file1 = "sequence1.txt";
+    std::string file2 = "sequence2.txt";
+    size_t userDefLevel = 0;
+    int randomSeed = 0;
+    bool textOnly=false;
+    
+    //reading command-line arguments
+    size_t args = argc;
+    size_t currArg = 1;
+    while(currArg<args){
+        if(std::string(argv[currArg]) == "-text"){
+
+            textOnly = true;
+            ++currArg;
+        } else if(std::string(argv[currArg]) == "-seed"){
+            ++currArg;
+            randomSeed = std::stoi(std::string(argv[currArg]));
+            ++currArg;
+        } else if(std::string(argv[currArg]) == "-scriptfile1"){
+            ++currArg;
+            file1 = std::string(argv[currArg]);
+            ++currArg;            
+        } else if(std::string(argv[currArg]) == "-scriptfile2"){
+            ++currArg;
+            file2 = std::string(argv[currArg]);
+            ++currArg;            
+        } else if(std::string(argv[currArg]) == "-startlevel"){
+            ++currArg;
+            userDefLevel = std::stoi(std::string(argv[currArg]));
+            ++currArg;            
+        }
+    }
+
     unique_ptr<GameBoard> g{new GameBoard{}};
     GameBoard* board = g.get();
 
@@ -113,7 +148,15 @@ int main() {
                 board->setHeavy();
                 board->render();
                 
-            } 
+            } else if (command == "rename"){
+                cout<<"hi"<<endl;
+                std::string toRename; 
+                cin >> toRename;
+                
+                std::string cmd;
+                cin >> cmd;
+                ci.rename(toRename, cmd);
+            }
         } else{
             if (command == "drop") {
                 board2->dropBlock();
@@ -150,7 +193,7 @@ int main() {
                 board2->render();
 
             } else if (command == "counterclockwise") {
-            for(int i =0; i<multi; ++i){
+                for(int i =0; i<multi; ++i){
                     board2->rotate(0);
                 }
                 board2->render();
@@ -163,7 +206,14 @@ int main() {
                 board2->setHeavy();
                 board2->render();
                 
-            } 
+            } else if (command == "rename"){
+                std::string toRename; 
+                cin >> toRename;
+                
+                std::string cmd;
+                cin >> cmd;
+                ci.rename(toRename, cmd);
+            }
         }
 
     }
