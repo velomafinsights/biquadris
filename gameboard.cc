@@ -17,9 +17,10 @@ GameBoard::GameBoard() {
     turnNumber = 1;
     level = 0;
     score = 0;
+    blocksWithoutRowClear = 0;
 }
 
-bool GameBoard::newBlock() {
+void GameBoard::newBlock() {
     if (currBlock == nullptr) {
         currBlock = currLevel->getBlock(turnNumber);
         nextBlock = currLevel->getBlock(turnNumber + 1);
@@ -30,9 +31,8 @@ bool GameBoard::newBlock() {
     }
     ++turnNumber;
     if (!drawBlock()){
-        return 0;
+        gameOver = true;
     }
-    return 1;
 }
 
 void GameBoard::clearRow(int row) {
@@ -77,6 +77,24 @@ int GameBoard::dropBlock() {
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
     int rowsCleared = clearFilledRows();
+    if (level == 4) {
+        if (rowsCleared == 0) {
+            blocksWithoutRowClear++;
+        } else {
+            blocksWithoutRowClear = 0;
+        }
+        if (blocksWithoutRowClear % 5 == 0 and blocksWithoutRowClear >= 5) {
+            for (int i = 0; i < 18; i++) {
+                if (i != 0 && board[i][5] != '.') {
+                    board[i - 1][5] == '*';
+                    break;
+                } else if (i == 0) {
+                    gameOver = true;
+                    break;
+                }
+            }
+        }
+    }
     return rowsCleared;
 }
 
@@ -186,11 +204,18 @@ void GameBoard::rotate(bool clockwise) {
 }
 
 void GameBoard::levelUp() {
-    // delete level
+    delete currLevel;
+    heavy = false;
     if (level == 0) {
+        currLevel = new Level1{};
     } else if (level == 1) {
+        currLevel = new Level2{};
     } else if (level == 2) {
+        currLevel = new Level3{true};
+        heavy = true;
     } else if (level == 3) {
+        currLevel = new Level4{true};
+        heavy = true;
     }
     if (level != 4) {
         currLevel++;
@@ -198,11 +223,17 @@ void GameBoard::levelUp() {
 }
 
 void GameBoard::levelDown() {
-    // delete level
+    delete currLevel;
+    heavy = false;
     if (level == 1) {
+        currLevel = new Level0{"sequence1.txt"};
     } else if (level == 2) {
+        currLevel = new Level1{};
     } else if (level == 3) {
+        currLevel = new Level2{};
     } else if (level == 4) {
+        currLevel = new Level3{true};
+        heavy = true;
     }
     if (level != 0) {
         currLevel--;
@@ -246,3 +277,53 @@ GameBoard::~GameBoard() {
     }
 }
 
+void GameBoard::changeBlock(char block) {
+    bool canPlace = true;
+    Block* newBlock = new Block{block};
+    clearBlock();
+    char symbol = newBlock->getBlockType();
+    for (auto it: newBlock->getStructure()) {
+        if (board[it[0]][it[1]] != '.'){
+            canPlace = 0;
+            break;
+        }
+    }
+    if (canPlace) {
+        delete currBlock;
+        currBlock = newBlock;
+        newBlock = nullptr;
+        drawBlock();
+    } else {
+        gameOver = true;
+    }
+}
+
+void GameBoard::restart() {
+    for (int i = 0; i < 18; i++) {
+        for (int j = 0; j < 11; j++) {
+            board[i][j] = '*';
+        }
+    }
+    delete currBlock;
+    delete nextBlock;
+    for (auto it: blocks) {
+        delete it;
+    }
+    delete currLevel;
+    currLevel = new Level0{"sequence1.txt"};
+    turnNumber = 1;
+    level = 0;
+    score = 0;
+    blind = false;
+    heavy = false;
+    gameOver = false;
+    blocksWithoutRowClear = 0;
+}
+
+bool GameBoard::getGameOver() {
+    return gameOver;
+}
+
+std::vector<std::vector<int>> GameBoard::getNextBlock() {
+    return nextBlock->getStructure();
+}

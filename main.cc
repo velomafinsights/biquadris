@@ -68,7 +68,7 @@ int main() {
         if(i%2 == 0){
             if (command == "drop") {
                 board->dropBlock();
-                gameContinue = board->newBlock();
+                gameContinue = board->getGameOver();
                 if (gameContinue == 0){
                     cout<< "Game Over! :("<<endl;
                     break;
@@ -117,7 +117,8 @@ int main() {
         } else{
             if (command == "drop") {
                 board2->dropBlock();
-                gameContinue = board2->newBlock();
+                board2->newBlock();
+                gameContinue = board2->getGameOver();
                 if (gameContinue == 0){
                     cout<< "Game Over! :("<<endl;
                     break;

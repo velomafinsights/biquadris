@@ -6,6 +6,10 @@
 #include "block.h"
 #include "level.h"
 #include "level0.h"
+#include "level1.h"
+#include "level2.h"
+#include "level3.h"
+#include "level4.h"
 
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
@@ -17,8 +21,10 @@ class GameBoard: public Subject {
     size_t level;
     size_t score;
     size_t highScore;
+    size_t blocksWithoutRowClear;
     bool blind;
     bool heavy;
+    bool gameOver;
     size_t clearFilledRows();
     void clearRow(int row);
     void clearBlock();
@@ -27,7 +33,7 @@ class GameBoard: public Subject {
     void applyHeavy();
  public:
     GameBoard();
-    bool newBlock();
+    void newBlock();
     int dropBlock();
     void moveRight();
     void moveLeft();
@@ -36,7 +42,7 @@ class GameBoard: public Subject {
     void setHeavy();
     void levelUp();
     void levelDown();
-    bool changeBlock(char block);
+    void changeBlock(char block);
     size_t getScore();
     size_t getLevel();
     size_t getHighScore();
@@ -47,7 +53,8 @@ class GameBoard: public Subject {
     std::vector<std::vector <char>> getState();
     bool getBlind();
     ~GameBoard();
-    //getNextBlock()
+    bool getGameOver();
+    std::vector<std::vector<int>> getNextBlock();
     //score, highscore
 };
 
