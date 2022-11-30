@@ -20,6 +20,9 @@ GameBoard::GameBoard() {
 }
 
 bool GameBoard::newBlock() {
+    if (currBlock != nullptr) {
+        blocks.emplace_back(currBlock);
+    }
     currBlock = currLevel->getBlock(0);
     /*
     if (currBlock == nullptr) {
@@ -77,7 +80,6 @@ size_t GameBoard::clearFilledRows() {
 
 int GameBoard::dropBlock() {
     while (moveDown()) {}
-    blocks.emplace_back(currBlock);
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
     int rowsCleared = clearFilledRows();
