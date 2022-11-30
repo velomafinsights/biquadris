@@ -14,6 +14,8 @@
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     std::vector<Block*> blocks;
+    bool won;
+    string winner;
     Block* currBlock;
     Block* nextBlock;
     Level* currLevel;
@@ -24,7 +26,7 @@ class GameBoard: public Subject {
     size_t blocksWithoutRowClear;
     bool blind;
     bool heavy;
-    bool gameOver;
+    bool gameContinue;
     size_t clearFilledRows();
     void clearRow(int row);
     void clearBlock();
@@ -55,7 +57,9 @@ class GameBoard: public Subject {
     ~GameBoard();
     bool getGameOver();
     std::vector<std::vector<int>> getNextBlock();
-    //score, highscore
+    bool getWon();
+    string getWinner();
+    void setWinner(string player);
 };
 
 #endif

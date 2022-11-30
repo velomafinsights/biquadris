@@ -18,6 +18,7 @@ GameBoard::GameBoard() {
     level = 0;
     score = 0;
     blocksWithoutRowClear = 0;
+    gameContinue = true;
 }
 
 void GameBoard::newBlock() {
@@ -31,7 +32,7 @@ void GameBoard::newBlock() {
     }
     ++turnNumber;
     if (!drawBlock()){
-        gameOver = true;
+        gameContinue = false;
     }
 }
 
@@ -89,7 +90,7 @@ int GameBoard::dropBlock() {
                     board[i - 1][5] == '*';
                     break;
                 } else if (i == 0) {
-                    gameOver = true;
+                    gameContinue = false;
                     break;
                 }
             }
@@ -214,7 +215,7 @@ void GameBoard::levelUp() {
         currLevel = new Level3{true};
         heavy = true;
     } else if (level == 3) {
-        currLevel = new Level4{true};
+        currLevel = new Level4{true, "sequence1.txt"};
         heavy = true;
     }
     if (level != 4) {
@@ -294,7 +295,7 @@ void GameBoard::changeBlock(char block) {
         newBlock = nullptr;
         drawBlock();
     } else {
-        gameOver = true;
+        gameContinue = false;
     }
 }
 
@@ -316,14 +317,36 @@ void GameBoard::restart() {
     score = 0;
     blind = false;
     heavy = false;
-    gameOver = false;
+    gameContinue = true;
     blocksWithoutRowClear = 0;
 }
 
 bool GameBoard::getGameOver() {
-    return gameOver;
+    return gameContinue;
 }
 
 std::vector<std::vector<int>> GameBoard::getNextBlock() {
     return nextBlock->getStructure();
+}
+
+
+size_t GameBoard::getHighScore() {
+    return highScore;
+}
+    
+void GameBoard::setHighScore(size_t hScore) {
+    highScore = hScore;
+}
+
+void GameBoard::setWinner(string player) {
+    won = 1;
+    winner = player;
+}
+
+bool GameBoard::getWon() {
+    return won;
+}
+
+string GameBoard::getWinner() {
+    return winner;
 }

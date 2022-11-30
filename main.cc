@@ -103,6 +103,7 @@ int main(int argc, char* argv[]) {
         if(i%2 == 0){
             if (command == "drop") {
                 board->dropBlock();
+                board->newBlock();
                 gameContinue = board->getGameOver();
                 if (gameContinue == 0){
                     cout<< "Game Over! :("<<endl;
