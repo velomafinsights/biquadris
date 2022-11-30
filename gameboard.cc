@@ -13,13 +13,13 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
-    ///unique_ptr<Level0> l{new Level0{"sequence1.txt"}};
     currLevel = new Level0{"sequence1.txt"};
     turnNumber = 1;
+    level = 0;
+    score = 0;
 }
 
 bool GameBoard::newBlock() {
-    delete currBlock;
     currBlock = currLevel->getBlock(0);
     /*
     if (currBlock == nullptr) {
@@ -49,7 +49,8 @@ void GameBoard::clearRow(int row) {
     }
 }
 
-void GameBoard::clearFilledRows() {
+size_t GameBoard::clearFilledRows() {
+    size_t numberOfRowsCleared = 0;
     for (int i = 0; i < 18; i++) {
         bool rowClear = 1;
         for (int j = 0; j < 11; j++) {
@@ -58,14 +59,29 @@ void GameBoard::clearFilledRows() {
                 break;
             }
         }
-        if (rowClear) clearRow(i);
+        if (rowClear) {
+            clearRow(i);
+            for(auto it: blocks) {
+                it->rowCleared(i);
+                int blockRemove = it->blockRemoved();
+                if (blockRemove >= 0) {
+                    score += (blockRemove + 1) * (blockRemove + 1);
+                }
+            }
+            numberOfRowsCleared++;
+        }
     }
+    score += (level + numberOfRowsCleared) * (level + numberOfRowsCleared);
+    return numberOfRowsCleared;
 }
 
-void GameBoard::dropBlock() {
+int GameBoard::dropBlock() {
     while (moveDown()) {}
+    blocks.emplace_back(currBlock);
+    currBlock->setCurrLevel(level);
     if (blind) blind = false;
-    clearFilledRows();
+    int rowsCleared = clearFilledRows();
+    return rowsCleared;
 }
 
 void GameBoard::clearBlock() {
@@ -173,6 +189,30 @@ void GameBoard::rotate(bool clockwise) {
     drawBlock();
 }
 
+void GameBoard::levelUp() {
+    // delete level
+    if (level == 0) {
+    } else if (level == 1) {
+    } else if (level == 2) {
+    } else if (level == 3) {
+    }
+    if (level != 4) {
+        currLevel++;
+    }
+}
+
+void GameBoard::levelDown() {
+    // delete level
+    if (level == 1) {
+    } else if (level == 2) {
+    } else if (level == 3) {
+    } else if (level == 4) {
+    }
+    if (level != 0) {
+        currLevel--;
+    }
+}
+
 void GameBoard::setBlind() {
     blind = true;
 }
@@ -205,4 +245,7 @@ GameBoard::~GameBoard() {
     delete currBlock;
     delete nextBlock;
     delete currLevel;
+    for (auto it: blocks) {
+        delete it;
+    }
 }

@@ -19,7 +19,7 @@ class GameBoard: public Subject {
     size_t highScore;
     bool blind;
     bool heavy;
-    void clearFilledRows();
+    size_t clearFilledRows();
     void clearRow(int row);
     void clearBlock();
     bool drawBlock();
@@ -28,7 +28,7 @@ class GameBoard: public Subject {
  public:
     GameBoard();
     bool newBlock();
-    void dropBlock();
+    int dropBlock();
     void moveRight();
     void moveLeft();
     bool moveDown();
