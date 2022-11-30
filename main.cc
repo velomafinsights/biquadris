@@ -9,6 +9,9 @@
 #include "level.h"
 #include "level0.h"
 #include "level1.h"
+#include "level2.h"
+#include "level3.h"
+
 
 int main() {
     GameBoard* board = new GameBoard();
@@ -19,9 +22,10 @@ int main() {
     string command;
     commandInterpreter ci{};
     bool gameContinue;
-    /*
+    /* TESTING LEVELS
     Level0 lev0 = Level0{"sequence1.txt"};
     Level1 lev1 =  Level1();
+    Level2 lev2 = Level2();
 
     for (size_t i = 1; i <= 12; ++i){
         Block* gb = lev0.getBlock(i);
@@ -32,7 +36,20 @@ int main() {
         Block* gb = lev1.getBlock(i);
         cout<< "Level 1: "<< i << "th block:" << gb->c<<endl;
     }
+
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev2.getBlock(i);
+        cout<< "Level 2: "<< i << "th block:" << gb->c<<endl;
+    }
+    Level3 lev3 = Level3(true, "sequence2.txt");
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev3.getBlock(i);
+        cout<< "Level 3: "<< i << "th block:" << gb->c<<endl;
+    }
+    
+    
     */
+    
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);

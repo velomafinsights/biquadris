@@ -1,7 +1,7 @@
 #include "level2.h"
 
 Block* Level2::getBlock(size_t i){
-    int v1 = rand() % 1 + 7;
+    int v1 = rand() % 7 + 1;
     Block* nB;
     if (v1 == 1){
         nB = new Block('s');
@@ -26,6 +26,7 @@ Block* Level2::getBlock(size_t i){
     }
     else {
         nB = nullptr;
+        cout<<"rand out of range"<<endl;
     }
     return nB;
 }
