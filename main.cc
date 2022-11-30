@@ -148,7 +148,15 @@ int main(int argc, char* argv[]) {
                 board->setHeavy();
                 board->render();
                 
-            } 
+            } else if (command == "rename"){
+                cout<<"hi"<<endl;
+                std::string toRename; 
+                cin >> toRename;
+                
+                std::string cmd;
+                cin >> cmd;
+                ci.rename(toRename, cmd);
+            }
         } else{
             if (command == "drop") {
                 board2->dropBlock();
@@ -184,7 +192,7 @@ int main(int argc, char* argv[]) {
                 board2->render();
 
             } else if (command == "counterclockwise") {
-            for(int i =0; i<multi; ++i){
+                for(int i =0; i<multi; ++i){
                     board2->rotate(0);
                 }
                 board2->render();
@@ -197,7 +205,14 @@ int main(int argc, char* argv[]) {
                 board2->setHeavy();
                 board2->render();
                 
-            } 
+            } else if (command == "rename"){
+                std::string toRename; 
+                cin >> toRename;
+                
+                std::string cmd;
+                cin >> cmd;
+                ci.rename(toRename, cmd);
+            }
         }
 
     }
