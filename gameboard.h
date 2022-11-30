@@ -12,9 +12,12 @@ class GameBoard: public Subject {
     std::vector<Block*> blocks;
     Block* currBlock;
     Block* nextBlock;
-    bool blind;
-    size_t turnNumber;
     Level* currLevel;
+    size_t turnNumber;
+    size_t level;
+    size_t score;
+    size_t highScore;
+    bool blind;
     bool heavy;
     void clearFilledRows();
     void clearRow(int row);
@@ -31,14 +34,21 @@ class GameBoard: public Subject {
     bool moveDown();
     void setBlind();
     void setHeavy();
+    void levelUp();
+    void levelDown();
+    bool changeBlock(char block);
+    size_t getScore();
+    size_t getLevel();
+    size_t getHighScore();
+    void setHighScore(size_t hScore);
     void rotate(bool clockwise);
     void render();
+    void restart();
     std::vector<std::vector <char>> getState();
     bool getBlind();
-    ~GameBoard() = default;
+    ~GameBoard();
     //getNextBlock()
-    //getLevel()
-    //getScore()
+    //score, highscore
 };
 
 #endif

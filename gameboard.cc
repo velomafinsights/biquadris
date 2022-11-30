@@ -1,5 +1,7 @@
 #include "gameboard.h"
 #include <vector>
+#include <memory>
+#include <utility>
 #include <stdlib.h>
 #include "blocks.h"
 
@@ -11,13 +13,14 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
+    ///unique_ptr<Level0> l{new Level0{"sequence1.txt"}};
     currLevel = new Level0{"sequence1.txt"};
     turnNumber = 1;
 }
 
 bool GameBoard::newBlock() {
     delete currBlock;
-    currBlock = new Block{'o'};
+    currBlock = currLevel->getBlock(0);
     /*
     if (currBlock == nullptr) {
         currBlock = new Block{'i'};
@@ -182,10 +185,24 @@ void GameBoard::render(){
     notifyObservers();
 }
 
+size_t GameBoard::getLevel(){
+    return level;
+}
+
+size_t GameBoard::getScore(){
+    return score;
+}
+
 std::vector<std::vector <char>> GameBoard::getState() {
     return board;
 }
 
 bool GameBoard::getBlind(){
     return blind;
+}
+
+GameBoard::~GameBoard() {
+    delete currBlock;
+    delete nextBlock;
+    delete currLevel;
 }

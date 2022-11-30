@@ -12,7 +12,7 @@ using namespace std;
 class commandInterpreter{
         std::vector<std::string> core = {
             "left", "right", "down", "clockwise", "counterclockwise", "drop", "level up", "level down", "norandom", "random",
-            "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart", "heavy", "blind", "force"
+            "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart", "heavy", "blind", "force", "switch"
         };
 
         std::vector<std::string> users = {};

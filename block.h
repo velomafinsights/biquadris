@@ -42,7 +42,7 @@ class Block {
         std::vector<std::vector<int>> getleftMost();
         std::vector<std::vector<int>> getRightMost();
         int blockRemoved();
-        void rowCleared(int row, bool called);
+        void rowCleared(int row);
         void moveBlockRight();
         void moveBlockLeft();      // change x
         void moveBlockDown();       // change y

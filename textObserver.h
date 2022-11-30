@@ -5,10 +5,11 @@
 
 class TextObserver: public Observer {
     public:
-        GameBoard* iObserve;
+        GameBoard* iObserve1;
+        GameBoard* iObserve2;
         int top, bottom, left, right;
     public:
-        TextObserver(GameBoard* iObserve, int top, int bottom, int left, int right);
+        TextObserver(GameBoard* iObserve, GameBoard* iObserve2, int top, int bottom, int left, int right);
         void notify() override;
         ~TextObserver();
 };
