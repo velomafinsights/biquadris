@@ -73,7 +73,6 @@ int main() {
                     cout<< "Game Over! :("<<endl;
                     break;
                 }
-                board->newBlock();
                 board->render();
                 ++i;
             } else if (command == "right") {
@@ -123,7 +122,6 @@ int main() {
                     cout<< "Game Over! :("<<endl;
                     break;
                 }
-                board2->newBlock();
                 board2->render();
                 ++i;
             } else if (command == "right") {

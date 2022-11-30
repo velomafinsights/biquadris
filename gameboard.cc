@@ -20,20 +20,14 @@ GameBoard::GameBoard() {
 }
 
 bool GameBoard::newBlock() {
-    if (currBlock != nullptr) {
-        blocks.emplace_back(currBlock);
-    }
-    currBlock = currLevel->getBlock(0);
-    /*
     if (currBlock == nullptr) {
-        currBlock = new Block{'i'};
-        nextBlock = new Block{'j'};
+        currBlock = currLevel->getBlock(turnNumber);
+        nextBlock = currLevel->getBlock(turnNumber + 1);
     } else {
-        Block* temp = currBlock;
+        blocks.emplace_back(currBlock);
         currBlock = nextBlock;
-        nextBlock = new Block{'s'};
-        delete temp;
-    }*/
+        nextBlock = currLevel->getBlock(turnNumber + 1);
+    }
     ++turnNumber;
     if (!drawBlock()){
         return 0;
@@ -251,3 +245,4 @@ GameBoard::~GameBoard() {
         delete it;
     }
 }
+
