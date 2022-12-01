@@ -2,6 +2,8 @@
 #include "observer.h"
 #include "subject.h"
 #include "textObserver.h"
+#include "graphicobserver.h"
+#include "window.h"
 #include "commandinterpreter.h"
 #include <iostream>
 #include <string>
@@ -22,9 +24,15 @@ int main() {
     unique_ptr<GameBoard> g2{new GameBoard{}};
     GameBoard* board2 = g2.get();
 
-
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
     Observer* obs = o.get();
+
+//int wWidth, int wHeight, int blockWidth, int gameHeight, int gameWidth, 
+//                   int p1MarginLeft, int p2MarginLeft, int marginBtw, GameBoard *p1, GameBoard *p2)
+    int blockWidth = 25;
+    // do we even need wWidth and wHeight?]
+    unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
+    Observer* graphics = win.get();
 
     board->newBlock();
     board2->newBlock();
