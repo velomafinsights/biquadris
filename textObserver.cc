@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include "block.h"
 
 TextObserver::TextObserver(GameBoard* iObserve, GameBoard* iObserve2, int top, int bottom, int left, int right): iObserve1{iObserve}, iObserve2{iObserve2},top{top}, bottom{bottom}, left{left}, right{right} {
     iObserve1->attach(this);
@@ -65,6 +66,41 @@ void TextObserver::notify() {
     cout<<"                               ";
     cout<<"Next:      ";
     std::cout << std::endl;
+
+    std::vector<std::vector <char>> nextBoardP1 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p1Next = iObserve1->getNextBlock();
+    char p1NextSym = p1Next->getBlockType();
+    std::vector<std::vector <int>> p1strcut = p1Next->getStructure();
+    int minRow = p1strcut[0][0];
+    for (auto it: p1strcut) {
+        nextBoardP1[it[0] - minRow][it[1]] = p1NextSym;
+    }
+
+    std::vector<std::vector <char>> nextBoardP2 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p2Next = iObserve2->getNextBlock();
+    char p2NextSym = p2Next->getBlockType();
+    std::vector<std::vector <int>> p2strcut = p2Next->getStructure();
+    minRow = p2strcut[0][0];
+    for (auto it: p2Next->getStructure()) {
+        nextBoardP2[it[0] - minRow][it[1]] = p2NextSym;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            std::cout << nextBoardP1[i][j];
+        }
+        
+        cout<<"                                       ";
+
+        for (int k = 0; k < 4; k++) {
+            std::cout << nextBoardP2[i][k];
+        }
+        std::cout << std::endl;
+    }
+
+
+    
+
 }
 
 TextObserver::~TextObserver() {

@@ -24,6 +24,8 @@ class GameBoard: public Subject {
     size_t score;
     size_t highScore;
     size_t blocksWithoutRowClear;
+    string file;
+    int randomSeed;
     bool blind;
     bool heavy;
     bool gameContinue;
@@ -34,7 +36,9 @@ class GameBoard: public Subject {
     void blindBoard();
     void applyHeavy();
  public:
-    GameBoard();
+    GameBoard(string f, size_t l, int rSeed);
+    void norandom(std::string filePass);
+    void random();
     void newBlock();
     int dropBlock();
     void moveRight();
@@ -56,7 +60,7 @@ class GameBoard: public Subject {
     bool getBlind();
     ~GameBoard();
     bool getGameOver();
-    std::vector<std::vector<int>> getNextBlock();
+    Block* getNextBlock();
     bool getWon();
     string getWinner();
     void setWinner(string player);

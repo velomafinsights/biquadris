@@ -51,10 +51,10 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    unique_ptr<GameBoard> g{new GameBoard{}};
+    unique_ptr<GameBoard> g{new GameBoard{file1, userDefLevel, randomSeed}};
     GameBoard* board = g.get();
 
-    unique_ptr<GameBoard> g2{new GameBoard{}};
+    unique_ptr<GameBoard> g2{new GameBoard{file2, userDefLevel, randomSeed}};
     GameBoard* board2 = g2.get();
 
 
@@ -150,13 +150,32 @@ int main(int argc, char* argv[]) {
                 board->render();
                 
             } else if (command == "rename"){
-                cout<<"hi"<<endl;
                 std::string toRename; 
                 cin >> toRename;
                 
                 std::string cmd;
                 cin >> cmd;
                 ci.rename(toRename, cmd);
+            } else if (command == "levelup") {
+                for(int i =0; i<multi; ++i){
+                    board->levelUp();
+                }
+            } else if (command == "leveldown") {
+                for(int i =0; i<multi; ++i){
+                    board->levelDown();
+                }
+            } else if (command == "norandom"){
+                std::string fname;
+                cin >> fname;
+                if(board->getLevel() > 2){
+                    board->norandom(fname);
+                    board->render();
+                }
+            } else if (command == "random"){
+                if(board->getLevel() > 2){
+                    board->random();
+                    board->render();                    
+                }                
             }
         } else{
             if (command == "drop") {
@@ -214,6 +233,27 @@ int main(int argc, char* argv[]) {
                 std::string cmd;
                 cin >> cmd;
                 ci.rename(toRename, cmd);
+
+            } else if (command == "levelup") {
+                for(int i =0; i<multi; ++i){
+                    board2->levelUp();
+                }
+            } else if (command == "leveldown") {
+                for(int i =0; i<multi; ++i){
+                    board2->levelDown();
+                }
+            } else if (command == "norandom"){
+                std::string fname;
+                cin >> fname;
+                if(board2->getLevel() > 2){
+                    board2->norandom(fname);
+                    board2->render();
+                }
+            } else if (command == "random"){
+                if(board2->getLevel() > 2){
+                    board2->random();
+                    board2->render();
+                }                
             }
         }
 

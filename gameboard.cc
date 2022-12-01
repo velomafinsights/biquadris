@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "blocks.h"
 
-GameBoard::GameBoard() {
+GameBoard::GameBoard(string f, size_t l, int rSeed) {
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
         for (int j = 0; j < 11; j++) {
@@ -13,12 +13,24 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
-    currLevel = new Level0{"sequence1.txt"};
     turnNumber = 1;
-    level = 0;
+    level = l;
     score = 0;
     blocksWithoutRowClear = 0;
     gameContinue = true;
+    randomSeed = rSeed;
+    file = f;
+    if (level == 0) {
+        currLevel = new Level0{file};
+    } else if (level == 1) {
+        currLevel = new Level1{};
+    } else if (level == 2) {    
+        currLevel = new Level2{};
+    } else if (level == 3) {
+        currLevel = new Level3{false};
+    } else {
+        currLevel = new Level4{false};
+    }
 }
 
 void GameBoard::newBlock() {
@@ -162,7 +174,6 @@ bool GameBoard::moveDown() {
     bool canMoveDown = 1;
     for (auto it: currBlock->getbottomMost()) {
         if (it[0] == 17 || board[it[0] + 1][it[1]] != '.') {
-            std::cout << "OUT OF INDEX";
             std::cout << it[0] << "-" << it[1] << std::endl;
             canMoveDown = 0;
             break;
@@ -219,7 +230,7 @@ void GameBoard::levelUp() {
         heavy = true;
     }
     if (level != 4) {
-        currLevel++;
+        level++;
     }
 }
 
@@ -237,7 +248,7 @@ void GameBoard::levelDown() {
         heavy = true;
     }
     if (level != 0) {
-        currLevel--;
+        level--;
     }
 }
 
@@ -251,6 +262,25 @@ void GameBoard::setHeavy() {
 
 void GameBoard::render(){
     notifyObservers();
+}
+
+void GameBoard::norandom(std::string filePass){
+    delete currLevel;
+    if(level == 3){
+        currLevel = new Level3{true, filePass};
+    } else {
+        currLevel = new Level4{true, filePass};
+    }
+}
+
+void GameBoard::random(){
+    std::cout << "random" << std::endl;
+    delete currLevel;
+    if(level == 3){
+        currLevel = new Level3{false};
+    } else {
+        currLevel = new Level4{false};
+    }
 }
 
 size_t GameBoard::getLevel(){
@@ -325,8 +355,8 @@ bool GameBoard::getGameOver() {
     return gameContinue;
 }
 
-std::vector<std::vector<int>> GameBoard::getNextBlock() {
-    return nextBlock->getStructure();
+Block* GameBoard::getNextBlock() {
+    return nextBlock;
 }
 
 
