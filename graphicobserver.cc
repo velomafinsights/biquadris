@@ -49,8 +49,8 @@ void GraphicObserver::startGame(){
     win->fillRectangle(p1MarginLeft, marginTop, gWidth, gHeight, 1);
     win->fillRectangle(p2MarginLeft, marginTop, gWidth, gHeight, 1);
 
-    win->drawString(p1MarginLeft, marginTop + gHeight + 50, "Next: ");
-    win->drawString(p2MarginLeft, marginTop + gHeight + 50, "Next: ");
+    win->drawString(p1MarginLeft, marginTop + gHeight + 40, "Next: ");
+    win->drawString(p2MarginLeft, marginTop + gHeight + 40, "Next: ");
     /*
     for (int z = 0; z < 18; ++z){
         for (int i = 0; i < 11; ++i){
@@ -133,6 +133,46 @@ void GraphicObserver::notify(){
     win->fillRectangle(clearP2S, marginTop/2 + 55, pieceWidth, pieceWidth, 0);
 
     win->drawString(p2MarginLeft, marginTop/2 + 75, "Score:" + stuff + p2Score);
+
+    // next block:
+    std::vector<std::vector <char>> nextBoardP1 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p1Next = p1->getNextBlock();
+    char p1NextSym = p1Next->getBlockType();
+    std::vector<std::vector <int>> p1strcut = p1Next->getStructure();
+    int minRow = p1strcut[0][0];
+    for (auto it: p1strcut){
+        nextBoardP1[it[0] - minRow][it[1]] = p1NextSym;
+    }
+
+    std::vector<std::vector <char>> nextBoardP2 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p2Next = p2->getNextBlock();
+    char p2NextSym = p2Next->getBlockType();
+    std::vector<std::vector <int>> p2strcut = p2Next->getStructure();
+    minRow = p2strcut[0][0];
+    for (auto it: p2Next->getStructure()) {
+        nextBoardP2[it[0] - minRow][it[1]] = p2NextSym;
+    }
+
+    int p1N_x = p1MarginLeft;
+    int p1N_y = marginTop + gHeight + 65;
+    //win->fillRectangle(p1N_x, p1N_y, blockWidth * 4, blockWidth * 4, 1);
+    for (int i = 0; i < 4; ++i){
+        int newX = i * blockWidth; 
+        for (int j = 0; j < 4; ++j){
+            int newY = j * blockWidth;
+            win->fillRectangle(p1N_x + newX, p1N_y + newY, pieceWidth, pieceWidth, colourMap[nextBoardP1[j][i]]);
+        }
+    }
+
+    int p2N_x = p2MarginLeft;
+    int p2N_y = marginTop + gHeight + 65;
+    for (int i = 0; i < 4; ++i){
+        int newX = i * blockWidth; 
+        for (int j = 0; j < 4; ++j){
+            int newY = j * blockWidth;
+            win->fillRectangle(p2N_x + newX, p2N_y + newY, pieceWidth, pieceWidth, colourMap[nextBoardP2[j][i]]);
+        }
+    }
 
 }
 
