@@ -51,11 +51,6 @@ void GraphicObserver::startGame(){
 
     win->drawString(p1MarginLeft, marginTop + gHeight + 50, "Next: ");
     win->drawString(p2MarginLeft, marginTop + gHeight + 50, "Next: ");
-
-    /*
-    win->fillRectangle(p1MarginLeft + 50, marginTop + gHeight + 50, pieceWidth, pieceWidth, colourMap[boardP1[i][j]]);
-    win->fillRectangle(p2MarginLeft + 50, marginTop + gHeight + 50, pieceWidth, pieceWidth, colourMap[boardP2[i][j]]);
-*/
     /*
     for (int z = 0; z < 18; ++z){
         for (int i = 0; i < 11; ++i){
@@ -69,13 +64,15 @@ void GraphicObserver::startGame(){
 }
 
 void GraphicObserver::notify(){
+
     std::vector<std::vector <char>> boardP1 = p1->getState();
     std::vector<std::vector <char>> boardP2 = p2->getState();
     bool blind1 = p1->getBlind();
     bool blind2 = p2->getBlind();
 
     for (int i = 0; i < 18; ++i){
-
+        win->fillRectangle(0, 0, pieceWidth, pieceWidth, 5);
+        
         int y = marginTop + i * blockWidth + 2;
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j){
@@ -84,7 +81,6 @@ void GraphicObserver::notify(){
                 win->fillRectangle(x, y, pieceWidth, pieceWidth, 0);
             }
             else{
-                // translation from character to int colour
                 win->fillRectangle(x, y, pieceWidth, pieceWidth, colourMap[boardP1[i][j]]);
             }
         }
@@ -105,17 +101,37 @@ void GraphicObserver::notify(){
     std::stringstream p1S;
     std::stringstream p2S;
     std::string stuff(38, ' ');
+    std::string erasedraw(39, ' ');
     p1L << p1->getLevel();
     std::string p1Level = p1L.str();
+
+    int clearP1L = p1MarginLeft + 10 * blockWidth + 10;
+    win->fillRectangle(clearP1L, marginTop/2 + 30, pieceWidth, pieceWidth, 0);
+
     win->drawString(p1MarginLeft, marginTop/2 + 50 , "Level:" + stuff + p1Level);
+
     p2L << p2->getLevel();
     std::string p2Level = p2L.str();
+
+    int clearP2L = p2MarginLeft + 10 * blockWidth + 10;
+    win->fillRectangle(clearP2L, marginTop/2 + 30, pieceWidth, pieceWidth, 0);
+
     win->drawString(p2MarginLeft, marginTop/2 + 50, "Level:" + stuff + p2Level);
+
     p1S << p1->getScore();
     std::string p1Score = p1S.str();
+
+    int clearP1S = p1MarginLeft + 10 * blockWidth + 10;
+    win->fillRectangle(clearP1S, marginTop/2 + 55, pieceWidth, pieceWidth, 0);
+
     win->drawString(p1MarginLeft, marginTop/2 + 75 , "Score:" + stuff + p1Score);
+
     p2S << p2->getScore();
     std::string p2Score = p2S.str();
+
+    int clearP2S = p2MarginLeft + 10 * blockWidth + 10;
+    win->fillRectangle(clearP2S, marginTop/2 + 55, pieceWidth, pieceWidth, 0);
+
     win->drawString(p2MarginLeft, marginTop/2 + 75, "Score:" + stuff + p2Score);
 
 }
