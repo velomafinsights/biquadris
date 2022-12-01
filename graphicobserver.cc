@@ -46,8 +46,9 @@ void GraphicObserver::startGame(){
     win->drawString(p1MarginLeft, marginTop/2 + 75 , "Score:" + stuff + "0");
     win->drawString(p2MarginLeft, marginTop/2 + 75, "Score:" + stuff + "0");
 
-    win->fillRectangle(p1MarginLeft, marginTop, gWidth, gHeight, 1);
-    win->fillRectangle(p2MarginLeft, marginTop, gWidth, gHeight, 1);
+    // change back to 1
+    win->fillRectangle(p1MarginLeft - 2, marginTop, gWidth + 2, gHeight + 2, 1);
+    win->fillRectangle(p2MarginLeft - 2, marginTop, gWidth + 2, gHeight + 2, 1);
 
     win->drawString(p1MarginLeft, marginTop + gHeight + 40, "Next: ");
     win->drawString(p2MarginLeft, marginTop + gHeight + 40, "Next: ");
@@ -70,26 +71,24 @@ void GraphicObserver::notify(){
     bool blind1 = p1->getBlind();
     bool blind2 = p2->getBlind();
 
-    for (int i = 0; i < 18; ++i){
-        win->fillRectangle(0, 0, pieceWidth, pieceWidth, 5);
-        
+    for (int i = 0; i < 18; ++i){        
         int y = marginTop + i * blockWidth + 2;
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j){
             int x = p1MarginLeft + j * blockWidth;
             if (blind1 && i >= 3 && i <= 12 && j >= 3 && j <= 9){
-                win->fillRectangle(x, y, pieceWidth, pieceWidth, 0);
+                win->fillRectangle(x, y, pieceWidth, pieceWidth, 1); // changed from 0
             }
             else{
                 win->fillRectangle(x, y, pieceWidth, pieceWidth, colourMap[boardP1[i][j]]);
             }
         }
-
+    
          //Outputing Player 2's GameBoard
          for (int k = 0; k < 11; ++k) {
              int x = p2MarginLeft + k * blockWidth;
              if (blind2 && i>=3 && i<=12 && k>=3 && k<=9){
-                win->fillRectangle(x, y, pieceWidth, pieceWidth, 0);
+                win->fillRectangle(x, y, pieceWidth, pieceWidth, 1); // changed from 0
              }
              else{
                  win->fillRectangle(x, y, pieceWidth, pieceWidth, colourMap[boardP2[i][k]]);

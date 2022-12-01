@@ -17,27 +17,175 @@
 #include "level2.h"
 #include "level3.h"
 
+/*
+template<class Observer> class unique_ptr {
+    Observer* ptr;  
+    unique_ptr(Observer* ptr): ptr{ptr}{}
+    unique_ptr() { ptr = nullptr; }
+    ~unique_ptr() { delete ptr; }
+    unique_ptr( const unique_ptr<Observer> &other) = delete; 	// Disables copying
+    unique_ptr<Observer> &operator=(const unique_ptr<Observer> &other) = delete; // disables copy assignment
+    unique_ptr(unique_ptr<Observer> &&other): ptr{other.ptr} {      // move ctor
+        other.ptr = nullptr;
+    }
+    unique_ptr<Observer> &operator=(unique_ptr<Observer>&& other){
+		std::swap(ptr, other.ptr);
+		return *this;
+	}
+    Observer& operator*() {return *ptr; }
+};
+*/
+
+int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, commandInterpreter* ci){
+    int multi = ci->multiplier(commandFromUser);
+    std::string command = ci->process(commandFromUser);
+    bool gameContinue;
+    if (command == "drop") {
+        int rC = board->dropBlock();
+        board->newBlock();
+        gameContinue = board->getGameOver();
+        if (gameContinue == 0){
+            cout<< "Game Over! :("<<endl;
+            return 2;
+        }
+        if(rC >=2){
+            cout<<"Choose a punishment for your opponent?"<<endl;
+            std::string punish;
+            cin >> punish;
+            if (punish == "blind"){
+                board2->setBlind();
+            } else if (punish == "heavy"){
+                board2->setHeavy();
+            } else if (punish == "force"){
+                cout<<"What block would you like for your opponent?"<<endl; 
+                char blockOpp;
+                cin >> blockOpp; 
+                board2->changeBlock(blockOpp);
+            }
+        }
+        board->render();
+        return 1;
+        //++i;
+    } else if (command == "right") {
+        for(int i =0; i<multi; ++i){
+            board->moveRight();
+        }
+        board->render();   
+    } else if (command == "left") {
+        for(int i =0; i<multi; ++i){
+            board->moveLeft();
+        }
+        board->render();
+
+    } else if (command == "down") {
+        for(int i =0; i<multi; ++i){
+            board->moveDown();
+        }
+        board->render();
+    } else if (command == "clockwise") {
+        for(int i =0; i<multi; ++i){
+            board->rotate(1);
+        }
+        board->render();
+    } else if (command == "counterclockwise") {
+        for(int i =0; i<multi; ++i){
+            board->rotate(0);
+        }
+        board->render();
+    } else if (command == "blind"){
+        board->setBlind();
+        board->render();
+    } else if (command == "heavy"){
+        board->setHeavy();
+        board->render();  
+    } else if (command == "rename"){
+        std::string toRename; 
+        cin >> toRename;
+        std::string cmd;
+        cin >> cmd;
+        ci->rename(toRename, cmd);
+    } else if (command == "levelup") {
+        for(int i =0; i<multi; ++i){
+            board->levelUp();
+        }
+    } else if (command == "leveldown") {
+        for(int i =0; i<multi; ++i){
+            board->levelDown();
+        }
+    } else if (command == "norandom"){
+        std::string fname;
+        cin >> fname;
+        if(board->getLevel() > 2){
+            board->norandom(fname);
+            board->render();
+        }
+    } else if (command == "random"){
+        if(board->getLevel() > 2){
+            board->random();
+            board->render();                    
+        }                
+    } else if (command == "restart"){
+        board->restart();
+        board2->restart();
+        board->render();
+    } else if (command == "sequence"){
+        std::string fileName;
+        cin >> fileName;
+        ifstream commands{fileName};
+        //*userFile = true;
+        string cmd;
+        while(commands >> cmd){
+            int cmdResult = applyCommand(board, board2, cmd, ci);
+            if (cmdResult == 2){
+                return 2;
+            }
+            else if (cmdResult == 1){
+                return 1;
+            }
+        }
+    } else if (command == "I"){
+        board->changeBlock('i');
+        board->render();
+    } else if (command == "J"){
+        board->changeBlock('j');
+        board->render();
+    } else if (command == "L"){
+        board->changeBlock('l');
+        board->render();
+    } else if (command == "S"){
+        board->changeBlock('s');
+        board->render();
+    } else if (command == "T"){
+        board->changeBlock('t');
+        board->render();
+    } else if (command == "Z"){
+        board->changeBlock('z');
+        board->render();
+    } else if (command == "O"){
+        board->changeBlock('o');
+        board->render();
+    }
+    return 0;
+}
+
 
 int main(int argc, char* argv[]) {
-    //cout<<argv[0]<<argv[1];
-
+    srand(1);
     std::string file1 = "sequence1.txt";
     std::string file2 = "sequence2.txt";
     size_t userDefLevel = 0;
     int randomSeed = 0;
     bool textOnly=false;
     
-    //reading command-line arguments
-    size_t args = argc;
     size_t currArg = 1;
-    while(currArg<args){
+    while(currArg < argc){
         if(std::string(argv[currArg]) == "-text"){
-
             textOnly = true;
             ++currArg;
         } else if(std::string(argv[currArg]) == "-seed"){
             ++currArg;
             randomSeed = std::stoi(std::string(argv[currArg]));
+            srand(randomSeed);
             ++currArg;
         } else if(std::string(argv[currArg]) == "-scriptfile1"){
             ++currArg;
@@ -61,16 +209,15 @@ int main(int argc, char* argv[]) {
 
     unique_ptr<GameBoard> g2{new GameBoard{file2, userDefLevel, randomSeed}};
     GameBoard* board2 = g2.get();
-
     
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
     Observer* obs = o.get();
 
     int blockWidth = 25;
-    
-    if (!textOnly){
-        unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
-        Observer* graphics = win.get();
+    Observer* graphics = nullptr; 
+
+    if (textOnly == false){
+        graphics = new GraphicObserver{blockWidth, board, board2};
     }
 
     board->newBlock();
@@ -78,39 +225,37 @@ int main(int argc, char* argv[]) {
     board->render();
     string commandFromUser;
     string command;
-    commandInterpreter ci{};
+    commandInterpreter ci{};   
+    commandInterpreter* ciptr = &ci;
     bool gameContinue;
     ifstream commands;
+    // This was used to track which player's turn it is
     size_t i =0;
-    bool userFile=false;
-    /* TESTING LEVELS
-    Level0 lev0 = Level0{"sequence1.txt"};
-    Level1 lev1 =  Level1();
-    Level2 lev2 = Level2();
+    size_t playerOne = 0;
+    //bool userFile=false;
+    //bool *inputFromFile = &userFile;
 
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev0.getBlock(i);
-        cout<< "Level 0: "<< i << "th block:" << gb->c<<endl;
-    }
+    while(cin >> commandFromUser){
+        int commandResult;
+        if (playerOne % 2 == 0){
+            // call methods on playerOne
+            commandResult = applyCommand(board, board2, commandFromUser, ciptr);
+            //playerOne += applyCommand(board, board2, command, multi);
 
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev1.getBlock(i);
-        cout<< "Level 1: "<< i << "th block:" << gb->c<<endl;
-    }
+        }
+        else if (playerOne % 2 == 1){
+            // call methods on playerTwo
+            commandResult = applyCommand(board2, board, commandFromUser, ciptr);
+        }
 
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev2.getBlock(i);
-        cout<< "Level 2: "<< i << "th block:" << gb->c<<endl;
+        if (commandResult == 2){
+            break;
+        }
+        playerOne += commandResult;
+
     }
-    Level3 lev3 = Level3(true, "sequence2.txt");
-    for (size_t i = 1; i <= 12; ++i){
-        Block* gb = lev3.getBlock(i);
-        cout<< "Level 3: "<< i << "th block:" << gb->c<<endl;
-    }
-    
-    
-    */
-    
+    delete graphics;
+/*
     while (cin >> commandFromUser){
         int multi = ci.multiplier(commandFromUser);
         command = ci.process(commandFromUser);
@@ -360,7 +505,33 @@ int main(int argc, char* argv[]) {
             }           
         }
 
+    }*/
+
+        /* TESTING LEVELS
+    Level0 lev0 = Level0{"sequence1.txt"};
+    Level1 lev1 =  Level1();
+    Level2 lev2 = Level2();
+
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev0.getBlock(i);
+        cout<< "Level 0: "<< i << "th block:" << gb->c<<endl;
     }
+
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev1.getBlock(i);
+        cout<< "Level 1: "<< i << "th block:" << gb->c<<endl;
+    }
+
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev2.getBlock(i);
+        cout<< "Level 2: "<< i << "th block:" << gb->c<<endl;
+    }
+    Level3 lev3 = Level3(true, "sequence2.txt");
+    for (size_t i = 1; i <= 12; ++i){
+        Block* gb = lev3.getBlock(i);
+        cout<< "Level 3: "<< i << "th block:" << gb->c<<endl;
+    }
+    */
     //delete board;
     //delete obs;
 }

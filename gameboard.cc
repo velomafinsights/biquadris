@@ -188,7 +188,7 @@ bool GameBoard::moveDown() {
         currBlock->moveBlockDown();
     }
     drawBlock();
-    notifyObservers();
+    //notifyObservers();
     if (canMoveDown) {
         return true;
     }
