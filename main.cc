@@ -51,6 +51,8 @@ int main(int argc, char* argv[]) {
             ++currArg;
             userDefLevel = std::stoi(std::string(argv[currArg]));
             ++currArg;            
+        } else {
+            break;
         }
     }
 
@@ -65,14 +67,11 @@ int main(int argc, char* argv[]) {
     Observer* obs = o.get();
 
     int blockWidth = 25;
-
-    unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
-    Observer* graphics = win.get();
-    /*
+    
     if (!textOnly){
         unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
         Observer* graphics = win.get();
-    }*/
+    }
 
     board->newBlock();
     board2->newBlock();
@@ -217,6 +216,27 @@ int main(int argc, char* argv[]) {
                 ifstream commands{fileName};
                 userFile = true;
 
+            } else if (command == "I"){
+                board->changeBlock('i');
+                board->render();
+            } else if (command == "J"){
+                board->changeBlock('j');
+                board->render();
+            } else if (command == "L"){
+                board->changeBlock('l');
+                board->render();
+            } else if (command == "S"){
+                board->changeBlock('s');
+                board->render();
+            } else if (command == "T"){
+                board->changeBlock('t');
+                board->render();
+            } else if (command == "Z"){
+                board->changeBlock('z');
+                board->render();
+            } else if (command == "O"){
+                board->changeBlock('o');
+                board->render();
             }
         } else{
             if (command == "drop") {
@@ -316,7 +336,28 @@ int main(int argc, char* argv[]) {
                 board2->restart();
                 board2->render();
                 continue;
-            }
+            } else if (command == "I"){
+                board2->changeBlock('i');
+                board2->render();
+            } else if (command == "J"){
+                board2->changeBlock('j');
+                board2->render();
+            } else if (command == "L"){
+                board2->changeBlock('l');
+                board2->render();
+            } else if (command == "S"){
+                board2->changeBlock('s');
+                board2->render();
+            } else if (command == "T"){
+                board2->changeBlock('t');
+                board2->render();
+            } else if (command == "Z"){
+                board2->changeBlock('z');
+                board2->render();
+            } else if (command == "O"){
+                board2->changeBlock('o');
+                board2->render();
+            }           
         }
 
     }

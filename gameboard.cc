@@ -28,8 +28,10 @@ GameBoard::GameBoard(string f, size_t l, int rSeed) {
         currLevel = new Level2{};
     } else if (level == 3) {
         currLevel = new Level3{false};
+        heavy = true;
     } else {
         currLevel = new Level4{false};
+        heavy = true;
     }
 }
 
@@ -90,23 +92,26 @@ int GameBoard::dropBlock() {
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
     int rowsCleared = clearFilledRows();
-    if (level == 4) {
-        if (rowsCleared == 0) {
-            blocksWithoutRowClear++;
-        } else {
-            blocksWithoutRowClear = 0;
-        }
+    if (level == 4 && rowsCleared == 0) {
+        blocksWithoutRowClear++;
+        std::cout << blocksWithoutRowClear << std::endl;
         if (blocksWithoutRowClear % 5 == 0 and blocksWithoutRowClear >= 5) {
             for (int i = 0; i < 18; i++) {
-                if (i != 0 && board[i][5] != '.') {
-                    board[i - 1][5] == '*';
-                    break;
-                } else if (i == 0) {
+                if (i == 0 && board[i][5] != '.') {
                     gameContinue = false;
+                    break;
+                } else if (board[i][5] != '.') {
+                    board[i - 1][5] = '*';
+                    break;
+                } if (i == 17) {
+                    std::cout << "i = 17" << std::endl;
+                    board[17][5] = '*';
                     break;
                 }
             }
         }
+    } else {
+        blocksWithoutRowClear = 0;
     }
     return rowsCleared;
 }
