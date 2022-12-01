@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 
@@ -84,10 +85,22 @@ int commandInterpreter::multiplier(std::string given){
 }
 
 void commandInterpreter::rename(std::string toRename, std::string given){
-    //vector<std::string>::iterator it;
-    //it = remove(users.begin(), users.end(), given);
+    size_t idx = NULL;
+    for(size_t i =0; i<users.size(); i++){
+        if(users[i] == given){
+            idx = i;
+            break;
+        }
+    }
+    
+    if(idx != NULL){
+        users.erase(users.begin()+idx);
+    }
     userDefined[given] = toRename;
     users.emplace_back(given);
+    /*for(auto it: users){
+        cout<<it<<endl;
+    }*/
 }
 
 

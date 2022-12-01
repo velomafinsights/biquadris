@@ -11,8 +11,8 @@ using namespace std;
 
 class commandInterpreter{
         std::vector<std::string> core = {
-            "left", "right", "down", "clockwise", "counterclockwise", "drop", "level up", "level down", "norandom", "random",
-            "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart", "heavy", "blind", "force", "switch"
+            "left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", "norandom", "random",
+            "sequence", "I", "J", "K", "L", "S", "T", "Z", "O", "restart", "heavy", "blind", "force", "switch", "rename"
         };
 
         std::vector<std::string> users = {};

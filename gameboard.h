@@ -6,10 +6,16 @@
 #include "block.h"
 #include "level.h"
 #include "level0.h"
+#include "level1.h"
+#include "level2.h"
+#include "level3.h"
+#include "level4.h"
 
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     std::vector<Block*> blocks;
+    bool won;
+    string winner;
     Block* currBlock;
     Block* nextBlock;
     Level* currLevel;
@@ -17,18 +23,24 @@ class GameBoard: public Subject {
     size_t level;
     size_t score;
     size_t highScore;
+    size_t blocksWithoutRowClear;
+    string file;
+    int randomSeed;
     bool blind;
     bool heavy;
-    void clearFilledRows();
+    bool gameContinue;
+    size_t clearFilledRows();
     void clearRow(int row);
     void clearBlock();
     bool drawBlock();
     void blindBoard();
     void applyHeavy();
  public:
-    GameBoard();
-    bool newBlock();
-    void dropBlock();
+    GameBoard(string f, size_t l, int rSeed);
+    void norandom(std::string filePass);
+    void random();
+    void newBlock();
+    int dropBlock();
     void moveRight();
     void moveLeft();
     bool moveDown();
@@ -36,7 +48,7 @@ class GameBoard: public Subject {
     void setHeavy();
     void levelUp();
     void levelDown();
-    bool changeBlock(char block);
+    void changeBlock(char block);
     size_t getScore();
     size_t getLevel();
     size_t getHighScore();
@@ -47,8 +59,11 @@ class GameBoard: public Subject {
     std::vector<std::vector <char>> getState();
     bool getBlind();
     ~GameBoard();
-    //getNextBlock()
-    //score, highscore
+    bool getGameOver();
+    Block* getNextBlock();
+    bool getWon();
+    string getWinner();
+    void setWinner(string player);
 };
 
 #endif

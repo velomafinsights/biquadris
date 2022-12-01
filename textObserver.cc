@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include "block.h"
 
 TextObserver::TextObserver(GameBoard* iObserve, GameBoard* iObserve2, int top, int bottom, int left, int right): iObserve1{iObserve}, iObserve2{iObserve2},top{top}, bottom{bottom}, left{left}, right{right} {
     iObserve1->attach(this);
@@ -16,24 +17,24 @@ void TextObserver::notify() {
     std::vector<std::vector <char>> boardP2 = iObserve2->getState();
 
     cout<<"Level:    "<<iObserve1->getLevel();
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"Level:    "<<iObserve2->getLevel();
     std::cout << std::endl;
 
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve1->getScore();
-    cout<<"               ";
-    cout<<"Score:"<<setfill(' ')<<setw(4)<<iObserve2->getScore();
+    cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve1->getScore();
+    cout<<"                               ";
+    cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve2->getScore();
     std::cout<<std::endl;
     
 
     cout<<"-----------";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"-----------";
     std::cout << std::endl;
 
     for (int i = 0; i < 18; ++i) {
-        if (i < 10) std::cout << i << "      ";
-        else std::cout << i << "     ";
+        //if (i < 10) std::cout << i << "      ";
+        //else std::cout << i << "     ";
 
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j) {
@@ -43,7 +44,7 @@ void TextObserver::notify() {
                 std::cout << boardP1[i][j] << " ";
             }
         }
-        cout<<"               ";
+        cout<<"                    ";
 
         //Outputing Player 2's GameBoard
         for (int k = 0; k < 11; ++k) {
@@ -57,14 +58,49 @@ void TextObserver::notify() {
     }
 
     cout<<"-----------";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"-----------";
     std::cout << std::endl;
 
     cout<<"Next:      ";
-    cout<<"               ";
+    cout<<"                               ";
     cout<<"Next:      ";
     std::cout << std::endl;
+
+    std::vector<std::vector <char>> nextBoardP1 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p1Next = iObserve1->getNextBlock();
+    char p1NextSym = p1Next->getBlockType();
+    std::vector<std::vector <int>> p1strcut = p1Next->getStructure();
+    int minRow = p1strcut[0][0];
+    for (auto it: p1strcut) {
+        nextBoardP1[it[0] - minRow][it[1]] = p1NextSym;
+    }
+
+    std::vector<std::vector <char>> nextBoardP2 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
+    Block* p2Next = iObserve2->getNextBlock();
+    char p2NextSym = p2Next->getBlockType();
+    std::vector<std::vector <int>> p2strcut = p2Next->getStructure();
+    minRow = p2strcut[0][0];
+    for (auto it: p2Next->getStructure()) {
+        nextBoardP2[it[0] - minRow][it[1]] = p2NextSym;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            std::cout << nextBoardP1[i][j];
+        }
+        
+        cout<<"                                       ";
+
+        for (int k = 0; k < 4; k++) {
+            std::cout << nextBoardP2[i][k];
+        }
+        std::cout << std::endl;
+    }
+
+
+    
+
 }
 
 TextObserver::~TextObserver() {
