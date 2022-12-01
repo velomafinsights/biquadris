@@ -332,7 +332,7 @@ void GameBoard::changeBlock(char block) {
 void GameBoard::restart() {
     for (int i = 0; i < 18; i++) {
         for (int j = 0; j < 11; j++) {
-            board[i][j] = '*';
+            board[i][j] = '.';
         }
     }
     delete currBlock;
@@ -340,6 +340,9 @@ void GameBoard::restart() {
     for (auto it: blocks) {
         delete it;
     }
+    blocks.clear();
+    currBlock = nullptr;
+    nextBlock = nullptr;
     delete currLevel;
     currLevel = new Level0{"sequence1.txt"};
     turnNumber = 1;
@@ -349,6 +352,7 @@ void GameBoard::restart() {
     heavy = false;
     gameContinue = true;
     blocksWithoutRowClear = 0;
+    this->newBlock();
 }
 
 bool GameBoard::getGameOver() {
