@@ -9,6 +9,7 @@
 #include <string>
 #include <memory>
 #include <utility>
+#include <fstream>
 
 #include "level.h"
 #include "level0.h"
@@ -76,7 +77,9 @@ int main(int argc, char* argv[]) {
     string command;
     commandInterpreter ci{};
     bool gameContinue;
+    ifstream commands;
     size_t i =0;
+    bool userFile=false;
     /* TESTING LEVELS
     Level0 lev0 = Level0{"sequence1.txt"};
     Level1 lev1 =  Level1();
@@ -110,12 +113,28 @@ int main(int argc, char* argv[]) {
         command = ci.process(commandFromUser);
         if(i%2 == 0){
             if (command == "drop") {
-                board->dropBlock();
+                int rC = board->dropBlock();
                 board->newBlock();
                 gameContinue = board->getGameOver();
                 if (gameContinue == 0){
                     cout<< "Game Over! :("<<endl;
                     break;
+                }
+                if(rC >=2){
+                    cout<<"Choose a punishment for your opponent?"<<endl;
+                    std::string punish;
+                    cin >> punish;
+                    if (punish == "blind"){
+                        board2->setBlind();
+                    } else if (punish == "heavy"){
+                        board2->setHeavy();
+                    } else if (punish == "force"){
+                       cout<<"What block would you like for your opponent?"<<endl; 
+                       char blockOpp;
+                       cin >> blockOpp;
+                       
+                       board2->changeBlock(blockOpp);
+                    }
                 }
                 board->render();
                 ++i;
@@ -184,16 +203,42 @@ int main(int argc, char* argv[]) {
                     board->random();
                     board->render();                    
                 }                
+            } else if (command == "restart"){
+                board->restart();
+                board2->restart();
+                board->render();
+            } else if (command == "sequence"){
+                std::string fileName;
+                cin >> fileName;
+                ifstream commands{fileName};
+                userFile = true;
+
             }
         } else{
             if (command == "drop") {
-                board2->dropBlock();
+                int rC = board2->dropBlock();
                 board2->newBlock();
                 gameContinue = board2->getGameOver();
                 if (gameContinue == 0){
                     cout<< "Game Over! :("<<endl;
                     break;
                 }
+                if(rC >=2){
+                    cout<<"Choose a punishment for your opponent?"<<endl;
+                    std::string punish;
+                    cin >> punish;
+                    if (punish == "blind"){
+                        board->setBlind();
+                    } else if (punish == "heavy"){
+                        board->setHeavy();
+                    } else if (punish == "force"){
+                       cout<<"What block would you like for your opponent?"<<endl; 
+                       char blockOpp;
+                       cin >> blockOpp;
+                       
+                       board->changeBlock(blockOpp);
+                    }
+                }                
                 board2->render();
                 ++i;
             } else if (command == "right") {
@@ -262,6 +307,11 @@ int main(int argc, char* argv[]) {
                     board2->random();
                     board2->render();
                 }                
+            } else if (command == "restart"){
+                board->restart();
+                board2->restart();
+                board2->render();
+                continue;
             }
         }
 
