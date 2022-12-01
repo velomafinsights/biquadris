@@ -66,13 +66,11 @@ int main(int argc, char* argv[]) {
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
     Observer* obs = o.get();
 
-    int blockWidth = 25;
+    /*int blockWidth = 25;
     
-    if (!textOnly){
-        unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
-        Observer* graphics = win.get();
-    }
-
+    unique_ptr<Observer> win{new GraphicObserver{blockWidth, board, board2}};
+    Observer* graphics = win.get();
+*/
     board->newBlock();
     board2->newBlock();
     board->render();
