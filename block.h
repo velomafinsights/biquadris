@@ -30,6 +30,8 @@ class Block {
         // character the block is made up of: I, J, L, O, S, Z, T
         char c;
 
+        bool blockCleared;
+
         // current index in orientation vector
         size_t i;
         std::vector<std::vector<int>> getStructure();
