@@ -38,7 +38,10 @@ GraphicObserver::GraphicObserver(int wWidth, int wHeight, int blockWidth,
 
 void GraphicObserver::startGame(){
     std::string stuff(38, ' ');
-    win->drawString(p1MarginLeft + gWidth + 80, marginTop/2 - 10, "BIQUADRIS");
+    win->drawString(p1MarginLeft + gWidth + 80, marginTop/2 - 40, "BIQUADRIS");
+
+    win->drawString(p1MarginLeft + gWidth, marginTop/2, "High Score");
+    win->drawString(p1MarginLeft + gWidth + marginBtw - 20, marginTop/2, "0");
 
     win->drawString(p1MarginLeft, marginTop/2 + 50 , "Level:" + stuff + "0");
     win->drawString(p2MarginLeft, marginTop/2 + 50, "Level:" + stuff + "0");
@@ -46,11 +49,15 @@ void GraphicObserver::startGame(){
     win->drawString(p1MarginLeft, marginTop/2 + 75 , "Score:" + stuff + "0");
     win->drawString(p2MarginLeft, marginTop/2 + 75, "Score:" + stuff + "0");
 
-    win->fillRectangle(p1MarginLeft, marginTop, gWidth, gHeight, 1);
-    win->fillRectangle(p2MarginLeft, marginTop, gWidth, gHeight, 1);
+    // change back to 1
+    win->fillRectangle(p1MarginLeft - 2, marginTop, gWidth + 2, gHeight + 2, 1);
+    win->fillRectangle(p2MarginLeft - 2, marginTop, gWidth + 2, gHeight + 2, 1);
 
-    win->drawString(p1MarginLeft, marginTop + gHeight + 40, "Next: ");
-    win->drawString(p2MarginLeft, marginTop + gHeight + 40, "Next: ");
+    win->drawString(p1MarginLeft, marginTop + gHeight + 20, "Player One");
+    win->drawString(p2MarginLeft, marginTop + gHeight + 20, "Player Two");
+
+    win->drawString(p1MarginLeft, marginTop + gHeight + 60, "Next: ");
+    win->drawString(p2MarginLeft, marginTop + gHeight + 60, "Next: ");
     /*
     for (int z = 0; z < 18; ++z){
         for (int i = 0; i < 11; ++i){
@@ -70,37 +77,54 @@ void GraphicObserver::notify(){
     bool blind1 = p1->getBlind();
     bool blind2 = p2->getBlind();
 
-    for (int i = 0; i < 18; ++i){
-        win->fillRectangle(0, 0, pieceWidth, pieceWidth, 5);
-        
+    for (int i = 0; i < 18; ++i){        
         int y = marginTop + i * blockWidth + 2;
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j){
             int x = p1MarginLeft + j * blockWidth;
             if (blind1 && i >= 3 && i <= 12 && j >= 3 && j <= 9){
-                win->fillRectangle(x, y, pieceWidth, pieceWidth, 0);
+                win->fillRectangle(x, y, pieceWidth, pieceWidth, 1); // changed from 0
             }
             else{
                 win->fillRectangle(x, y, pieceWidth, pieceWidth, colourMap[boardP1[i][j]]);
             }
         }
-
          //Outputing Player 2's GameBoard
          for (int k = 0; k < 11; ++k) {
              int x = p2MarginLeft + k * blockWidth;
              if (blind2 && i>=3 && i<=12 && k>=3 && k<=9){
-                win->fillRectangle(x, y, pieceWidth, pieceWidth, 0);
+                win->fillRectangle(x, y, pieceWidth, pieceWidth, 1); // changed from 0
              }
              else{
                  win->fillRectangle(x, y, pieceWidth, pieceWidth, colourMap[boardP2[i][k]]);
              }
          }
     }
+
     std::stringstream p1L;
     std::stringstream p2L;
     std::stringstream p1S;
     std::stringstream p2S;
+    std::stringstream HS;
     std::string stuff(38, ' ');
+
+    // HighScore
+    win->fillRectangle(p1MarginLeft + gWidth + marginBtw - 25, marginTop/2 - 20, pieceWidth, pieceWidth, 0);
+    int p1HS = p1->getScore();
+    int p2HS = p2->getScore();
+    if (p1HS > p2HS){
+        p1->setHighScore(p1HS);
+        p2->setHighScore(p1HS);
+    }
+    else{
+        p1->setHighScore(p2HS);
+        p2->setHighScore(p2HS);
+    }
+    HS << p1->getHighScore();
+    std::string observeHS = HS.str();
+    win->drawString(p1MarginLeft + gWidth + marginBtw - 20, marginTop/2, observeHS);
+
+    // p1's level
     std::string erasedraw(39, ' ');
     p1L << p1->getLevel();
     std::string p1Level = p1L.str();
@@ -109,7 +133,8 @@ void GraphicObserver::notify(){
     win->fillRectangle(clearP1L, marginTop/2 + 30, pieceWidth, pieceWidth, 0);
 
     win->drawString(p1MarginLeft, marginTop/2 + 50 , "Level:" + stuff + p1Level);
-
+   
+    // p2's level
     p2L << p2->getLevel();
     std::string p2Level = p2L.str();
 
@@ -118,6 +143,7 @@ void GraphicObserver::notify(){
 
     win->drawString(p2MarginLeft, marginTop/2 + 50, "Level:" + stuff + p2Level);
 
+    // p1's score
     p1S << p1->getScore();
     std::string p1Score = p1S.str();
 
@@ -126,6 +152,7 @@ void GraphicObserver::notify(){
 
     win->drawString(p1MarginLeft, marginTop/2 + 75 , "Score:" + stuff + p1Score);
 
+    //p2's score
     p2S << p2->getScore();
     std::string p2Score = p2S.str();
 
@@ -134,7 +161,7 @@ void GraphicObserver::notify(){
 
     win->drawString(p2MarginLeft, marginTop/2 + 75, "Score:" + stuff + p2Score);
 
-    // next block:
+    // rendering next block:
     std::vector<std::vector <char>> nextBoardP1 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
     Block* p1Next = p1->getNextBlock();
     char p1NextSym = p1Next->getBlockType();
@@ -154,7 +181,7 @@ void GraphicObserver::notify(){
     }
 
     int p1N_x = p1MarginLeft;
-    int p1N_y = marginTop + gHeight + 65;
+    int p1N_y = marginTop + gHeight + 85;
     //win->fillRectangle(p1N_x, p1N_y, blockWidth * 4, blockWidth * 4, 1);
     for (int i = 0; i < 4; ++i){
         int newX = i * blockWidth; 
@@ -165,7 +192,7 @@ void GraphicObserver::notify(){
     }
 
     int p2N_x = p2MarginLeft;
-    int p2N_y = marginTop + gHeight + 65;
+    int p2N_y = marginTop + gHeight + 85;
     for (int i = 0; i < 4; ++i){
         int newX = i * blockWidth; 
         for (int j = 0; j < 4; ++j){
@@ -173,7 +200,22 @@ void GraphicObserver::notify(){
             win->fillRectangle(p2N_x + newX, p2N_y + newY, pieceWidth, pieceWidth, colourMap[nextBoardP2[j][i]]);
         }
     }
+    // check losers
+    bool p1lost = !(p1->getGameOver());
+    bool p2lost = !(p2->getGameOver());
+    if (p1lost){
+        //cout<< "Player One Lost"<<endl;
+        win->drawString(p1MarginLeft + gWidth + 60, marginTop*2, "Player Two Won!");
+        win->drawString(p1MarginLeft + gWidth + 40, marginTop*2 + 20, "To exit, press any key,");
+        win->drawString(p1MarginLeft + gWidth + 50, marginTop*2 + 40, "then press 'Enter'.");
+    }
+    if (p2lost){
+        //cout<< "Player Two Lost"<<endl;
+        win->drawString(p1MarginLeft + gWidth + 60, marginTop*2, "Player One Won!");
+        win->drawString(p1MarginLeft + gWidth + 40, marginTop*2 + 20, "To exit, press any key,");
+        win->drawString(p1MarginLeft + gWidth + 50, marginTop*2 + 40, "then press 'Enter'.");
 
+    }
 }
 
 GraphicObserver::~GraphicObserver(){

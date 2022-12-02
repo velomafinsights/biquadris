@@ -1,0 +1,1 @@
+left left left right right right 3clockwise 4down 8right 4left counterclockwise drop
