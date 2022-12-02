@@ -19,7 +19,15 @@
 
 
 int dropCurrBlock(GameBoard* board, GameBoard* board2){
+    cout<< board->getScore() << endl;
     int rC = board->dropBlock();
+    int p1HS = board->getScore();
+    if (p1HS > board->getHighScore()){
+        board->setHighScore(p1HS);
+        board2->setHighScore(p1HS);
+    }
+
+    cout<< board->getScore() << endl;
     board->newBlock();
     if (board->getGameOver() == 0){
         board->render();
@@ -104,6 +112,9 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
         if(board->getLevel() > 2){
             board->norandom(fname);
             board->render();
+        }
+        else{
+            cout << "Error: you must be in level 3 or level 4 to run this command" << endl;
         }
     } else if (command == "random"){
         if(board->getLevel() > 2){
@@ -226,10 +237,21 @@ int main(int argc, char* argv[]) {
         if (playerOne % 2 == 0){
             commandResult = applyCommand(board, board2, commandFromUser, ciptr);
         }
-        //else if (playerOne % 2 == 1){
         else{
             commandResult = applyCommand(board2, board, commandFromUser, ciptr);
         }
+/*
+        int p1HS = board->getScore();
+        int p2HS = board2->getScore();
+        if (p1HS > p2HS){
+            board->setHighScore(p1HS);
+            board2->setHighScore(p1HS);
+        }
+        else{
+            board->setHighScore(p2HS);
+            board2->setHighScore(p2HS);
+        }
+*/
         if (commandResult == 2){
             // cin a new command
             int breakloop = 0;

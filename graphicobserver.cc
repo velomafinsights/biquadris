@@ -110,6 +110,7 @@ void GraphicObserver::notify(){
 
     // HighScore
     win->fillRectangle(p1MarginLeft + gWidth + marginBtw - 25, marginTop/2 - 20, pieceWidth, pieceWidth, 0);
+    /*
     int p1HS = p1->getScore();
     int p2HS = p2->getScore();
     if (p1HS > p2HS){
@@ -119,7 +120,7 @@ void GraphicObserver::notify(){
     else{
         p1->setHighScore(p2HS);
         p2->setHighScore(p2HS);
-    }
+    }*/
     HS << p1->getHighScore();
     std::string observeHS = HS.str();
     win->drawString(p1MarginLeft + gWidth + marginBtw - 20, marginTop/2, observeHS);
