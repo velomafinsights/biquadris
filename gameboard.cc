@@ -1,12 +1,10 @@
 #include "gameboard.h"
 #include <vector>
-#include <memory>
 #include <utility>
 #include <stdlib.h>
 #include "blocks.h"
 
-//use MIL
-GameBoard::GameBoard(string f, size_t l, int rSeed) {
+GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, level{lvl}, score{0}, highScore{0}, blocksWithoutRowClear{0}, file{inputFile}, randomSeed{rSeed}, gameContinue{true} {
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
         for (int j = 0; j < 11; j++) {
@@ -14,13 +12,6 @@ GameBoard::GameBoard(string f, size_t l, int rSeed) {
         }
         board.emplace_back(row);
     }
-    turnNumber = 1;
-    level = l;
-    score = 0;
-    blocksWithoutRowClear = 0;
-    gameContinue = true;
-    randomSeed = rSeed;
-    file = f;
     if (level == 0) {
         currLevel = new Level0{file};
     } else if (level == 1) {
@@ -75,11 +66,8 @@ size_t GameBoard::clearFilledRows() {
         if (rowClear) {
             clearRow(i);
             for(auto it: blocks) {
-                std::cout << "rowCleared call" << std::endl;
                 it->rowCleared(i);
-                std::cout << "rowCleared return" << std::endl;
                 int blockRemove = it->blockRemoved();
-                std::cout << "blockRemove done" << std::endl;
                 if (blockRemove >= 0) {
                     score += (blockRemove + 1) * (blockRemove + 1);
                 }
@@ -98,7 +86,6 @@ int GameBoard::dropBlock() {
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
     int rowsCleared = clearFilledRows();
-    std::cout << "rows have been cleared" << std::endl;
     if (level == 4 && rowsCleared == 0) {
         blocksWithoutRowClear++;
         if (blocksWithoutRowClear % 5 == 0 && blocksWithoutRowClear >= 5) {
@@ -193,7 +180,6 @@ bool GameBoard::moveDown() {
     }
     currBlock->moveBlockDown();
     drawBlock();
-    // notifyObservers();
     return true;
 }
 
@@ -259,18 +245,6 @@ void GameBoard::levelDown() {
     }
 }
 
-void GameBoard::setBlind() {
-    blind = true;
-}
-
-void GameBoard::setHeavy() {
-    heavy = true;
-}
-
-void GameBoard::render(){
-    notifyObservers();
-}
-
 void GameBoard::norandom(std::string filePass){
     delete currLevel;
     if(level == 3){
@@ -286,31 +260,6 @@ void GameBoard::random(){
         currLevel = new Level3{false};
     } else {
         currLevel = new Level4{false};
-    }
-}
-
-size_t GameBoard::getLevel(){
-    return level;
-}
-
-size_t GameBoard::getScore(){
-    return score;
-}
-
-std::vector<std::vector <char>> GameBoard::getState() {
-    return board;
-}
-
-bool GameBoard::getBlind(){
-    return blind;
-}
-
-GameBoard::~GameBoard() {
-    delete currBlock;
-    delete nextBlock;
-    delete currLevel;
-    for (auto it: blocks) {
-        delete it;
     }
 }
 
@@ -371,6 +320,22 @@ void GameBoard::restart() {
     this->newBlock();
 }
 
+size_t GameBoard::getLevel(){
+    return level;
+}
+
+size_t GameBoard::getScore(){
+    return score;
+}
+
+std::vector<std::vector <char>> GameBoard::getState() {
+    return board;
+}
+
+bool GameBoard::getBlind(){
+    return blind;
+}
+
 bool GameBoard::getGameOver() {
     return gameContinue;
 }
@@ -387,19 +352,27 @@ void GameBoard::setHighScore(size_t hScore) {
     highScore = hScore;
 }
 
-void GameBoard::setWinner(string player) {
-    won = 1;
-    winner = player;
-}
-
-bool GameBoard::getWon() {
-    return won;
-}
-
-string GameBoard::getWinner() {
-    return winner;
-}
-
 bool GameBoard::getHeavy() {
     return heavy;
+}
+
+void GameBoard::setBlind() {
+    blind = true;
+}
+
+void GameBoard::setHeavy() {
+    heavy = true;
+}
+
+void GameBoard::render(){
+    notifyObservers();
+}
+
+GameBoard::~GameBoard() {
+    delete currBlock;
+    delete nextBlock;
+    delete currLevel;
+    for (auto it: blocks) {
+        delete it;
+    }
 }

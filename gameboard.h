@@ -14,8 +14,6 @@
 class GameBoard: public Subject {
     std::vector<std::vector <char>> board;
     std::vector<Block*> blocks;
-    bool won;
-    string winner;
     Block* currBlock;
     Block* nextBlock;
     Level* currLevel;
@@ -35,7 +33,7 @@ class GameBoard: public Subject {
     bool drawBlock();
     void blindBoard();
  public:
-    GameBoard(string f, size_t l, int rSeed);
+    GameBoard(string inputFile, size_t lvl, int rSeed);
     void norandom(std::string filePass);
     void random();
     void newBlock();
@@ -48,23 +46,20 @@ class GameBoard: public Subject {
     void levelUp();
     void levelDown();
     void changeBlock(char block);
-    size_t getScore();
-    size_t getLevel();
-    size_t getHighScore();
     void setHighScore(size_t hScore);
     void rotate(bool clockwise);
     void render();
     void restart();
     std::vector<std::vector <char>> getState();
-    ~GameBoard();
     bool getGameOver();
     Block* getNextBlock();
-    bool getWon();
-    string getWinner();
     bool getBlind();
-    bool applyHeavy();
-    void setWinner(string player);
+    size_t getScore();
+    size_t getLevel();
+    size_t getHighScore();
     bool getHeavy();
+    bool applyHeavy();
+    ~GameBoard();
 };
 
 #endif
