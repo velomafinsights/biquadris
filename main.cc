@@ -44,10 +44,6 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
         int rC = board->dropBlock();
         board->newBlock();
         gameContinue = board->getGameOver();
-        if (gameContinue == 0){
-            cout<< "Game Over! :("<<endl;
-            return 2;
-        }
         if(rC >=2){
             cout<<"Choose a punishment for your opponent?"<<endl;
             std::string punish;
@@ -64,6 +60,10 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
             }
         }
         board->render();
+        if (gameContinue == 0){
+            cout<< "Game Over! " <<endl;
+            return 2;
+        }
         return 1;
         //++i;
     } else if (command == "right") {
@@ -236,23 +236,29 @@ int main(int argc, char* argv[]) {
     //bool *inputFromFile = &userFile;
 
     while(cin >> commandFromUser){
-        int commandResult;
+        int commandResult = 0;
         if (playerOne % 2 == 0){
-            // call methods on playerOne
             commandResult = applyCommand(board, board2, commandFromUser, ciptr);
-            //playerOne += applyCommand(board, board2, command, multi);
-
         }
-        else if (playerOne % 2 == 1){
-            // call methods on playerTwo
+        //else if (playerOne % 2 == 1){
+        else{
             commandResult = applyCommand(board2, board, commandFromUser, ciptr);
         }
-
         if (commandResult == 2){
-            break;
+            // cin a new command
+            int breakloop = 0;
+            cout << "To exit, press any key, then press 'Enter'."<<endl;
+            while (true){
+                if (cin >> commandFromUser){
+                    breakloop = 1;
+                    break;
+                }
+            }
+            if (breakloop == 1){
+                break;
+            }
         }
         playerOne += commandResult;
-
     }
     delete graphics;
 /*

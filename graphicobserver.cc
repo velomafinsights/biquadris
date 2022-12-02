@@ -38,7 +38,10 @@ GraphicObserver::GraphicObserver(int wWidth, int wHeight, int blockWidth,
 
 void GraphicObserver::startGame(){
     std::string stuff(38, ' ');
-    win->drawString(p1MarginLeft + gWidth + 80, marginTop/2 - 10, "BIQUADRIS");
+    win->drawString(p1MarginLeft + gWidth + 80, marginTop/2 - 40, "BIQUADRIS");
+
+    win->drawString(p1MarginLeft + gWidth, marginTop/2, "High Score");
+    win->drawString(p1MarginLeft + gWidth + marginBtw - 20, marginTop/2, "0");
 
     win->drawString(p1MarginLeft, marginTop/2 + 50 , "Level:" + stuff + "0");
     win->drawString(p2MarginLeft, marginTop/2 + 50, "Level:" + stuff + "0");
@@ -95,11 +98,17 @@ void GraphicObserver::notify(){
              }
          }
     }
+
     std::stringstream p1L;
     std::stringstream p2L;
     std::stringstream p1S;
     std::stringstream p2S;
+    std::stringstream HS;
     std::string stuff(38, ' ');
+    // Add HighScore to this draw string later
+    win->fillRectangle(p1MarginLeft + gWidth + marginBtw - 25, marginTop/2 - 20, pieceWidth, pieceWidth, 0);
+    win->drawString(p1MarginLeft + gWidth + marginBtw - 20, marginTop/2, "0");
+
     std::string erasedraw(39, ' ');
     p1L << p1->getLevel();
     std::string p1Level = p1L.str();
