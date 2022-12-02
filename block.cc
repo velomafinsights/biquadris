@@ -251,7 +251,7 @@ void Block::rowCleared(int row){
         }
     } else {
         std::vector<int> erasePoint;
-        for (int j = 0; i < orientation[j].size(); ++j) {
+        for (int j = 0; j < orientation[i].size(); ++j) {
             if (orientation[i][j][0] == row) {
                 erasePoint.emplace_back(i);
             }
