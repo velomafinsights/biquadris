@@ -1,7 +1,12 @@
 #include "block.h"
 
 Block::Block(char c): c{c}{
-    if(c == 's'){
+    if (c == '*') {
+        vector<vector<int>> s0 = {{0,5}};
+        orientation = {s0, s0, s0, s0};
+        blockWidth = {1, 1};
+        bottomMost = {s0, s0, s0, s0};
+    } else if(c == 's'){
         vector<vector<int>> s0 = {{2,1}, {2,2}, {3,0}, {3,1}};
         vector<vector<int>> s1 = {{1,0}, {2,0}, {2,1}, {3,1}};
         orientation = {s0, s1, s0, s1};
@@ -123,6 +128,8 @@ void Block::moveBlockRight(){
             ++x;
         }
     }
+    //int orientationLen = orientation[i].size();
+    //int blockLen = orientation[i][0].size();
     // change orientation vector
     for (int i = 0; i < 4; ++i){
         //orientation[i]; gives each of the 2d vectors
@@ -159,22 +166,23 @@ void Block::moveBlockLeft(){
 }
 
 void Block::moveBlockDown(){
-    ++y;
-    for (int i = 0; i < 4; ++i){
-        //orientation[i]; gives each of the 2d vectors
-        for (int j = 0; j < 4; ++j){
-            orientation[i][j][0] += 1;
+    if (c == '*') {
+        orientation[i][0][0] += 1;
+    } else {
+        ++y;
+        for (int i = 0; i < 4; ++i){
+            //orientation[i]; gives each of the 2d vectors
+            for (int j = 0; j < 4; ++j){
+                orientation[i][j][0] += 1;
+            }
+        }
+        for (int i = 0; i < 4; ++i){
+            int itlen = bottomMost[i].size();
+            for (int j = 0; j < itlen; ++j){
+                bottomMost[i][j][0] += 1;
+            }
         }
     }
-    
-    for (int i = 0; i < 4; ++i){
-        int itlen = bottomMost[i].size();
-        for (int j = 0; j < itlen; ++j){
-            bottomMost[i][j][0] += 1;
-        }
-    }
-
-
 }
 
 std::vector<std::vector<int>> Block::getStructure(){
@@ -226,27 +234,37 @@ int Block::getY(){
 }
 
 int Block::blockRemoved(){
-    if (orientation[i].empty()){
+    if (!blockCleared && orientation[i].empty()){
+        blockCleared = true;
+        if (c == '*') {
+            return 4;
+        }
         return currLevel;
     }
     return -1;
 }
 
 void Block::rowCleared(int row){
-    vector<int> remIndex;
-    for (int j = 0; j < orientation[i].size(); ++j){
-        if (orientation[i][j][0] == row){
-            remIndex.emplace_back(j);
+    if (c == '*') {
+        if (blockCleared || orientation[i][0][0] == row) {
+            orientation[i].clear();
         }
-    }
-    for (int x = 0; x < remIndex.size(); ++x){
-        orientation[i].erase(orientation[i].begin() + remIndex[x]);
-    }
-
-    //vector<int> ltRows;
-    for (int j = 0; j < orientation[i].size(); ++j){
-        if (orientation[i][j][0] < row){
-            orientation[i][j][0] += 1;
+    } else {
+        std::vector<int> erasePoint;
+        for (int j = 0; i < orientation[j].size(); ++j) {
+            if (orientation[i][j][0] == row) {
+                erasePoint.emplace_back(i);
+            }
+        }
+        int numberErased = 0;
+        for (int it: erasePoint) {
+            orientation[i].erase(orientation[i].begin() + it - numberErased);
+            numberErased++;
+        }
+        for (int j = 0; j < orientation[i].size(); ++j){
+            if (orientation[i][j][0] < row){
+                orientation[i][j][0] += 1;
+            }
         }
     }
 }

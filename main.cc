@@ -220,6 +220,7 @@ int main(int argc, char* argv[]) {
         graphics = new GraphicObserver{blockWidth, board, board2};
     }
 
+
     board->newBlock();
     board2->newBlock();
     board->render();
