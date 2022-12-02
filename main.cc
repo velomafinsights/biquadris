@@ -17,55 +17,41 @@
 #include "level2.h"
 #include "level3.h"
 
-/*
-template<class Observer> class unique_ptr {
-    Observer* ptr;  
-    unique_ptr(Observer* ptr): ptr{ptr}{}
-    unique_ptr() { ptr = nullptr; }
-    ~unique_ptr() { delete ptr; }
-    unique_ptr( const unique_ptr<Observer> &other) = delete; 	// Disables copying
-    unique_ptr<Observer> &operator=(const unique_ptr<Observer> &other) = delete; // disables copy assignment
-    unique_ptr(unique_ptr<Observer> &&other): ptr{other.ptr} {      // move ctor
-        other.ptr = nullptr;
+
+int dropCurrBlock(GameBoard* board, GameBoard* board2){
+    int rC = board->dropBlock();
+    board->newBlock();
+    if (board->getGameOver() == 0){
+        board->render();
+        cout<< "Game Over! " <<endl;
+        return 2;
     }
-    unique_ptr<Observer> &operator=(unique_ptr<Observer>&& other){
-		std::swap(ptr, other.ptr);
-		return *this;
-	}
-    Observer& operator*() {return *ptr; }
-};
-*/
+    if(rC >=2){
+        cout<<"Choose a punishment for your opponent?"<<endl;
+        std::string punish;
+        cin >> punish;
+        if (punish == "blind"){
+            board2->setBlind();
+        } else if (punish == "heavy"){
+            board2->setHeavy();
+        } else if (punish == "force"){
+            cout<<"What block would you like for your opponent?"<<endl; 
+            char blockOpp;
+            cin >> blockOpp; 
+            board2->changeBlock(blockOpp);
+        }
+    }
+    board->render();
+    return 1;
+
+}
 
 int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, commandInterpreter* ci){
     int multi = ci->multiplier(commandFromUser);
     std::string command = ci->process(commandFromUser);
     bool gameContinue;
     if (command == "drop") {
-        int rC = board->dropBlock();
-        board->newBlock();
-        gameContinue = board->getGameOver();
-        if(rC >=2){
-            cout<<"Choose a punishment for your opponent?"<<endl;
-            std::string punish;
-            cin >> punish;
-            if (punish == "blind"){
-                board2->setBlind();
-            } else if (punish == "heavy"){
-                board2->setHeavy();
-            } else if (punish == "force"){
-                cout<<"What block would you like for your opponent?"<<endl; 
-                char blockOpp;
-                cin >> blockOpp; 
-                board2->changeBlock(blockOpp);
-            }
-        }
-        board->render();
-        if (gameContinue == 0){
-            cout<< "Game Over! " <<endl;
-            return 2;
-        }
-        return 1;
-        //++i;
+        return dropCurrBlock(board, board2);
     } else if (command == "right") {
         for(int i =0; i<multi; ++i){
             board->moveRight();
@@ -132,7 +118,6 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
         std::string fileName;
         cin >> fileName;
         ifstream commands{fileName};
-        //*userFile = true;
         string cmd;
         while(commands >> cmd){
             int cmdResult = applyCommand(board, board2, cmd, ci);
@@ -231,7 +216,7 @@ int main(int argc, char* argv[]) {
     bool gameContinue;
     ifstream commands;
     // This was used to track which player's turn it is
-    size_t i =0;
+    //size_t i =0;
     size_t playerOne = 0;
     //bool userFile=false;
     //bool *inputFromFile = &userFile;
