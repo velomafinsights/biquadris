@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "blocks.h"
 
+//use MIL
 GameBoard::GameBoard(string f, size_t l, int rSeed) {
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
@@ -74,8 +75,11 @@ size_t GameBoard::clearFilledRows() {
         if (rowClear) {
             clearRow(i);
             for(auto it: blocks) {
+                std::cout << "rowCleared call" << std::endl;
                 it->rowCleared(i);
+                std::cout << "rowCleared return" << std::endl;
                 int blockRemove = it->blockRemoved();
+                std::cout << "blockRemove done" << std::endl;
                 if (blockRemove >= 0) {
                     score += (blockRemove + 1) * (blockRemove + 1);
                 }
@@ -94,6 +98,7 @@ int GameBoard::dropBlock() {
     currBlock->setCurrLevel(level);
     if (blind) blind = false;
     int rowsCleared = clearFilledRows();
+    std::cout << "rows have been cleared" << std::endl;
     if (level == 4 && rowsCleared == 0) {
         blocksWithoutRowClear++;
         if (blocksWithoutRowClear % 5 == 0 && blocksWithoutRowClear >= 5) {
@@ -143,64 +148,53 @@ bool GameBoard::drawBlock() {
     return 1;
 }
 
-void GameBoard::applyHeavy() {
+bool GameBoard::applyHeavy() {
     for (int i = 0; i < 2; i++) {
         if (!moveDown()) {
-            dropBlock();
-            break;
+            return false;
         }
     }
+    return true;
 }
 
-void GameBoard::moveRight() {
-    bool canMoveRight = 1;
+bool GameBoard::moveRight() {
     clearBlock();
     for (auto it: currBlock->getStructure()) {
         if (it[1] == 10 || board[it[0]][it[1] + 1] != '.') {
-            canMoveRight = 0;
-            break;
+            drawBlock();
+            return false;
         }
     }
-    if (canMoveRight) {
-        currBlock->moveBlockRight();
-    }
+    currBlock->moveBlockRight();
     drawBlock();
-    if (heavy) applyHeavy();
+    return true;
 }
 
-void GameBoard::moveLeft() {
-    bool canMoveLeft = 1;
+bool GameBoard::moveLeft() {
     clearBlock();
     for (auto it: currBlock->getStructure()) {
         if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '.') {
-            canMoveLeft = 0;
-            break;
+            drawBlock();
+            return false;
         }
     }
-    if (canMoveLeft) {
-        currBlock->moveBlockLeft();
-    }
+    currBlock->moveBlockLeft();
     drawBlock();
-    if (heavy) applyHeavy();
+    return true;
 }
 
 bool GameBoard::moveDown() {
     clearBlock();
-    bool canMoveDown = 1;
     for (auto it: currBlock->getbottomMost()) {
         if (it[0] == 17 || board[it[0] + 1][it[1]] != '.') {
-            canMoveDown = 0;
-            break;
+            drawBlock();
+            return false;
         }
     }
-    if (canMoveDown) {
-        currBlock->moveBlockDown();
-    }
+    currBlock->moveBlockDown();
     drawBlock();
-    if (canMoveDown) {
-        return true;
-    }
-    return false;
+    // notifyObservers();
+    return true;
 }
 
 void GameBoard::rotate(bool clockwise) {
@@ -404,4 +398,8 @@ bool GameBoard::getWon() {
 
 string GameBoard::getWinner() {
     return winner;
+}
+
+bool GameBoard::getHeavy() {
+    return heavy;
 }

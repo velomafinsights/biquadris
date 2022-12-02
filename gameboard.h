@@ -34,15 +34,14 @@ class GameBoard: public Subject {
     void clearBlock();
     bool drawBlock();
     void blindBoard();
-    void applyHeavy();
  public:
     GameBoard(string f, size_t l, int rSeed);
     void norandom(std::string filePass);
     void random();
     void newBlock();
     int dropBlock();
-    void moveRight();
-    void moveLeft();
+    bool moveRight();
+    bool moveLeft();
     bool moveDown();
     void setBlind();
     void setHeavy();
@@ -57,13 +56,15 @@ class GameBoard: public Subject {
     void render();
     void restart();
     std::vector<std::vector <char>> getState();
-    bool getBlind();
     ~GameBoard();
     bool getGameOver();
     Block* getNextBlock();
     bool getWon();
     string getWinner();
+    bool getBlind();
+    bool applyHeavy();
     void setWinner(string player);
+    bool getHeavy();
 };
 
 #endif
