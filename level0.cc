@@ -1,6 +1,14 @@
 #include "level0.h"
 #include <string>
 #include "block.h"
+#include "s.h"
+#include "z.h"
+#include "j.h"
+#include "l.h"
+#include "i.h"
+#include "o.h"
+#include "t.h"
+
 
 using namespace std;
 
@@ -23,25 +31,25 @@ Block* Level0::getBlock(size_t i){
     size_t pos = (i-1) % seqOneLength;
     Block* nB;
     if (blockQueue[pos] == "S"){
-        nB = new Block('s');
+        nB = new blockS();
     }
     else if (blockQueue[pos] == "I"){
-        nB = new Block('i');
+        nB = new blockI();
     }
     else if (blockQueue[pos] == "J"){
-        nB = new Block('j');
+        nB = new blockJ();
     }
     else if (blockQueue[pos] == "L"){
-        nB = new Block('l');
+        nB = new blockL();
     }
     else if (blockQueue[pos] == "Z"){
-        nB = new Block('z');
+        nB = new blockZ();
     }
     else if (blockQueue[pos] == "O"){
-        nB = new Block('o');
+        nB = new blockO();
     }
     else if (blockQueue[pos] == "T"){
-        nB = new Block('t');
+        nB = new blockT();
     }
     else {
         nB = nullptr;

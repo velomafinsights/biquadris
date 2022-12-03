@@ -1,7 +1,7 @@
 #include "block.h"
 
-Block::Block(char c): c{c}{
-    if (c == '*') {
+Block::Block(){
+    /*if (c == '*') {
         vector<vector<int>> s0 = {{0,5}};
         orientation = {s0, s0, s0, s0};
         blockWidth = {1, 1};
@@ -85,7 +85,7 @@ Block::Block(char c): c{c}{
         vector<vector<int>> b2 = {{2,1}, {2,0}, {2,2}};
         vector<vector<int>> b3 = {{3,0}, {2,1}};
         bottomMost = {b0, b1, b2, b3};
-    }
+    }*/
     x = 0;
     y = 0;
     i = 0;
@@ -166,21 +166,17 @@ void Block::moveBlockLeft(){
 }
 
 void Block::moveBlockDown(){
-    if (c == '*') {
-        orientation[i][0][0] += 1;
-    } else {
-        ++y;
-        for (int i = 0; i < 4; ++i){
-            //orientation[i]; gives each of the 2d vectors
-            for (int j = 0; j < 4; ++j){
-                orientation[i][j][0] += 1;
-            }
+    ++y;
+    for (int i = 0; i < 4; ++i){
+        //orientation[i]; gives each of the 2d vectors
+        for (int j = 0; j < 4; ++j){
+            orientation[i][j][0] += 1;
         }
-        for (int i = 0; i < 4; ++i){
-            int itlen = bottomMost[i].size();
-            for (int j = 0; j < itlen; ++j){
-                bottomMost[i][j][0] += 1;
-            }
+    }
+    for (int i = 0; i < 4; ++i){
+        int itlen = bottomMost[i].size();
+        for (int j = 0; j < itlen; ++j){
+            bottomMost[i][j][0] += 1;
         }
     }
 }
@@ -236,20 +232,19 @@ int Block::getY(){
 int Block::blockRemoved(){
     if (!blockCleared && orientation[i].empty()){
         blockCleared = true;
-        if (c == '*') {
+        /*if (c == '*') {
             return 4;
-        }
+        }*/
         return currLevel;
     }
     return -1;
 }
 
 void Block::rowCleared(int row){
-    if (c == '*') {
+    /*if (c == '*') {
         if (blockCleared || orientation[i][0][0] == row) {
             orientation[i].clear();
-        }
-    } else {
+        }*/
         std::vector<int> erasePoint;
         for (int j = 0; j < orientation[i].size(); ++j) {
             if (orientation[i][j][0] == row) {
@@ -266,7 +261,6 @@ void Block::rowCleared(int row){
                 orientation[i][j][0] += 1;
             }
         }
-    }
 }
 
 void Block::setCurrLevel(size_t level){
