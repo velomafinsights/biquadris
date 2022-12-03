@@ -26,8 +26,6 @@ int dropCurrBlock(GameBoard* board, GameBoard* board2){
         board->setHighScore(p1HS);
         board2->setHighScore(p1HS);
     }
-
-    cout<< board->getScore() << endl;
     board->newBlock();
     if (board->getGameOver() == 0){
         board->render();
@@ -54,6 +52,7 @@ int dropCurrBlock(GameBoard* board, GameBoard* board2){
 
 }
 
+
 int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, commandInterpreter* ci){
     int multi = ci->multiplier(commandFromUser);
     std::string command = ci->process(commandFromUser);
@@ -62,33 +61,56 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
         return dropCurrBlock(board, board2);
     } else if (command == "right") {
         for(int i =0; i<multi; ++i){
-            if (board->moveRight() && board->getHeavy() && !board->applyHeavy()) {
-                return dropCurrBlock(board, board2);
+            if (board->moveRight()){
+                if (!board->getHeavy() && (board->getLevel() == 3 || board->getLevel() == 4)){
+                    if (!board->moveDown()) return dropCurrBlock(board, board2);
+                }
+                else if (board->getHeavy() && !board->applyHeavy()){
+                    return dropCurrBlock(board, board2);
+                }
             }
         }
         board->render();
     } else if (command == "left") {
         for(int i =0; i<multi; ++i){
-            if (board->moveLeft() && board->getHeavy() && !board->applyHeavy()) {
-                return dropCurrBlock(board, board2);
+            if (board->moveLeft()){
+                if (!board->getHeavy() && (board->getLevel() == 3 || board->getLevel() == 4)){
+                    if (!board->moveDown()) return dropCurrBlock(board, board2);
+                }
+                else if (board->getHeavy() && !board->applyHeavy()){
+                    return dropCurrBlock(board, board2);
+                }
             }
         }
         board->render();
     } else if (command == "down") {
         for(int i =0; i<multi; ++i){
-            if (!board->moveDown()) {
+            if(board->moveDown()){
+                if (board->getLevel() == 3 || board->getLevel() == 4){
+                    if (!board->moveDown()) return dropCurrBlock(board, board2);
+                }
+            }
+            else {
                 return dropCurrBlock(board, board2);
             }
         }
         board->render();
     } else if (command == "clockwise") {
         for(int i =0; i<multi; ++i){
-            board->rotate(1);
+            if (board->rotate(1)){
+                if (board->getLevel() == 3 || board->getLevel() == 4){
+                    if (!board->moveDown()) return dropCurrBlock(board, board2);
+                }
+            }
         }
         board->render();
     } else if (command == "counterclockwise") {
         for(int i =0; i<multi; ++i){
-            board->rotate(0);
+            if (board->rotate(0)){
+                if (board->getLevel() == 3 || board->getLevel() == 4){
+                    if (!board->moveDown()) return dropCurrBlock(board, board2);
+                }
+            }
         }
         board->render();
     } else if (command == "blind"){
@@ -245,18 +267,7 @@ int main(int argc, char* argv[]) {
         else{
             commandResult = applyCommand(board2, board, commandFromUser, ciptr);
         }
-/*
-        int p1HS = board->getScore();
-        int p2HS = board2->getScore();
-        if (p1HS > p2HS){
-            board->setHighScore(p1HS);
-            board2->setHighScore(p1HS);
-        }
-        else{
-            board->setHighScore(p2HS);
-            board2->setHighScore(p2HS);
-        }
-*/
+
         if (commandResult == 2){
             // cin a new command
             int breakloop = 0;

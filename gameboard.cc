@@ -20,10 +20,10 @@ GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, le
         currLevel = new Level2{};
     } else if (level == 3) {
         currLevel = new Level3{false};
-        heavy = true;
+        //heavy = true;
     } else {
         currLevel = new Level4{false};
-        heavy = true;
+        //heavy = true;
     }
 }
 
@@ -135,6 +135,7 @@ bool GameBoard::drawBlock() {
     return 1;
 }
 
+/**/
 bool GameBoard::applyHeavy() {
     for (int i = 0; i < 2; i++) {
         if (!moveDown()) {
@@ -183,7 +184,7 @@ bool GameBoard::moveDown() {
     return true;
 }
 
-void GameBoard::rotate(bool clockwise) {
+bool GameBoard::rotate(bool clockwise) {
     std::vector<std::vector <int>> rotatedBlock;
     if (clockwise) {
         rotatedBlock = currBlock->getNextCWOrientation();
@@ -206,6 +207,7 @@ void GameBoard::rotate(bool clockwise) {
         }
     }
     drawBlock();
+    return canRoate;
 }
 
 void GameBoard::levelUp() {
@@ -217,10 +219,11 @@ void GameBoard::levelUp() {
         currLevel = new Level2{};
     } else if (level == 2) {
         currLevel = new Level3{true};
-        heavy = true;
+        //heavy = true;
     } else if (level == 3) {
-        currLevel = new Level4{true, "sequence1.txt"};
-        heavy = true;
+        currLevel = new Level4{true, file};
+        //currLevel = new Level4{true, "sequence1.txt"};
+        //heavy = true;
     }
     if (level != 4) {
         level++;
@@ -238,7 +241,7 @@ void GameBoard::levelDown() {
         currLevel = new Level2{};
     } else if (level == 4) {
         currLevel = new Level3{true};
-        heavy = true;
+        //heavy = true;
     }
     if (level != 0) {
         level--;

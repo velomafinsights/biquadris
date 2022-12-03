@@ -47,7 +47,7 @@ class GameBoard: public Subject {
     void levelDown();
     void changeBlock(char block);
     void setHighScore(size_t hScore);
-    void rotate(bool clockwise);
+    bool rotate(bool clockwise);
     void render();
     void restart();
     std::vector<std::vector <char>> getState();
