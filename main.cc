@@ -62,18 +62,23 @@ int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, co
         return dropCurrBlock(board, board2);
     } else if (command == "right") {
         for(int i =0; i<multi; ++i){
-            board->moveRight();
-        }
-        board->render();   
-    } else if (command == "left") {
-        for(int i =0; i<multi; ++i){
-            board->moveLeft();
+            if (board->moveRight() && board->getHeavy() && !board->applyHeavy()) {
+                return dropCurrBlock(board, board2);
+            }
         }
         board->render();
-
+    } else if (command == "left") {
+        for(int i =0; i<multi; ++i){
+            if (board->moveLeft() && board->getHeavy() && !board->applyHeavy()) {
+                return dropCurrBlock(board, board2);
+            }
+        }
+        board->render();
     } else if (command == "down") {
         for(int i =0; i<multi; ++i){
-            board->moveDown();
+            if (!board->moveDown()) {
+                return dropCurrBlock(board, board2);
+            }
         }
         board->render();
     } else if (command == "clockwise") {
