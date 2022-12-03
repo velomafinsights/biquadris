@@ -22,7 +22,7 @@ class GraphicObserver: public Observer {
     int marginBtw;  // space between both boards
     int marginTop;
     // {'?', 0}, {'.', 1}
-    map<char, int>colourMap {{'.', 0}, {'?', 1}, {'i', 2}, {'j', 3}, {'l', 4}, 
+    map<char, int>colourMap {{' ', 0}, {'?', 1}, {'i', 2}, {'j', 3}, {'l', 4}, 
                             {'o', 4}, {'s', 2}, {'z', 3}, {'t', 4}, {'*', 2}};
     public:
         // init ctor GraphicObserver{blockWidth, board, board2}
