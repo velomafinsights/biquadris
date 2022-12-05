@@ -20,10 +20,8 @@ GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, le
         currLevel = new Level2{};
     } else if (level == 3) {
         currLevel = new Level3{false};
-        //heavy = true;
     } else {
         currLevel = new Level4{false};
-        //heavy = true;
     }
 }
 
@@ -135,7 +133,6 @@ bool GameBoard::drawBlock() {
     return 1;
 }
 
-/**/
 bool GameBoard::applyHeavy() {
     for (int i = 0; i < 2; i++) {
         if (!moveDown()) {
@@ -219,11 +216,8 @@ void GameBoard::levelUp() {
         currLevel = new Level2{};
     } else if (level == 2) {
         currLevel = new Level3{true};
-        //heavy = true;
     } else if (level == 3) {
         currLevel = new Level4{true, file};
-        //currLevel = new Level4{true, "sequence1.txt"};
-        //heavy = true;
     }
     if (level != 4) {
         level++;
@@ -241,7 +235,6 @@ void GameBoard::levelDown() {
         currLevel = new Level2{};
     } else if (level == 4) {
         currLevel = new Level3{true};
-        //heavy = true;
     }
     if (level != 0) {
         level--;
@@ -379,3 +372,5 @@ GameBoard::~GameBoard() {
         delete it;
     }
 }
+
+

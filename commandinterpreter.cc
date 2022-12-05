@@ -5,9 +5,6 @@
 #include <algorithm>
 using namespace std;
 
-
-// validSubString returns true if sub is a beginning substring of original
-// ex. validSubString(left, le) == 1
 bool commandInterpreter::validSubString(std::string original, std::string sub){
     if (original.find(sub) == 0){
         return true;
@@ -15,18 +12,9 @@ bool commandInterpreter::validSubString(std::string original, std::string sub){
     else{
         return false;
     }
-/*
-    for (vector<std::string>::iterator it = core.begin(); it != core.end(); ++it){
-        if (*it == given){
-            return true;
-        }
-    }
-    return false;*/
 }
 
-
 std::string commandInterpreter::process(std::string given){
-    //given2 will be the modified string after checking for multi
     std::string given2;
     size_t k = 0;
     for(k; k < given.length(); ++k){
@@ -35,9 +23,7 @@ std::string commandInterpreter::process(std::string given){
             break;
         }
     }
-
     given2 = given.substr(k);
-    // number of matches between given and vector<string> core
     int validOptions = 0;
     string validCommand;
     for (vector<std::string>::iterator it = core.begin(); it != core.end(); ++it){
@@ -46,21 +32,16 @@ std::string commandInterpreter::process(std::string given){
             validCommand = *it;
         }
     }
-
-    //number of matches between given and vector<string> user defined
     for (vector<std::string>::iterator it1 = users.begin(); it1 != users.end(); ++it1){
         if (validSubString(*it1, given2)){
             ++validOptions;
             validCommand = userDefined[*it1];
         }
     }
-    
     if(validOptions == 1){
         return validCommand;
-    } else {
-        return "Invalid Output";
     }
-    //return validCommand;
+    return "Invalid Output";
 }
 
 int commandInterpreter::multiplier(std::string given){
@@ -74,7 +55,6 @@ int commandInterpreter::multiplier(std::string given){
             break;
         }
     }
-
     if(multi.length() == 0){
         return 1;
     } else {
@@ -92,16 +72,11 @@ void commandInterpreter::rename(std::string toRename, std::string given){
             break;
         }
     }
-    
     if(idx != NULL){
         users.erase(users.begin()+idx);
     }
     userDefined[given] = toRename;
     users.emplace_back(given);
-    /*for(auto it: users){
-        cout<<it<<endl;
-    }*/
 }
-
 
 

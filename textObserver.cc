@@ -33,9 +33,6 @@ void TextObserver::notify() {
     std::cout << std::endl;
 
     for (int i = 0; i < 18; ++i) {
-        //if (i < 10) std::cout << i << "      ";
-        //else std::cout << i << "     ";
-
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j) {
             if (blind1 && i>=3 && i<=12 && j>=3 && j<=9) {
@@ -75,7 +72,6 @@ void TextObserver::notify() {
     for (auto it: p1strcut) {
         nextBoardP1[it[0] - minRow][it[1]] = p1NextSym;
     }
-
     std::vector<std::vector <char>> nextBoardP2 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
     Block* p2Next = iObserve2->getNextBlock();
     char p2NextSym = p2Next->getBlockType();
@@ -84,26 +80,21 @@ void TextObserver::notify() {
     for (auto it: p2Next->getStructure()) {
         nextBoardP2[it[0] - minRow][it[1]] = p2NextSym;
     }
-
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             std::cout << nextBoardP1[i][j];
         }
         
         cout<<"                                       ";
-
         for (int k = 0; k < 4; k++) {
             std::cout << nextBoardP2[i][k];
         }
         std::cout << std::endl;
     }
-
-
-    
-
 }
 
 TextObserver::~TextObserver() {
     iObserve1->detach(this);
     iObserve2->detach(this);
 }
+

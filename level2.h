@@ -7,9 +7,6 @@
 
 using namespace std;
 
-// give probability 1/12 for S and Z
-// and 1/6 for O, L, I, J, T
-
 class Level2 : public Level {
 
     public:

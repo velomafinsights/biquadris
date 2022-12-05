@@ -49,7 +49,6 @@ Block* Level0::getBlock(size_t i){
     return nB;
 }
 
-
 size_t Level0::getLevel() {
     return 0;
 }

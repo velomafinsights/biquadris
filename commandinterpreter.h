@@ -19,12 +19,17 @@ class commandInterpreter{
 
         std::map<std::string, std::string> userDefined;
     public:
-        // performs startsWith string comparison
+        // validSubString returns true if sub is a beginning substring of original
+        // ex. validSubString(left, le) == 1
         bool validSubString(std::string original, std::string sub);
 
-        // returns the corresponding command 
+        // process takes in a command such as '3lef' and processes it as 'left'
         std::string process(std::string given);
+
+        // multiplier returns the number of times a command is called (i.e. 3lef returns 3)
         int multiplier(std::string input);
+
+        // renames toRename command if it exists in std::vector<std::string> core
         void rename(std::string toRename, std::string given);
 };
 

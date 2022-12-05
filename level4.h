@@ -5,16 +5,16 @@
 #include "level.h"
 #include "block.h"
 
-// how do we find how many times we've placed 5 blocks?
 
 using namespace std;
-
-// first set up Level4 exactly as Level3
 
 class Level4 : public Level {
     string seqOneSource;
     ifstream seqOne;
-    bool queueFromFile;     // queueFromFile = 1: take from provided file, queueFromFile = 0, call from random
+
+    // if queueFromFile = 1, getBlock follows the provided file, else getBlock follows probability model for level 3
+    bool queueFromFile;
+    
     size_t seqOneLength;
 
     public:
