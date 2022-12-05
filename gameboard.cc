@@ -46,18 +46,24 @@ GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed) : turnNumber{1}, l
 
 void GameBoard::newBlock()
 {
+    cout<<"pre con"<<endl;
     if (currBlock == nullptr)
     {
+        cout<<"post if con"<<endl;
         currBlock = currLevel->getBlock(turnNumber);
+        cout<<"post-block"<<endl;
         nextBlock = currLevel->getBlock(turnNumber + 1);
+        cout<<"next block"<<endl;
     }
     else
     {
+        cout<<"post else con"<<endl;
         blocks.emplace_back(currBlock);
         currBlock = nextBlock;
         nextBlock = currLevel->getBlock(turnNumber + 1);
     }
     ++turnNumber;
+
     if (!drawBlock())
     {
         gameContinue = false;
@@ -167,7 +173,9 @@ void GameBoard::clearBlock() {
 bool GameBoard::drawBlock()
 {
     char symbol = currBlock->getBlockType();
-    for (auto it: currBlock->getStructure()) {
+    cout<<"hello"<<endl;
+    std::vector<std::vector<int>> x = currBlock->getStructure();
+    for (auto it: x) {
         if (board[it[0]][it[1]] != ' '){
             return 0;
         }

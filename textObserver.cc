@@ -27,9 +27,9 @@ void TextObserver::notify() {
     std::cout<<std::endl;
     
 
-    cout<<"-----------";
-    cout<<"                               ";
-    cout<<"-----------";
+    cout<<"- - - - - - - - - - -";
+    cout<<"                                     ";
+    cout<<"- - - - - - - - - - -";
     std::cout << std::endl;
 
     for (int i = 0; i < 18; ++i) {
@@ -57,9 +57,9 @@ void TextObserver::notify() {
         std::cout << std::endl;
     }
 
-    cout<<"-----------";
+    cout<<"- - - - - - - - - - -";
     cout<<"                               ";
-    cout<<"-----------";
+    cout<<"- - - - - - - - - - -";
     std::cout << std::endl;
 
     cout<<"Next:      ";

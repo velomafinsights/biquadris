@@ -226,13 +226,15 @@ int main(int argc, char* argv[]) {
             break;
         }
     }
+    
 
     unique_ptr<GameBoard> g{new GameBoard{file1, userDefLevel, randomSeed}};
     GameBoard* board = g.get();
-
+    
     unique_ptr<GameBoard> g2{new GameBoard{file2, userDefLevel, randomSeed}};
     GameBoard* board2 = g2.get();
     
+
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
     Observer* obs = o.get();
 
@@ -242,7 +244,6 @@ int main(int argc, char* argv[]) {
     if (textOnly == false){
         graphics = new GraphicObserver{blockWidth, board, board2};
     }
-
 
     board->newBlock();
     board2->newBlock();

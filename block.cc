@@ -1,6 +1,7 @@
 #include "block.h"
 
 Block::Block(){
+    std::cout << "block stor called" << std::endl;
     /*if (c == '*') {
         vector<vector<int>> s0 = {{0,5}};
         orientation = {s0, s0, s0, s0};
@@ -182,7 +183,9 @@ void Block::moveBlockDown(){
 }
 
 std::vector<std::vector<int>> Block::getStructure(){
+    std::cout << i << std::endl;
     return orientation[i];
+    //cout<<"hi"<<endl;
 }
 
 std::vector<std::vector<int>> Block::getNextCWOrientation(){

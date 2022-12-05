@@ -14,6 +14,7 @@ using namespace std;
 
 // init ctor
 Level0::Level0(std::string seqOneSource): seqOneSource{seqOneSource}, seqOneLength{0} { 
+    //cout << "reached";
     setBlockQueue();
 }
 
@@ -35,6 +36,7 @@ Block* Level0::getBlock(size_t i){
     }
     else if (blockQueue[pos] == "I"){
         nB = new blockI();
+        std::cout << "i block created" << std::endl;
     }
     else if (blockQueue[pos] == "J"){
         nB = new blockJ();
