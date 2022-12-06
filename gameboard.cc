@@ -8,7 +8,7 @@ GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, le
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
         for (int j = 0; j < 11; j++) {
-            row.emplace_back(' ');
+            row.emplace_back('.');
         }
         board.emplace_back(row);
     }
@@ -42,7 +42,7 @@ void GameBoard::newBlock() {
 
 void GameBoard::clearRow(int row) {
     for (int i = 0; i < 11; i++) {
-        board[row][i] = ' ';
+        board[row][i] = '.';
     }
     for (int i = row; i > 0; i--) {
         for (int j = 0; j < 11; j++) {
@@ -56,7 +56,7 @@ size_t GameBoard::clearFilledRows() {
     for (int i = 0; i < 18; i++) {
         bool rowClear = 1;
         for (int j = 0; j < 11; j++) {
-            if (board[i][j] == ' ') {
+            if (board[i][j] == '.') {
                 rowClear = 0;
                 break;
             }
@@ -88,10 +88,10 @@ int GameBoard::dropBlock() {
         blocksWithoutRowClear++;
         if (blocksWithoutRowClear % 5 == 0 && blocksWithoutRowClear >= 5) {
             for (int i = 0; i < 18; i++) {
-                if (i == 0 && board[i][5] != ' ') {
+                if (i == 0 && board[i][5] != '.') {
                     gameContinue = false;
                     break;
-                } else if (board[i][5] != ' ') {
+                } else if (board[i][5] != '.') {
                     Block* level4Block = new Block{'*'};
                     for (int j = 0; j < (i - 1); j++) {
                         level4Block->moveBlockDown();
@@ -118,14 +118,14 @@ int GameBoard::dropBlock() {
 
 void GameBoard::clearBlock() {
     for (auto it: currBlock->getStructure()) {
-        board[it[0]][it[1]] = ' ';
+        board[it[0]][it[1]] = '.';
     }
 }
 
 bool GameBoard::drawBlock() {
     char symbol = currBlock->getBlockType();
     for (auto it: currBlock->getStructure()) {
-        if (board[it[0]][it[1]] != ' '){
+        if (board[it[0]][it[1]] != '.'){
             return 0;
         }
         board[it[0]][it[1]] = symbol;
@@ -145,7 +145,7 @@ bool GameBoard::applyHeavy() {
 bool GameBoard::moveRight() {
     clearBlock();
     for (auto it: currBlock->getStructure()) {
-        if (it[1] == 10 || board[it[0]][it[1] + 1] != ' ') {
+        if (it[1] == 10 || board[it[0]][it[1] + 1] != '.') {
             drawBlock();
             return false;
         }
@@ -158,7 +158,7 @@ bool GameBoard::moveRight() {
 bool GameBoard::moveLeft() {
     clearBlock();
     for (auto it: currBlock->getStructure()) {
-        if (it[1] == 0 ||  board[it[0]][it[1] - 1] != ' ') {
+        if (it[1] == 0 ||  board[it[0]][it[1] - 1] != '.') {
             drawBlock();
             return false;
         }
@@ -171,7 +171,7 @@ bool GameBoard::moveLeft() {
 bool GameBoard::moveDown() {
     clearBlock();
     for (auto it: currBlock->getbottomMost()) {
-        if (it[0] == 17 || board[it[0] + 1][it[1]] != ' ') {
+        if (it[0] == 17 || board[it[0] + 1][it[1]] != '.') {
             drawBlock();
             return false;
         }
@@ -191,7 +191,7 @@ bool GameBoard::rotate(bool clockwise) {
     clearBlock();
     bool canRoate = 1;
     for (auto it: rotatedBlock) {
-        if (it[0] == 18 || it[1] == 11 || it[1] == -1 || board[it[0]][it[1]] != ' ') {
+        if (it[0] == 18 || it[1] == 11 || it[1] == -1 || board[it[0]][it[1]] != '.') {
             canRoate = 0;
             break;
         }
@@ -275,7 +275,7 @@ void GameBoard::changeBlock(char block) {
     clearBlock();
     char symbol = newBlock->getBlockType();
     for (auto it: newBlock->getStructure()) {
-        if (board[it[0]][it[1]] != ' '){
+        if (board[it[0]][it[1]] != '.'){
             canPlace = 0;
             break;
         }
@@ -293,7 +293,7 @@ void GameBoard::changeBlock(char block) {
 void GameBoard::restart() {
     for (int i = 0; i < 18; i++) {
         for (int j = 0; j < 11; j++) {
-            board[i][j] = ' ';
+            board[i][j] = '.';
         }
     }
     delete currBlock;
