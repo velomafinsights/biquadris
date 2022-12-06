@@ -80,9 +80,9 @@ Block::Block(char c): c{c}{
 
         blockWidth = {3, 2};
 
-        vector<vector<int>> b0 = {{3,1}, {2,2}};
+        vector<vector<int>> b0 = {{3,1}, {2,0}, {2,2}}; // before, it was just {3,1}, {2,2}, but we should also have {2, 0}
         vector<vector<int>> b1 = {{3,1}, {2,0}};
-        vector<vector<int>> b2 = {{2,1}, {2,0}, {2,2}};
+        vector<vector<int>> b2 = {{3,1}, {3,0}, {3,2}};
         vector<vector<int>> b3 = {{3,0}, {2,1}};
         bottomMost = {b0, b1, b2, b3};
     }

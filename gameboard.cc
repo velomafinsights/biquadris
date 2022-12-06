@@ -3,7 +3,7 @@
 #include <utility>
 #include <stdlib.h>
 
-GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, level{lvl}, score{0}, highScore{0}, blocksWithoutRowClear{0}, file{inputFile}, randomSeed{rSeed}, gameContinue{true} {
+GameBoard::GameBoard(string inputFile, size_t lvl): turnNumber{1}, level{lvl}, score{0}, highScore{0}, blocksWithoutRowClear{0}, file{inputFile}, gameContinue{true} {
     for (int i = 0; i < 18; i++) {
         std::vector<char> row;
         for (int j = 0; j < 11; j++) {
@@ -216,7 +216,7 @@ void GameBoard::levelUp() {
         currLevel = new Level2{};
     } else if (level == 2) {
         delete currLevel;
-        currLevel = new Level3{true};
+        currLevel = new Level3{false};
     } else if (level == 3) {
         delete currLevel;
         currLevel = new Level4{false};
@@ -230,7 +230,7 @@ void GameBoard::levelDown() {
     heavy = false;
     if (level == 1) {
         delete currLevel;
-        currLevel = new Level0{"sequence1.txt"};
+        currLevel = new Level0{file};
     } else if (level == 2) {
         delete currLevel;
         currLevel = new Level1{};
@@ -310,7 +310,7 @@ void GameBoard::restart() {
     currBlock = nullptr;
     nextBlock = nullptr;
     delete currLevel;
-    currLevel = new Level0{"sequence1.txt"};
+    currLevel = new Level0{file};
     turnNumber = 1;
     level = 0;
     score = 0;

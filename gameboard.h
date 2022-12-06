@@ -23,7 +23,6 @@ class GameBoard: public Subject {
     size_t highScore;
     size_t blocksWithoutRowClear;
     string file;
-    int randomSeed;
     bool blind;
     bool heavy;
     bool gameContinue;
@@ -33,7 +32,7 @@ class GameBoard: public Subject {
     bool drawBlock();
     void blindBoard();
  public:
-    GameBoard(string inputFile, size_t lvl, int rSeed);
+    GameBoard(string inputFile, size_t lvl);
     void norandom(std::string filePass);
     void random();
     void newBlock();

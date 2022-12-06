@@ -226,10 +226,10 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    unique_ptr<GameBoard> g{new GameBoard{file1, userDefLevel, randomSeed}};
+    unique_ptr<GameBoard> g{new GameBoard{file1, userDefLevel}};
     GameBoard* board = g.get();
 
-    unique_ptr<GameBoard> g2{new GameBoard{file2, userDefLevel, randomSeed}};
+    unique_ptr<GameBoard> g2{new GameBoard{file2, userDefLevel}};
     GameBoard* board2 = g2.get();
     
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
