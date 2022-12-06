@@ -10,7 +10,7 @@
 #include <memory>
 #include <utility>
 #include <fstream>
-
+#include <cctype>
 #include "level.h"
 #include "level0.h"
 #include "level1.h"
@@ -44,7 +44,7 @@ int dropCurrBlock(GameBoard* board, GameBoard* board2){
             cout<<"What block would you like for your opponent?"<<endl; 
             char blockOpp;
             cin >> blockOpp; 
-            board2->changeBlock(blockOpp);
+            board2->changeBlock(tolower(blockOpp));
         }
     }
     board->render();
