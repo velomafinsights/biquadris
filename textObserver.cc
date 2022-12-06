@@ -15,24 +15,28 @@ void TextObserver::notify() {
 
     std::vector<std::vector <char>> boardP1 = iObserve1->getState();
     std::vector<std::vector <char>> boardP2 = iObserve2->getState();
+    cout<<endl;
+    cout<<endl;
 
-    cout<<"Level:    "<<iObserve1->getLevel();
-    cout<<"                               ";
+    cout<<"  Level:    "<<iObserve1->getLevel();
+    cout<<"                                   ";
     cout<<"Level:    "<<iObserve2->getLevel();
     std::cout << std::endl;
 
-    cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve1->getScore();
-    cout<<"                               ";
+    cout<<"  Score:"<<setfill(' ')<<setw(5)<<iObserve1->getScore();
+    cout<<"                                   ";
     cout<<"Score:"<<setfill(' ')<<setw(5)<<iObserve2->getScore();
+    std::cout<<std::endl;
     std::cout<<std::endl;
     
 
-    cout<<"-----------";
-    cout<<"                               ";
-    cout<<"-----------";
+    cout<<" - - - - - - - - - - - - -";
+    cout<<"                      ";
+    cout<<"- - - - - - - - - - - - -";
     std::cout << std::endl;
 
     for (int i = 0; i < 18; ++i) {
+        cout<<"|  ";
         //Outputing Player 1's GameBoard
         for (int j = 0; j < 11; ++j) {
             if (blind1 && i>=3 && i<=12 && j>=3 && j<=9) {
@@ -41,8 +45,9 @@ void TextObserver::notify() {
                 std::cout << boardP1[i][j] << " ";
             }
         }
+        cout<<" |";
         cout<<"                    ";
-
+        cout<<"|  ";
         //Outputing Player 2's GameBoard
         for (int k = 0; k < 11; ++k) {
             if (blind2 && i>=3 && i<=12 && k>=3 && k<=9) {
@@ -51,17 +56,19 @@ void TextObserver::notify() {
                 std::cout << boardP2[i][k] << " ";
             }
         }
+        cout<<" |";
         std::cout << std::endl;
     }
 
-    cout<<"-----------";
-    cout<<"                               ";
-    cout<<"-----------";
+    cout<<" - - - - - - - - - - - - -";
+    cout<<"                      ";
+    cout<<"- - - - - - - - - - - - -";
     std::cout << std::endl;
 
-    cout<<"Next:      ";
-    cout<<"                               ";
-    cout<<"Next:      ";
+    cout<<endl;
+    cout<<" Next:      ";
+    cout<<"                                   ";
+    cout<<" Next:      ";
     std::cout << std::endl;
 
     std::vector<std::vector <char>> nextBoardP1 = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
@@ -80,14 +87,16 @@ void TextObserver::notify() {
     for (auto it: p2Next->getStructure()) {
         nextBoardP2[it[0] - minRow][it[1]] = p2NextSym;
     }
+
     for (int i = 0; i < 4; i++) {
+        cout<<" ";
         for (int j = 0; j < 4; j++) {
-            std::cout << nextBoardP1[i][j];
+            std::cout << nextBoardP1[i][j]<<" ";
         }
         
         cout<<"                                       ";
         for (int k = 0; k < 4; k++) {
-            std::cout << nextBoardP2[i][k];
+            std::cout << nextBoardP2[i][k]<<" ";
         }
         std::cout << std::endl;
     }
