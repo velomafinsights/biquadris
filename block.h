@@ -9,12 +9,8 @@ using namespace std;
 // Block implements 
 
 class Block {
-    // current orientation (coordinates) of the 4 pieces of the block 
-    // std::vector<std::vector<int>> structure;
 
  public:
- // we don't need to explicitly define the 3D vector as private field
- // orientation determined by a 3D vector
         Block(char c);
         std::vector<std::vector<std::vector<int>>> orientation;
         std::vector<int> blockWidth;

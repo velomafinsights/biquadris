@@ -13,7 +13,6 @@ class Level {
     size_t level;
     
     public:
-        //std::vector<string> blockQueue;
         virtual Block* getBlock(size_t i) = 0;
         virtual size_t getLevel() = 0;
         virtual ~Level();

@@ -17,8 +17,8 @@ Block::Block(char c): c{c}{
         vector<vector<int>> b1 = {{2,0}, {3,1}};
         bottomMost = {b0, b1, b0, b1};
     } else if (c == 'i'){
-        vector<vector<int>> s0 = {{3,0}, {3,1}, {3,2}, {3,3}}; //Original starting position
-        vector<vector<int>> s1 = {{0,0}, {1,0}, {2,0}, {3,0}};//Clockwise
+        vector<vector<int>> s0 = {{3,0}, {3,1}, {3,2}, {3,3}}; 
+        vector<vector<int>> s1 = {{0,0}, {1,0}, {2,0}, {3,0}};
         orientation = {s0, s1, s0, s1};
         
         blockWidth = {4, 1};
@@ -80,7 +80,7 @@ Block::Block(char c): c{c}{
 
         blockWidth = {3, 2};
 
-        vector<vector<int>> b0 = {{3,1}, {2,0}, {2,2}}; // before, it was just {3,1}, {2,2}, but we should also have {2, 0}
+        vector<vector<int>> b0 = {{3,1}, {2,0}, {2,2}};
         vector<vector<int>> b1 = {{3,1}, {2,0}};
         vector<vector<int>> b2 = {{3,1}, {3,0}, {3,2}};
         vector<vector<int>> b3 = {{3,0}, {2,1}};
@@ -109,14 +109,11 @@ void Block::rotateCounterClockWise(){
 }
 
 void Block::moveBlockRight(){
-    // create a check for out of range
-    // create a check for current orientation and max width
     size_t colAdd = 0;
     size_t colMargin;
     if (i == 0 || i == 2){
         colMargin = 11 - blockWidth[0];
         if (x < colMargin){
-            // we've basically incremented the x (col) values by 1
             colAdd = 1;
             ++x;
         }
@@ -128,11 +125,7 @@ void Block::moveBlockRight(){
             ++x;
         }
     }
-    //int orientationLen = orientation[i].size();
-    //int blockLen = orientation[i][0].size();
-    // change orientation vector
     for (int i = 0; i < 4; ++i){
-        //orientation[i]; gives each of the 2d vectors
         for (int j = 0; j < 4; ++j){
             orientation[i][j][1] += colAdd;
         }
@@ -152,7 +145,6 @@ void Block::moveBlockLeft(){
         --x;
     }
     for (int i = 0; i < 4; ++i){
-        //orientation[i]; gives each of the 2d vectors
         for (int j = 0; j < 4; ++j){
             orientation[i][j][1] -= colSub;
         }
@@ -171,7 +163,6 @@ void Block::moveBlockDown(){
     } else {
         ++y;
         for (int i = 0; i < 4; ++i){
-            //orientation[i]; gives each of the 2d vectors
             for (int j = 0; j < 4; ++j){
                 orientation[i][j][0] += 1;
             }
@@ -207,11 +198,6 @@ std::vector<std::vector<int>> Block::getNextCCWOrientation(){
     }
 }
 
-/*
-virtual std::vector<std::vector<int>> getbottomMost() = 0;
-        virtual std::vector<std::vector<int>> getleftMost() = 0;
-        virtual std::vector<std::vector<int>> getRightMost() = 0;
-*/
 
 std::vector<std::vector<int>> Block::getbottomMost(){
     return bottomMost[i];

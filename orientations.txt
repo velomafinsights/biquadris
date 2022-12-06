@@ -57,3 +57,4 @@ vector<vector<int>> b1 = {{2,1}, {1,0}};
 vector<vector<int>> b2 = {{1,1}, {1,0}, {1,2}};
 vector<vector<int>> b3 = {{2,0}, {1,1}};
 bottomMost = {b0, b1, b2, b3};
+

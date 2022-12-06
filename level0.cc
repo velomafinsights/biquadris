@@ -4,13 +4,11 @@
 
 using namespace std;
 
-// init ctor
 Level0::Level0(std::string seqOneSource): seqOneSource{seqOneSource}, seqOneLength{0} { 
     setBlockQueue();
 }
 
 void Level0::setBlockQueue(){
-    // 
     seqOne.open(seqOneSource);
     string blockQItem;
     while(seqOne >> blockQItem){
