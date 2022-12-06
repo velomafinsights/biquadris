@@ -17,7 +17,7 @@ bool commandInterpreter::validSubString(std::string original, std::string sub){
 std::string commandInterpreter::process(std::string given){
     std::string given2;
     size_t k = 0;
-    for(k; k < given.length(); ++k){
+    for(;k < given.length(); ++k){
         if(given[k]>='0' && given[k]<='9'){
         } else {
             break;
@@ -65,14 +65,14 @@ int commandInterpreter::multiplier(std::string given){
 }
 
 void commandInterpreter::rename(std::string toRename, std::string given){
-    size_t idx = NULL;
+    int idx = -1;
     for(size_t i =0; i<users.size(); i++){
         if(users[i] == given){
             idx = i;
             break;
         }
     }
-    if(idx != NULL){
+    if(idx != -1){
         users.erase(users.begin()+idx);
     }
     userDefined[given] = toRename;

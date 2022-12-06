@@ -21,7 +21,7 @@
 int dropCurrBlock(GameBoard* board, GameBoard* board2){
     cout<< board->getScore() << endl;
     int rC = board->dropBlock();
-    int p1HS = board->getScore();
+    size_t p1HS = board->getScore();
     if (p1HS > board->getHighScore()){
         board->setHighScore(p1HS);
         board2->setHighScore(p1HS);
@@ -56,7 +56,6 @@ int dropCurrBlock(GameBoard* board, GameBoard* board2){
 int applyCommand(GameBoard* board, GameBoard* board2, string commandFromUser, commandInterpreter* ci){
     int multi = ci->multiplier(commandFromUser);
     std::string command = ci->process(commandFromUser);
-    bool gameContinue;
     if (command == "drop") {
         return dropCurrBlock(board, board2);
     } else if (command == "right") {
@@ -200,7 +199,7 @@ int main(int argc, char* argv[]) {
     int randomSeed = 0;
     bool textOnly=false;
     
-    size_t currArg = 1;
+    int currArg = 1;
     while(currArg < argc){
         if(std::string(argv[currArg]) == "-text"){
             textOnly = true;
@@ -234,7 +233,6 @@ int main(int argc, char* argv[]) {
     GameBoard* board2 = g2.get();
     
     unique_ptr<Observer> o{new TextObserver{board,board2, 0, 0, 0, 0}};
-    Observer* obs = o.get();
 
     int blockWidth = 25;
     Observer* graphics = nullptr; 
@@ -251,7 +249,6 @@ int main(int argc, char* argv[]) {
     string command;
     commandInterpreter ci{};   
     commandInterpreter* ciptr = &ci;
-    bool gameContinue;
     ifstream commands;
     size_t playerOne = 0;
 

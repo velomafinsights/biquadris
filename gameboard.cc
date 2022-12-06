@@ -279,7 +279,7 @@ void GameBoard::changeBlock(char block) {
         y--;
     }
     clearBlock();
-    char symbol = newBlock->getBlockType();
+    //char symbol = newBlock->getBlockType();
     for (auto it: newBlock->getStructure()) {
         if (board[it[0]][it[1]] != '.'){
             canPlace = 0;

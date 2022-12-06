@@ -10,12 +10,12 @@
 using namespace std;
 
 class GraphicObserver: public Observer {
+    int blockWidth;  // width (and height) of a single square block 
     Xwindow *win;
     GameBoard *p1;
     GameBoard *p2;
     //int top, bottom, left, right;  
     int wWidth, wHeight;  // window width and height when calling new Xwindow{width, height}
-    int blockWidth;  // width (and height) of a single square block 
     int pieceWidth; // size of a piece = 2 less than blockWidth
     int gHeight, gWidth;  // individual game height
     int p1MarginLeft, p2MarginLeft, p2MarginRight;     // margin-left of the two boards
