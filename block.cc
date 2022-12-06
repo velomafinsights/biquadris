@@ -111,8 +111,8 @@ void Block::rotateCounterClockWise(){
 void Block::moveBlockRight(){
     // create a check for out of range
     // create a check for current orientation and max width
-    int colAdd = 0;
-    int colMargin;
+    size_t colAdd = 0;
+    size_t colMargin;
     if (i == 0 || i == 2){
         colMargin = 11 - blockWidth[0];
         if (x < colMargin){
@@ -251,7 +251,7 @@ void Block::rowCleared(int row){
         }
     } else {
         std::vector<int> erasePoint;
-        for (int j = 0; j < orientation[i].size(); ++j) {
+        for (size_t j = 0; j < orientation[i].size(); ++j) {
             if (orientation[i][j][0] == row) {
                 erasePoint.emplace_back(j);
             }
@@ -261,7 +261,7 @@ void Block::rowCleared(int row){
             orientation[i].erase(orientation[i].begin() + it - numberErased);
             numberErased++;
         }
-        for (int j = 0; j < orientation[i].size(); ++j){
+        for (size_t j = 0; j < orientation[i].size(); ++j){
             if (orientation[i][j][0] < row){
                 orientation[i][j][0] += 1;
             }

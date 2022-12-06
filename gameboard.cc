@@ -207,15 +207,18 @@ bool GameBoard::rotate(bool clockwise) {
 }
 
 void GameBoard::levelUp() {
-    delete currLevel;
     heavy = false;
     if (level == 0) {
+        delete currLevel;
         currLevel = new Level1{};
     } else if (level == 1) {
+        delete currLevel;
         currLevel = new Level2{};
     } else if (level == 2) {
-        currLevel = new Level3{false};
+        delete currLevel;
+        currLevel = new Level3{true};
     } else if (level == 3) {
+        delete currLevel;
         currLevel = new Level4{false};
     }
     if (level != 4) {
@@ -224,15 +227,18 @@ void GameBoard::levelUp() {
 }
 
 void GameBoard::levelDown() {
-    delete currLevel;
     heavy = false;
     if (level == 1) {
+        delete currLevel;
         currLevel = new Level0{"sequence1.txt"};
     } else if (level == 2) {
+        delete currLevel;
         currLevel = new Level1{};
     } else if (level == 3) {
+        delete currLevel;
         currLevel = new Level2{};
     } else if (level == 4) {
+        delete currLevel;
         currLevel = new Level3{false};
     }
     if (level != 0) {
@@ -272,7 +278,7 @@ void GameBoard::changeBlock(char block) {
         y--;
     }
     clearBlock();
-    char symbol = newBlock->getBlockType();
+    //char symbol = newBlock->getBlockType();
     for (auto it: newBlock->getStructure()) {
         if (board[it[0]][it[1]] != '.'){
             canPlace = 0;

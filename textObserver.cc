@@ -13,9 +13,17 @@ void TextObserver::notify() {
     bool blind1 = iObserve1->getBlind();
     bool blind2 = iObserve2->getBlind();
 
+std::cout << "               ____  __  __   _  _   __   ____  ____  __  ____ " << std::endl;
+std::cout << "              (  _ \\(  )/  \\ / )( \\ / _\\ (    \\(  _ \\(  )/ ___) " << std::endl;
+std::cout << "               ) _ ( )((  O )) \\/ (/    \\ ) D ( )   / )( \\___ \\ " << std::endl;
+std::cout << "              (____/(__)\\__\\)\\____/\\_/\\_/(____/(__\\_)(__)(____/ " << std::endl;
+
     std::vector<std::vector <char>> boardP1 = iObserve1->getState();
     std::vector<std::vector <char>> boardP2 = iObserve2->getState();
     cout<<endl;
+    cout<<endl;
+    cout<<"                              High Score: ";
+    cout<<iObserve2->getHighScore();
     cout<<endl;
 
     cout<<"  Level:    "<<iObserve1->getLevel();
