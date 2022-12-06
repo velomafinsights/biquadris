@@ -215,9 +215,9 @@ void GameBoard::levelUp() {
     } else if (level == 1) {
         currLevel = new Level2{};
     } else if (level == 2) {
-        currLevel = new Level3{true};
+        currLevel = new Level3{false};
     } else if (level == 3) {
-        currLevel = new Level4{true, file};
+        currLevel = new Level4{false};
     }
     if (level != 4) {
         level++;
@@ -234,7 +234,7 @@ void GameBoard::levelDown() {
     } else if (level == 3) {
         currLevel = new Level2{};
     } else if (level == 4) {
-        currLevel = new Level3{true};
+        currLevel = new Level3{false};
     }
     if (level != 0) {
         level--;

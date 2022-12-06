@@ -23,7 +23,7 @@ class GraphicObserver: public Observer {
     int marginTop;  // general margin-top for spacing the gameboards from the top
     // colourMap: sets a colour for each character on GameBoard
     map<char, int>colourMap {{'.', 0}, {'?', 1}, {'i', 2}, {'j', 3}, {'l', 4}, 
-                            {'o', 4}, {'s', 2}, {'z', 3}, {'t', 4}, {'*', 2}};
+                            {'o', 5}, {'s', 6}, {'z', 7}, {'t', 8}, {'*', 9}};
     public:
         GraphicObserver(int blockWidth, GameBoard *p1, GameBoard *p2);
         void startGame();
