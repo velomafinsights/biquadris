@@ -62,11 +62,15 @@ size_t GameBoard::clearFilledRows() {
         }
         if (rowClear) {
             clearRow(i);
-            for(auto it: blocks) {
-                it->rowCleared(i);
-                int blockRemove = it->blockRemoved();
+            auto it = blocks.begin();
+            while (it != blocks.end()) {
+                (**it).rowCleared(i);
+                int blockRemove = (**it).blockRemoved();
                 if (blockRemove >= 0) {
                     score += (blockRemove + 1) * (blockRemove + 1);
+                    it = blocks.erase(it);
+                } else {
+                    ++it;
                 }
             }
             numberOfRowsCleared++;
@@ -278,7 +282,6 @@ void GameBoard::changeBlock(char block) {
         y--;
     }
     clearBlock();
-    //char symbol = newBlock->getBlockType();
     for (auto it: newBlock->getStructure()) {
         if (board[it[0]][it[1]] != '.'){
             canPlace = 0;
@@ -377,5 +380,3 @@ GameBoard::~GameBoard() {
         delete it;
     }
 }
-
-
