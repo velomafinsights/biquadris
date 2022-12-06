@@ -2,7 +2,6 @@
 #include <vector>
 #include <utility>
 #include <stdlib.h>
-#include "blocks.h"
 
 GameBoard::GameBoard(string inputFile, size_t lvl, int rSeed): turnNumber{1}, level{lvl}, score{0}, highScore{0}, blocksWithoutRowClear{0}, file{inputFile}, randomSeed{rSeed}, gameContinue{true} {
     for (int i = 0; i < 18; i++) {
