@@ -53,7 +53,7 @@ Block::Block(char c): c{c}{
         vector<vector<int>> b0 = {{3,0}, {3,1}, {3,2}};
         vector<vector<int>> b1 = {{3,1}, {3,0}};
         vector<vector<int>> b2 = {{3,0}, {2,1}, {2,2}};
-        vector<vector<int>> b3 = {{3,0}, {3,1}};
+        vector<vector<int>> b3 = {{1,0}, {3,1}}; // changed from 3,0 
         bottomMost = {b0, b1, b2, b3};
     } else if (c == 'z') {
         vector<vector<int>> s0 = {{2,0}, {2,1}, {3,1}, {3,2}};
