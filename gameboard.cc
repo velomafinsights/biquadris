@@ -12,6 +12,7 @@ GameBoard::GameBoard() {
         }
         board.emplace_back(row);
     }
+    // added random comment
     currLevel = new Level0{"sequence1.txt"};
     turnNumber = 1;
     level = 0;
